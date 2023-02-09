@@ -14,10 +14,6 @@ int main(int argc, char* argv[]){
 	init_sdl();
 	SDL_Surface *img = load_image(argv[1]);
 
-	printf("image %s loaded",argv[1]);
-
 	size_t r = image(img);
-
-	printf("res : %lu\n");
 	return 0;
 }

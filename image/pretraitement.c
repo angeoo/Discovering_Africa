@@ -52,12 +52,10 @@ size_t image(SDL_Surface * img){
 	
 	img = grayscale(img);
 
-	SDL_SaveBMP("gray.bmp",img);
 	int w = img->w;
 	int h = img->h;
 
 
-	printf("img->w : %d\nimg->h : %d\n\n\n\n\n",w,h);
 
 	Uint32 pixel;
 	Uint8 r,g,b;
@@ -68,10 +66,11 @@ size_t image(SDL_Surface * img){
 	int j=0;
 	int on =1;
 	while(i<w && on==1){
+		j=0;
 		while(j<h && on==1){
 			pixel = get_pixel(img,i,j);
 			SDL_GetRGB(pixel,img->format,&r,&g,&b);
-			if(r==0 && g==0 && b==0){
+			if(r==0){
 				coordw=i;
 				coordh=j;
 				on = 0;
@@ -81,16 +80,12 @@ size_t image(SDL_Surface * img){
 		i+=1;
 	}
 
-	printf("\ncoordw : %d\ncoordh : %d\n",coordw, coordh);
-
-
 	int new_w = w-2*coordw;
 	int new_h = h-2*coordh;
 
 	SDL_Surface *output = SDL_CreateRGBSurface(0,new_w,new_h,32,0,0,0,0);
-	SDL_SaveBMP(output,"blank.bmp");
-	for(int u=coordw;u<new_w;u++){
-		for(int v=coordh;v<new_h;v++){
+	for(int u=coordw;u<new_w+coordw-1;u++){
+		for(int v=coordh;v<new_h+coordh-1;v++){
 			pixel = get_pixel(img,u,v);
 
 			put_pixel(output,u-coordw,v-coordh,pixel);
