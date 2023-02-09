@@ -5,18 +5,6 @@
 
 
 
-typedef struct mod
-{
-	int module_size;
-	int color;
-}mod;
-
-typedef struct qr
-{
-	mod matrix[][];
-	int size;
-	int v;
-}qr;
 
 Uint32 getpixel(SDL_Surface *surface, int x, int y)
 {
@@ -122,3 +110,5 @@ SDL_Surface* display_image(SDL_Surface *img)
     return screen;
 }
 
+int** QR(SDL_Surface *surface, int mod_size);
+int module_size(SDL_Surface * surface);
