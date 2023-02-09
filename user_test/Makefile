@@ -4,7 +4,7 @@ CFLAGS = -Wall -Wextra
 all:main
 main : main.o questions.o
 
-questionso: questions.h
+questions.o: questions.h
 
 clean:
 	${RM} *.o

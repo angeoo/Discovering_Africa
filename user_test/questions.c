@@ -5,7 +5,7 @@
 #include <err.h>
 #include "questions.h"
 
-struct User init_(){
+struct User init(){
 	
 	struct User u;
 	u.name = "";
@@ -18,19 +18,19 @@ struct User init_(){
 }
 
 
-struct User  HelloWorld(char* buffer){
+struct User  HelloWorld(){
 
 	char * w = "Welcome to Discovering Africa\n\nHere's a few questions to help you find a beautiful destination to discover in Africa\n\n";
 
-	int res;
-	
+	printf("%s\n",w);
 	char * q1 = "Tell us your name : \n";
 	//while(){ //tant q user ne press pas Entree
-	res = write(STDOUT_FILENO, buffer, q1);
+	printf("%s\n",q1);
 	//}
 
 	struct User user = init();
-	char * name = read(STDIN_FILENO,q1, res);
+	char name[100];
+	scanf("%s",name);
 
 	user.name = name;
 
