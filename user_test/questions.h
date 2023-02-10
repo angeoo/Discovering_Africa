@@ -1,14 +1,13 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <string.h>
+#include<string.h>
 #include <err.h>
-
 
 struct User{
 
-	char* name;
-	char* age;
+	char name[100];
+	int age, nbv;
 	int nx,ny,nz;
 };
 
