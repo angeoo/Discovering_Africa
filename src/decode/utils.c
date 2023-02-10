@@ -44,15 +44,16 @@ int* QR(SDL_Surface *surface, int mod_size)
 */
 
 	int ix=0;
-	for (int i=0; i<h && ix<w/mod_size ; i+=mod_size && ix++)
+	for (int i=mod_size/2; i<h && ix<(w/mod_size) ; i+=mod_size && ix++)
 	{
 		int iy=0;
-		for (int j=0; j<w && iy<w/mod_size; j+=mod_size && iy++)
+		for (int j=mod_size/2; j<w && iy<(w/mod_size); j+=mod_size && iy++)
 		{
-			pixel=getpixel(surface,i/2,j/2);
+			pixel=getpixel(surface,i,j);
 			SDL_GetRGB(pixel,surface->format,&r,&g,&b);
-			if (r==0)
+			if (r==0){
 				*(mat+(ix*(w/mod_size)+iy))=1;
+			}
 		}
 	}
 
@@ -66,6 +67,7 @@ int main (int argc, char *argv[])
 	init_sdl();
 	SDL_Surface *qr=load_image(argv[1]);
 	int w=qr->w;
+	printf("w : %d\nh %d : \n\n\n\n",qr->w,qr->h);
 	int size = module_size(qr);
 	printf("mod_size : %d\n", size);
 	int* data = QR(qr,size);
