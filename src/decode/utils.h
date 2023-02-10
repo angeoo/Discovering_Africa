@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
+#include <err.h>
 
 
 
@@ -110,5 +111,5 @@ SDL_Surface* display_image(SDL_Surface *img)
     return screen;
 }
 
-int** QR(SDL_Surface *surface, int mod_size);
+int* QR(SDL_Surface *surface, int mod_size);
 int module_size(SDL_Surface * surface);
