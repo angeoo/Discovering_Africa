@@ -44,17 +44,20 @@ int* QR(SDL_Surface *surface, int mod_size)
 */
 
 	int ix=0;
-	for (int i=mod_size/2; i<h && ix<(w/mod_size) ; i+=mod_size && ix++)
+	for (int i=mod_size/2; i<h && ix<(w/mod_size) ; i+=mod_size )
 	{
 		int iy=0;
-		for (int j=mod_size/2; j<w && iy<(w/mod_size); j+=mod_size && iy++)
+		for (int j=mod_size/2; j<w && iy<(w/mod_size); j+=mod_size )
 		{
 			pixel=getpixel(surface,i,j);
 			SDL_GetRGB(pixel,surface->format,&r,&g,&b);
 			if (r==0){
-				*(mat+(ix*(w/mod_size)+iy))=1;
+				printf("pixel coordinates: i=%d j=%d\n",i,j);
+				*(mat+(iy*(w/mod_size)+ix))=1;
 			}
+			iy++;
 		}
+		ix++;
 	}
 
 	return mat;
