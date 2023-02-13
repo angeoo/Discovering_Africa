@@ -5,6 +5,19 @@
 #include <err.h>
 #include "questions.h"
 
+int init_res(struct User u){
+	if(u.nx>=u.ny){
+		if(u.nx>=u.nz){
+			return 1;
+		}
+		return 3;
+	}
+	if(u.ny>=u.nz){
+		return 2;
+	}
+	return 3;
+}
+
 struct User init(){
 
 	struct User u;
@@ -21,7 +34,7 @@ struct User init(){
 
 struct User  HelloWorld(){
 
-	char * w = "Welcome to Discovering Africa\n\nHere's a few questions to help you find a beautiful destination to discover in Africa\n\n";
+	char * w = "\n\n\n\nWelcome to Discovering Africa\n\nHere's a few questions to help you find a beautiful destination to discover in Africa\n\n";
 
 	printf("%s\n",w);
 
@@ -29,9 +42,9 @@ struct User  HelloWorld(){
 	char* q1;
 	char* q2;
 
-			//x = rural/culturel
-			//y = playa et cocktail
-			//z = sport et paysage
+	//x = rural/culturel
+	//y = playa et cocktail
+	//z = sport et paysage
 
 
 
@@ -216,9 +229,9 @@ struct User  HelloWorld(){
 
 	char *q8;
 	q8 = "Dream location :\n\n\
-		1) Modern loft with 360 view angle over the city\n\
-		2) Nice mountain cabin\n\
-		3) Anything nice and local\n";
+	      1) Modern loft with 360 view angle over the city\n\
+	      2) Nice mountain cabin\n\
+	      3) Anything nice and local\n";
 	int res8;
 
 	do{
@@ -252,9 +265,9 @@ struct User  HelloWorld(){
 
 	char *q9;
 	q9 = "Where would you go on a sunday afternoon :\n\n\
-		1) Go shopping\n\
-		2) Walk in the newboorhood\n\
-		3) Anywhere there is food at\n";
+	      1) Go shopping\n\
+	      2) Walk in the newboorhood\n\
+	      3) Anywhere there is food at\n";
 	int res9;
 
 	do{
@@ -285,4 +298,44 @@ struct User  HelloWorld(){
 
 	}while(res9==0);
 	return user;
+}
+
+
+
+struct User HelloTraveler(){
+	char * w = "\n\nSince you are not traveling alone, does your compagny wants to take the test ? (Y/N) ";
+
+	char *res=calloc(5,sizeof(char));
+
+	int c=1;
+	int l;
+	do{
+		printf("%s",w);
+		scanf("%s",res);
+		l = strlen(res);
+
+		if(l!=1){
+			printf("\nWrong answer... Y or N only valid answer");
+			continue;
+		}
+		switch(res[0]){
+
+			case 'Y':
+			case 'y':
+				c=1;
+				break;
+			case 'N':
+			case 'n':
+				c=0;
+				return init();
+			default:
+				printf("\nWrong answer...Y or N only valid answer");
+				break;
+		}
+		c=0;
+
+	}while(c==1);
+
+	return init();
+
 }

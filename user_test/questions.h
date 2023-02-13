@@ -11,7 +11,9 @@ struct User{
 	int nx,ny,nz;
 };
 
+int init_res(struct User u);
 struct User init();
 struct User HelloWorld();
+struct User HelloTraveler();
 
 
