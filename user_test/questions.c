@@ -21,23 +21,6 @@ void init_res(struct User u, char* arr[]){
 		res = 3;
 		}
 	}
-/*
-	switch(res){
-		case 1:
-			printf("https://www.google.com/search?q=cai    re&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjwzP6jjJP9AhVLTaQEHcsdD-IQ_AUoAnoEC    AEQBA&biw=1916&bih=968&dpr=1");
-			return ;
-		case 2:
-			printf("https://www.google.com/search?q=zan    zibar&source=lnms&tbm=isch&sa=X&ved=2ahUKEwi-gYqajJP9AhVRVaQEHVMiDgMQ_AUoAX    oECAIQAw&biw=1916&bih=968&dpr=1");
-			return ;
-		case 3 :
-			printf("https://www.google.com/search?q=add    is+ababa&source=lnms&tbm=isch&sa=X&ved=2ahUKEwi69bjWjJP9AhU3RKQEHTxnARUQ_AU    oAXoECAEQAw&biw=1916&bih=968&dpr=1");
-			return ;
-		default :
-			printf("Error with init_res\n\n");
-			return ;
-	}
-
-*/
 	char * ville;
 	switch(res){
 		case 1:
@@ -53,7 +36,7 @@ void init_res(struct User u, char* arr[]){
 			printf("Error with init_res");
 			break;
 	}
-	printf("\n\n\n\nThe best destination for you is %s\n\n\nYou can found at more about the site here : \n\n%s",ville,arr[res-1]);
+	printf("\n\n\n\nThe best destination for you is %s\n\n\nYou can found at more about the site here : \n\n%s\n\n",ville,arr[res-1]);
 }
 
 struct User init(){
