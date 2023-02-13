@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "masking.c"
 
 
 int module_size(SDL_Surface * surface)
@@ -14,7 +14,6 @@ int module_size(SDL_Surface * surface)
 		if (r==255)
 			break;
 	}
-	printf(" fpl : %d\n",j);
 	int mod_size=0;
 	for(int k=0;k<w;k++)
 	{
@@ -29,6 +28,8 @@ int module_size(SDL_Surface * surface)
 	return mod_size;
 }
 
+
+
 int* QR(SDL_Surface *surface, int mod_size)
 {
 	int h=surface->h, w=surface->w;
@@ -36,12 +37,6 @@ int* QR(SDL_Surface *surface, int mod_size)
 	Uint8 r,g,b;
 	int size=(int)(w/mod_size)*(int)(w/mod_size);
 	int* mat=calloc(size,sizeof(int));
-	
-	/*qr *qr;
-	qr->matrix=mod;
-	qr->size=qr_size*qr_size;
-	qr->v=(qr_size-21)/4; //arithmetic formulas
-*/
 
 	int ix=0;
 	for (int i=mod_size/2; i<h && ix<(w/mod_size) ; i+=mod_size )
@@ -52,7 +47,6 @@ int* QR(SDL_Surface *surface, int mod_size)
 			pixel=getpixel(surface,i,j);
 			SDL_GetRGB(pixel,surface->format,&r,&g,&b);
 			if (r==0){
-				printf("pixel coordinates: i=%d j=%d\n",i,j);
 				*(mat+(iy*(w/mod_size)+ix))=1;
 			}
 			iy++;
@@ -62,6 +56,60 @@ int* QR(SDL_Surface *surface, int mod_size)
 
 	return mat;
 }
+int* mat_data (int* matrice , size_t taille )
+{
+	int count=0;
+	int* res = calloc(taille*taille, sizeof(int));
+	if (taille<22)
+	{
+		for (size_t x = 0 ; x<taille ; x +=1)
+		{
+			for (size_t y = 0; y<taille ; y+=1)
+			{
+				res[x*taille+y]=matrice[x*taille+y];
+				if (((x<9)&&(y<9))||((x<9)&&(y>=taille-8))||((x>=taille-8)&&(y<9)))
+				{
+					res[x*taille+y]=-1;
+				}
+				if (((((x>7)&&(x<taille-8))&& y==6) ||(((y>7)&&(y<taille-8))&& x==6 )))
+				{
+					res[x*taille+y]=-2;
+					count+=1;
+				}
+			}
+
+		}
+		printf("%d \n",count);
+	}
+	else
+	{
+
+		for (size_t x = 0 ; x<taille ; x +=1)
+		{
+			for (size_t y = 0; y<taille ; y+=1)
+			{
+				
+				res[x*taille+y]=matrice[x*taille+y];
+				if (((x<9)&&(y<9))||((x<9)&&(y>=taille-8))||((x>=taille-8)&&(y<9)))
+				{
+					res[x*taille+y]=-1;
+				}
+				if (((((x>7)&&(x<taille-8))&& y==6) ||(((y>7)&&(y<taille-8))&& x==6 ))||(((x>=taille-9)&&(x<taille-4))&&((y>=taille-9)&&(y<taille-4))))
+				{
+					res[x*taille+y]=-2;
+					count+=1;
+				}
+
+
+			}
+
+		}
+		printf("%d \n",count);
+	}
+return res;
+
+}
+
 
 int main (int argc, char *argv[])
 {
@@ -70,21 +118,25 @@ int main (int argc, char *argv[])
 	init_sdl();
 	SDL_Surface *qr=load_image(argv[1]);
 	int w=qr->w;
-	printf("w : %d\nh %d : \n\n\n\n",qr->w,qr->h);
 	int size = module_size(qr);
-	printf("mod_size : %d\n", size);
 	int* data = QR(qr,size);
-	int k=0;
+	int* data_matrix=mat_data(data,w/size);
+	Rmask(data_matrix,w/size,data);
+	int k=-1;
 	for (int i =0; i<w/size; i++)
 	{
 		for (int j=0; j<w/size;j++)
 		{
 			k++;
-			printf("%dth module color: %d\n",k, *(data+(i*(w/size))+j));
+			if (k%25==0)
+				printf("\n");
+			printf("%d |", *(data_matrix+(i*(w/size))+j));
 		}
 	}
 
+
 	free(data);
+	free(data_matrix);
 
 	return 0;
 }

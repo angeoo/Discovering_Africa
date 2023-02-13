@@ -1,23 +1,65 @@
 #include "utils.h"
 
-
-SDL_Surface *Rmasking(SDL_Surface surface,QR qr, char *mask)
+char * Find_masking(int *data,int size)
 {
-	int w=surface->w , h=surface->h;
-	for (int i=0; i<w; i++)
-	{
-		for (int j=0;j<h;j++)
-		{
-			if (i<7*qr.modul_size && j<7*q.modul_size)
-				continue;
-			if (i==7*qr.module_size)
-				continue;
-			if (j==7*qr.module_size)
-				continue;
-			if (i<w-7*qr.module_size && j<h-7*qr.module_size)
-				continue;
-			if (i<7*qr.modul_size && y>h-7*qr.module_size)
-				continue;
-			if 
+	char* mask=calloc(3,sizeof(char));
+	mask[0]=data[8*size+2];
+	mask[1]=data[8*size+3];
+	mask[2]=data[8*size+4];
+	return mask;
+}
 
+void Rmask (int* data, int size,int*data2)
+{
+	char *mask= Find_masking(data2,size);
+	for (int x=0; x<size; x++)
+	{
+		for (int y=0; y<size; y++)
+		{
+			if (data[x*size+y]>=0)
+			{
+				if (!(strcmp(mask,"000")))
+				{
+					if((x+y)%2==0)
+						data[x*size+y]=1;
+				}
+				if(!(strcmp(mask,"001")))
+				{
+					if(x%2==0)
+						data[x*size+y]=1;
+				}
+				if(!(strcmp(mask,"010")))
+				{
+					if(y%3==0)
+						data[x*size+y]=1;
+				}
+				if(!(strcmp(mask,"011")))
+				{
+					if((x+y)%3==0)
+						data[x*size+y]=1;
+				}
+				if(!(strcmp(mask,"100")))
+				{
+					if(((x/2)*(y/3))%2==0)
+						data[x*size+y]=1;
+				}
+				if(!(strcmp(mask,"101")))
+				{
+					if(((x*y)%2)+((x*y)%3)==0)
+						data[x*size+y]=1;
+				}
+				if(!(strcmp(mask,"110")))
+				{
+					if((((x*y)%2)+((x*y)%3))%2==0)
+						data[x*size+y]=1;
+				}
+				if(!(strcmp(mask,"111")))
+				{
+					if((((x*y)%3)+((x+y)%2))%2==0)
+						data[x*size+y]=1;
+				}
+			}
+		}
+	}
+}
 
