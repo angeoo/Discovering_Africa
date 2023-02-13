@@ -111,96 +111,97 @@ int* mat_data (int* matrice , size_t taille )
 }
 
 
-int calc(int* block) //donne le decimal dun block decode a partir dun pointerur
+int calc(int* block,int nb) //donne le decimal dun block decode a partir dun pointerur
 {
 	int len = 1;
 	int res =0;
 	int e=0;
-	while(e<8)
+	block =block-1;
+	while(e<nb-1)
 	{
 		if( *block ==1)
 		{
+			printf("||  block (%d) is black |v|  len = %d ||\n",e,len);
 			res=res+len;
 		}
 		len=len*2;
 		block=block-1;
+		e=e+1;
+	}
+
+
+	if(*block ==1 )
+	{
+		printf("||  block (%d) is black |v|  len = %d ||\n",e,len);
+		res=res+len;
 	}
 	return res;
 }
 
 
 
-int getencode(int taille , int** mat)
+int getencode(int taille , int* mat,int nb,int x ,int y)
 {
-	int len = 1;
-	int res=0;
-	int y=taille -1;
-	int x=taille -1;
+	int res;
 	int* form = malloc(4*sizeof(int));
-	while(x>taille-1-2)
+	while(x>=taille-(nb/2))
 	{
-		*form = mat[x][y];
+		*form = mat[x*taille + y];
+		printf("case(%d,%d) = %d\n",x,y,*form);
 		form=form+1;
-		*form = mat[x][y-1];
-		x=-1;
+		*form = mat[x*taille + (y-1)];
+		printf("case(%d,%d) = %d\n",x,y-1,*form);
+		form=form+1;
+		x=x-1;
 	}
-	int e=0;
-	while(e<4)
-	{
-		if(form[e]==1)
-		{
-			res=res+len;
-		}
-		len=len*2;
-		form=form-1;
-	}
+	res = calc(form , nb);
 	return res;
 }
 
 
 
 
-void _getup(int* mat , int* posx , int* posy,int** res, int n)
+void _getup(int* mat , int* posx , int* posy,int* res, int n)
 {
 	int c=0;
 	while(c<2)
 	{
 		if(mat[(*posx)*n + *posy]!=-2)
 		{
-			**res=mat[(*posx)*n + *posy];
-			*res = *res +1;
+			*res=mat[(*posx)*n + *posy];
+			res = res +1;
 			c=c+1;
 		}
-		*posx = *posx-1;
+		*posy = *posy-1;
 
 		if(mat[(*posx)*n + *posy]!=-2)
 		{
-			**res=mat[(*posx)*n+*posy];
-			*res=*res+1;
+			*res=mat[(*posx)*n+*posy];
+			res=res+1;
+			c=c+1;
+		}
+		*posy=*posy+1;
+		*posx=*posx-1;
+	}
+	return;
+}
+
+void _getdown(int* mat , int* posx , int* posy , int*res, int n)
+{
+	int c=0;
+	while(c<2)
+	{
+		if(mat[(*posx)*n + *posy]!=-2)
+		{
+			*res=mat[(*posx)*n + *posy];
+			res=res+1;
 			c=c+1;
 		}
 		*posy=*posy-1;
-		*posx=*posx+1;
-	}
-	return;
-
-}
-void _getdown(int* mat , int* posx , int* posy , int**res, int n)
-{
-	int c=0;
-	while(c<2)
-	{
-		if(mat[(*posx)*n + *posy]!=-2)
-		{
-			**res=mat[(*posx)*n + *posy];
-			*res=*res+1;
-			c=c+1;
-		}
-		*posx=*posx-1;
 		if(mat[(*posx)*n + *posy]==-2)
 		{
-			**res=mat[(*posx)*n+*posy];
-			*res=*res+1;
+			*res=mat[(*posx)*n+*posy];
+			res=res+1;
 			c=c+1;
 		}
 		*posy=*posy+1;
@@ -212,43 +213,57 @@ void _getdown(int* mat , int* posx , int* posy , int**res, int n)
 
 //////// Partie Brian
 
-int *getall(int* mat , int n , int totword)
+int getall(int* mat , int n , int totword ,int*  reso)
 
 {
 	int posx = n-1-6;
 	int posy = n-1-6;
 
-	int* _res = (int*) malloc(totword*8*sizeof(int));
 	int c = 0;
 	while(c<totword*8)
 	{
-		while(posx!=0 || mat[posx*n+(posy-1)]!=-1)
+		while(posx!=0 || (mat[posx*n+(posy-1)]!=-1) && (c<totword*8))
 		{
-			_getup(mat,&posx,&posy,&_res,n);
+			_getup(mat,&posx,&posy,reso,n);
 			c=c+2;
 		}
-		*_res=mat[posx*n+posy];
-		_res=_res+1;
-		posx=posx-1;
-		*_res=mat[posx*n+posy];
-		_res=_res+1;
-		posx=posx-1;
-		c=c+2;
-
-		while(posx!=n-1)
+		if(c<=totword*8)
 		{
-			_getdown(mat,&posx,&posy,&_res,n);
+			*reso=mat[posx*n+posy];
+			reso=reso+1;
+			posy=posy-1;
+			c=c+1;
+		}
+		if(c<=totword*8)
+		{
+			*reso=mat[posx*n+posy];
+			reso=reso+1;
+			posy=posy-1;
+			c=c+1;
+		}
+
+		while(posx!=n-1 && c< totword*8)
+		{
+			_getdown(mat,&posx,&posy,reso,n);
 			c=c+2;
 		}
-		*_res=mat[posx*n+posy];
-		_res=_res+1;
-		posx=posx-1;
-		_res=_res+1;
-		posx=posx-1;
-		c=c+2;
-
+		if(c<=totword*8)
+		{
+			*reso=mat[posx*n+posy];
+			reso=reso+1;
+			posy=posy-1;
+			c=c+1;
+		}
+		if(c<=totword*8)
+		{
+			*reso=mat[posx*n + posy];
+			reso=reso+1;
+			posy=posy-1;
+			c=c+1;
+		}
 	}
-	return _res;
+
+	return 0 ;//calc(reso,8);
 }
 
 int main (int argc, char *argv[])
@@ -275,6 +290,30 @@ int main (int argc, char *argv[])
 	//	{
 	//		printf("bit %d = %d || \n",i,*res);
 	//		res=res-1;
+	//
+	//
+	//
+
+
+	int ress = getencode(21,data_matrix,4,21-1,21-1);
+
+	printf("this is nb ||  %d ||| " , ress);
+
+	int ress2 = getencode(21,data_matrix,8,21-1-2,21-1-2);
+	printf("this is taille || %d ||| " ,ress2);
+
+//	int* ress2 = (int*) malloc(2*8*sizeof(int));
+
+//	int res = getall(data_matrix , 21 , 2 , ress2 );
+
+//	printf("final resul = %d " , res);
+//	for(int sa = 0 ; sa<53 ; sa++)
+//	{
+
+//		printf(" case(%d)  = %d ||\n" ,8-sa, *ress2 );
+//		ress2=ress2-1;
+//	}
+
 
 
 	Rmask(data_matrix,w/size,data);
@@ -284,7 +323,7 @@ int main (int argc, char *argv[])
 		for (int j=0; j<w/size;j++)
 		{
 			k++;
-			if (k%25==0)
+			if (k%21==0)
 				printf("\n");
 			printf("%d |", *(data_matrix+(i*(w/size))+j));
 		}
@@ -296,5 +335,4 @@ int main (int argc, char *argv[])
 	free(data);
 	free(data_matrix);
 
-	return 0;
 }
