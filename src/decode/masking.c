@@ -3,9 +3,9 @@
 char * Find_masking(int *data,int size)
 {
 	char* mask=calloc(3,sizeof(char));
-	mask[0]=data[8*size+2];
-	mask[1]=data[8*size+3];
-	mask[2]=data[8*size+4];
+	mask[0]='0'+data[8*size+2];
+	mask[1]='0'+data[8*size+3];
+	mask[2]='0'+data[8*size+4];
 	return mask;
 }
 

@@ -3,8 +3,8 @@
 #include "utils.h"
 
 
-char * Find_masking(int *data,size_t size);
+char * Find_masking(int *data,int size);
 
-void Rmask(int* data, size_t size);
+void Rmask(int* data, int size,int*data2);
 
 #endif

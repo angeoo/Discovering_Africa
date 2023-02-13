@@ -1,5 +1,8 @@
+#ifndef UTILS_H
+#define UTILS_H
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <err.h>
@@ -113,3 +116,6 @@ SDL_Surface* display_image(SDL_Surface *img)
 
 int* QR(SDL_Surface *surface, int mod_size);
 int module_size(SDL_Surface * surface);
+int* mat_data (int* matrice , size_t taille );
+
+#endif

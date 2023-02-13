@@ -53,13 +53,13 @@ utils.o: utils.c /run/current-system/sw/include/stdc-predef.h masking.c \
  /run/current-system/sw/include/alloca.h \
  /run/current-system/sw/include/bits/stdlib-bsearch.h \
  /run/current-system/sw/include/bits/stdlib-float.h \
+ /run/current-system/sw/include/string.h \
+ /run/current-system/sw/include/strings.h \
  /run/current-system/sw/include/SDL/SDL.h \
  /run/current-system/sw/include/SDL/SDL_main.h \
  /run/current-system/sw/include/SDL/SDL_stdinc.h \
  /run/current-system/sw/include/SDL/SDL_config.h \
  /run/current-system/sw/include/SDL/SDL_platform.h \
- /run/current-system/sw/include/string.h \
- /run/current-system/sw/include/strings.h \
  /run/current-system/sw/include/inttypes.h \
  /run/current-system/sw/include/stdint.h \
  /run/current-system/sw/include/bits/wchar.h \
