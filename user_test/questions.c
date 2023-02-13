@@ -5,17 +5,55 @@
 #include <err.h>
 #include "questions.h"
 
-int init_res(struct User u){
+void init_res(struct User u, char* arr[]){
+	int res=0;
 	if(u.nx>=u.ny){
 		if(u.nx>=u.nz){
-			return 1;
+			res = 1;
 		}
-		return 3;
+		res= 3;
 	}
-	if(u.ny>=u.nz){
-		return 2;
+	else {
+		if(u.ny>=u.nz){
+			res = 2;
+		}
+		else{
+		res = 3;
+		}
 	}
-	return 3;
+/*
+	switch(res){
+		case 1:
+			printf("https://www.google.com/search?q=cai    re&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjwzP6jjJP9AhVLTaQEHcsdD-IQ_AUoAnoEC    AEQBA&biw=1916&bih=968&dpr=1");
+			return ;
+		case 2:
+			printf("https://www.google.com/search?q=zan    zibar&source=lnms&tbm=isch&sa=X&ved=2ahUKEwi-gYqajJP9AhVRVaQEHVMiDgMQ_AUoAX    oECAIQAw&biw=1916&bih=968&dpr=1");
+			return ;
+		case 3 :
+			printf("https://www.google.com/search?q=add    is+ababa&source=lnms&tbm=isch&sa=X&ved=2ahUKEwi69bjWjJP9AhU3RKQEHTxnARUQ_AU    oAXoECAEQAw&biw=1916&bih=968&dpr=1");
+			return ;
+		default :
+			printf("Error with init_res\n\n");
+			return ;
+	}
+
+*/
+	char * ville;
+	switch(res){
+		case 1:
+			ville = "Le Caire";
+			break;
+		case 2:
+			ville = "Archipel de Zanzibar";
+			break;
+		case 3:
+			ville = "Addis-Abeba";
+			break;
+		default:
+			printf("Error with init_res");
+			break;
+	}
+	printf("\n\n\n\nThe best destination for you is %s\n\n\nYou can found at more about the site here : \n\n%s",ville,arr[res-1]);
 }
 
 struct User init(){
@@ -32,7 +70,7 @@ struct User init(){
 }
 
 
-struct User  HelloWorld(){
+struct User  HelloWorld(int i){
 
 	char * w = "\n\n\n\nWelcome to Discovering Africa\n\nHere's a few questions to help you find a beautiful destination to discover in Africa\n\n";
 
@@ -102,26 +140,21 @@ struct User  HelloWorld(){
 
 	  }while(notConform==1);
 	  */
-	char* q4="";
-	q4 = "How many travellers are coming with you ? ";
-	int notConform=1;
+	if(i==1){
+		char* q4="";
+		q4 = "How many travellers are coming with you ? ";
+		int notConform=1;
 
-	do{
-		printf("%s",q4);
-		scanf("%d",&user.nbv);
-		if(user.nbv<0){
-			printf("\nWrong answer... Try again !");
-			continue;
-		}
-		if(user.nbv == 0){
-			user.nbv=1;
+		do{
+			printf("%s",q4);
+			scanf("%d",&user.nbv);
+			if(user.nbv<0){
+				printf("\nWrong answer... Try again !");
+				continue;
+			}
 			notConform=0;
-		}
-		else{
-			user.nbv+=1;
-			notConform=0;
-		}
-	}while(notConform==1);
+		}while(notConform==1);
+	}
 	char*q5;
 
 	//x = rural/culturel
@@ -297,6 +330,8 @@ struct User  HelloWorld(){
 		}
 
 	}while(res9==0);
+
+
 	return user;
 }
 
@@ -307,35 +342,35 @@ struct User HelloTraveler(){
 
 	char *res=calloc(5,sizeof(char));
 
-	int c=1;
 	int l;
-	do{
-		printf("%s",w);
-		scanf("%s",res);
-		l = strlen(res);
+	printf("%s",w);
+	scanf("%s",res);
+	l = strlen(res);
 
-		if(l!=1){
-			printf("\nWrong answer... Y or N only valid answer");
-			continue;
-		}
-		switch(res[0]){
+	if(l!=1){
+		printf("\nWrong answer... Y or N only valid answer");
+		free(res);
+		return init();
+	}
+	switch(res[0]){
 
-			case 'Y':
-			case 'y':
-				c=1;
-				break;
-			case 'N':
-			case 'n':
-				c=0;
-				return init();
-			default:
-				printf("\nWrong answer...Y or N only valid answer");
-				break;
-		}
-		c=0;
+		case 'Y':
+		case 'y':
+			free(res);
+			return HelloWorld(0);
+			break;
+		case 'N':
+		case 'n':
+			free(res);
+			return init();
+			break;
+		default:
+			printf("\nWrong answer...Y or N only valid answer\n\n\n\nQuit()\n\n\n");
+			break;
+	}
 
-	}while(c==1);
 
+	free(res);
 	return init();
 
 }

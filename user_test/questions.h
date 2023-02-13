@@ -11,9 +11,9 @@ struct User{
 	int nx,ny,nz;
 };
 
-int init_res(struct User u);
+void init_res(struct User u, char* arr[]);
 struct User init();
-struct User HelloWorld();
+struct User HelloWorld(int i);
 struct User HelloTraveler();
 
 
