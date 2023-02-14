@@ -121,7 +121,6 @@ int calc(int* block,int nb) //donne le decimal dun block decode a partir dun poi
 	{
 		if( *block ==1)
 		{
-			printf("||  block (%d) is black |v|  len = %d ||\n",e,len);
 			res=res+len;
 		}
 		len=len*2;
@@ -132,7 +131,6 @@ int calc(int* block,int nb) //donne le decimal dun block decode a partir dun poi
 
 	if(*block ==1 )
 	{
-		printf("||  block (%d) is black |v|  len = %d ||\n",e,len);
 		res=res+len;
 	}
 	return res;
@@ -143,14 +141,13 @@ int calc(int* block,int nb) //donne le decimal dun block decode a partir dun poi
 int getencode(int taille , int* mat,int nb,int x ,int y)
 {
 	int res;
+	int xcst = x;
 	int* form = malloc(4*sizeof(int));
-	while(x>=taille-(nb/2))
+	while(x>xcst-(nb/2))
 	{
 		*form = mat[x*taille + y];
-		printf("case(%d,%d) = %d\n",x,y,*form);
 		form=form+1;
 		*form = mat[x*taille + (y-1)];
-		printf("case(%d,%d) = %d\n",x,y-1,*form);
 		form=form+1;
 		x=x-1;
 	}
@@ -266,6 +263,49 @@ int getall(int* mat , int n , int totword ,int*  reso)
 	return 0 ;//calc(reso,8);
 }
 
+
+void getencodingmode(int res)
+{
+	printf("encoding mode is : ");
+	if(res==7)
+	{
+		printf("ECI");
+	}
+	if(res==1)
+	{
+		printf("Numeric");
+	}
+	if(res==2)
+	{
+		printf("Alphanumeric");
+	}
+	if(res==4)
+	{
+		printf("8-bit Byte");
+	}
+	if(res==8)
+	{
+		printf("Kanji");
+	}
+	if(res==3)
+	{
+		printf("Structured Apped");
+	}
+		if(res==0)
+	{
+		printf("end of message");
+	}
+	printf("\n");
+}
+void getmsglen(int res)
+{
+	printf("The message is coded on %d codewords",res );
+}
+
+
+
+
+
 int main (int argc, char *argv[])
 {
 	if (argc!=2)
@@ -295,12 +335,11 @@ int main (int argc, char *argv[])
 	//
 
 
-	int ress = getencode(21,data_matrix,4,21-1,21-1);
-
-	printf("this is nb ||  %d ||| " , ress);
-
-	int ress2 = getencode(21,data_matrix,8,21-1-2,21-1-2);
-	printf("this is taille || %d ||| " ,ress2);
+	Rmask(data_matrix,w/size,data);
+	int ress = getencode(21,data_matrix,4,(int)(w/size)-1,(int)(w/size)-1);
+	getencodingmode(ress);
+	int ress2 = getencode(21,data_matrix,8,(int)(w/size)-1-2,(int)(w/size)-1);
+	getmsglen(ress2);
 
 //	int* ress2 = (int*) malloc(2*8*sizeof(int));
 
@@ -316,7 +355,6 @@ int main (int argc, char *argv[])
 
 
 
-	Rmask(data_matrix,w/size,data);
 	int k=-1;
 	for (int i =0; i<w/size; i++)
 	{
@@ -324,8 +362,19 @@ int main (int argc, char *argv[])
 		{
 			k++;
 			if (k%21==0)
+			{
+			
 				printf("\n");
-			printf("%d |", *(data_matrix+(i*(w/size))+j));
+				printf("\n");
+			}
+			if(*(data_matrix+(i*(w/size))+j)<0)
+			{
+			printf("|%d |", *(data_matrix+(i*(w/size))+j));
+			}
+			else
+			{
+			printf("| %d |", *(data_matrix+(i*(w/size))+j));
+			}
 		}
 	}
 
