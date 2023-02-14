@@ -11,6 +11,7 @@ utils.o:utils.c utils.h
 clean:
 	${RM} *.o
 	${RM} *.d
+	${RM} utils
 
 #END
 
