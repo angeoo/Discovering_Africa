@@ -1,0 +1,28 @@
+
+body   
+	{  
+	background-image: url("resources/background.jpeg");
+	/*background-size: cover;*/
+	font-family: sans-serif;  
+}  
+header {  
+	background-color: orange;  
+	position: fixed;  
+	left: 0;  
+	right: 0;  
+	top: 5px;  
+	/*height: 30px;  */
+	display: flex;  
+	align-items: center;  
+	box-shadow: 0 0 25px 0 black;  
+}  
+header * {  
+	display: inline;  
+}  
+/*header li {  
+	margin: 20px;  
+}*/ 
+header li a {  
+	color: black;  
+	text-decoration: none;  
+}  
