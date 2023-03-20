@@ -6,7 +6,8 @@ LDLIBS=-lm -lSDL_ttf -lSDL_gfx `pkg-config --libs sdl SDL_image` -export-dynamic
 
 utils:utils.o
 
-utils.o:utils.c utils.h
+utils.o:utils.c utils.h masking.c masking.h
+
 
 clean:
 	${RM} *.o

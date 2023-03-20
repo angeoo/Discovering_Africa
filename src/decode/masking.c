@@ -1,3 +1,4 @@
+#include "masking.h"
 #include "utils.h"
 
 char * Find_masking(int *data,int size)
@@ -21,43 +22,86 @@ void Rmask (int* data, int size,int*data2)
 				if (!(strcmp(mask,"000")))
 				{
 					if((x+y)%2==0)
-						data[x*size+y]=1;
+					{
+						if(data[x*size+y]==1)
+							data[x*size+y]=0;
+						else
+							data[x*size+y]=1;
+					}
 				}
 				if(!(strcmp(mask,"001")))
 				{
 					if(x%2==0)
-						data[x*size+y]=1;
+					{
+						if(data[x*size+y]==1)
+							data[x*size+y]=0;
+						else
+							data[x*size+y]=1;
+					}
 				}
 				if(!(strcmp(mask,"010")))
 				{
 					if(y%3==0)
-						data[x*size+y]=1;
+					{
+						if(data[x*size+y]==1)
+							data[x*size+y]=0;
+						else
+							data[x*size+y]=1;
+					}
 				}
 				if(!(strcmp(mask,"011")))
 				{
 					if((x+y)%3==0)
-						data[x*size+y]=1;
+					{
+						if(data[x*size+y]==1)
+							data[x*size+y]=0;
+						else
+							data[x*size+y]=1;
+					}
 				}
 				if(!(strcmp(mask,"100")))
 				{
-					if(((x/2)*(y/3))%2==0)
-						data[x*size+y]=1;
+					if(((x/2)+(y/3))%2==0)
+					{	
+						if(data[x*size+y]==1)
+							data[x*size+y]=0;
+						else
+							data[x*size+y]=1;
+					}
 				}
 				if(!(strcmp(mask,"101")))
 				{
 					if(((x*y)%2)+((x*y)%3)==0)
-						data[x*size+y]=1;
+					{
+						if(data[x*size+y]==1)
+							data[x*size+y]=0;
+						else
+							data[x*size+y]=1;
+					}
 				}
 				if(!(strcmp(mask,"110")))
 				{
 					if((((x*y)%2)+((x*y)%3))%2==0)
-						data[x*size+y]=1;
+					{	
+						if(data[x*size+y]==1)
+							data[x*size+y]=0;
+						else
+							data[x*size+y]=1;
+					}
 				}
+				
 				if(!(strcmp(mask,"111")))
 				{
 					if((((x*y)%3)+((x+y)%2))%2==0)
-						data[x*size+y]=1;
+					{	
+						if(data[x*size+y]==1)
+							data[x*size+y]=0;
+						else
+							data[x*size+y]=1;
+					}
 				}
+				
+				//data[x*size+y]=(data[x*size+y]^mask);
 			}
 		}
 	}

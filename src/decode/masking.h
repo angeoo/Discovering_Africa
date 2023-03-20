@@ -1,6 +1,8 @@
 #ifndef MASKING_H
 #define MASKING_H
-#include "utils.h"
+/*#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>*/
 
 
 char * Find_masking(int *data,int size);
