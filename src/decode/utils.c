@@ -1,5 +1,6 @@
 #include "utils.h"
 #include "masking.c"
+#include "parse.c"
 
 
 int module_size(SDL_Surface * surface)
@@ -131,37 +132,45 @@ int main (int argc, char *argv[])
 
 	Rmask(data_matrix,w/size,data);
 
+	/*
+	   int k=-1;
+	   for (int i =0; i<w/size; i++)
+	   {
+	   for (int j=0; j<w/size;j++)
+	   {
+	   k++;
+	   if (k%21==0)
+	   {
+	   printf("\n");
+	   }
+	   if(*(data_matrix+(i*(w/size))+j)<0)
+	   {
+	   printf("|%d |", *(data_matrix+(i*(w/size))+j));
+	   }
+	   else
+	   {
+	   printf("| %d |", *(data_matrix+(i*(w/size))+j));
+	   }
+	   if (k%(w/size)==0)
+	   printf("\n");
+	   if (*(data_matrix+(i*(w/size))+j)>=0)
+	   printf(" %d |", *(data_matrix+(i*(w/size))+j));
+	   else
+	   printf("%d |", *(data_matrix+(i*(w/size))+j));
+	   }
+	   }
+	   printf("\n");
+	 */
 
-	int k=-1;
-	for (int i =0; i<w/size; i++)
-	{
-		for (int j=0; j<w/size;j++)
-		{
-			k++;
-			/*if (k%21==0)
-			{
-				printf("\n");
-			}
-			if(*(data_matrix+(i*(w/size))+j)<0)
-			{
-			printf("|%d |", *(data_matrix+(i*(w/size))+j));
-			}
-			else
-			{
-			printf("| %d |", *(data_matrix+(i*(w/size))+j));
-			}*/
-			if (k%(w/size)==0)
-				printf("\n");
-			if (*(data_matrix+(i*(w/size))+j)>=0)
-				printf(" %d |", *(data_matrix+(i*(w/size))+j));
-			else
-				printf("%d |", *(data_matrix+(i*(w/size))+j));
-		}
-	}
-	printf("\n");
 
+	Prettprint(data_matrix , w/size);
+	int x= w/size;
+	int y = w/size;
+	int count = 0;
+	int *res = malloc(sizeof(int)*30);
+	getup(&x , &y , res ,data_matrix, &count , 20 , w/size);
 
-
+	Prettprint(data_matrix , w/size);
 
 	free(data);
 	free(data_matrix);
