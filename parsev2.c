@@ -32,19 +32,19 @@ int arr [20][21]= {
 
 
 
-void getup(int* x , int* y, int* resultat,int* arrd  ,int* count,int tot,int qrsize)
+void getup(int* x , int* y, int* resultat,int arrd[20][21]  ,int* count,int tot)
 {
 
 
-	while (*y>0 && arrd[(*y * qrsize)+ *x]!=-1 && *count!=tot)
+	while (*y>0 && arrd[*y][*x]!=-1 && *count!=tot)
 	{
-		int tmp = arrd[(*y * qrsize)+ *x];
+		int tmp = arrd[*y][*x];
 		if(tmp!=-2)
 		{
 
 			resultat[*count]=tmp;
 			*count = *count +1 ;
-		        arrd[(*y * qrsize) + *x]= 8;	
+		        arrd[*y][*x] = 8;	
 			printf("| x = %i , y = %i -> tmp = %i |\n",*x,*y,tmp);
 			if (*count==tot)
 			{
@@ -52,13 +52,13 @@ void getup(int* x , int* y, int* resultat,int* arrd  ,int* count,int tot,int qrs
 			}
 		}
 		*x=*x-1;
-		tmp = arrd[(*y * qrsize) + *x];
+		tmp = arrd[*y][*x];
 
 		if (tmp!=-2)
 		{
 			resultat[*count]=tmp;
 			*count = *count + 1 ;
-			arrd[(*y * qrsize)+ *x] = 8;
+			arrd[*y][*x] = 8;
 			printf("| x = %i , y = %i -> tmp = %i |\n",*x,*y,tmp);
 		}
 		*x=*x+1;
@@ -70,19 +70,19 @@ void getup(int* x , int* y, int* resultat,int* arrd  ,int* count,int tot,int qrs
 
 }
 
-void getdown(int* x , int* y, int* resultat,int *arrd  ,int* count, int tot,int qrsize)
+void getdown(int* x , int* y, int* resultat,int arrd[20][21]  ,int* count, int tot)
 {
 
 
-	while (*y<qrsize && arrd[(*y * qrsize)+*x]!=-1 && *count!=tot)
+	while (*y<20 && arrd[*y][*x]!=-1 && *count!=tot)
 	{
-		int tmp = arrd[(*y * qrsize) +*x];
+		int tmp = arrd[*y][*x];
 		if(tmp!=-2)
 		{
 
 			resultat[*count]=tmp;
 			*count = *count +1 ;
-			arrd[(*y * qrsize) + *x] = 8;
+			arrd[*y][*x] = 8;
 			printf("| x = %i , y = %i -> tmp = %i |\n",*x,*y,tmp);
 			if (*count==tot)
 			{
@@ -92,13 +92,13 @@ void getdown(int* x , int* y, int* resultat,int *arrd  ,int* count, int tot,int 
 
 		}
 		*x=*x-1;
-		tmp = arrd[(*y * qrsize)+*x];
+		tmp = arrd[*y][*x];
 
 		if (tmp!=-2)
 		{
 			resultat[*count]=tmp;
 			*count = *count + 1 ;
-		       	arrd[(*y * qrsize ) + *x] = 8;	
+		       	arrd[*y][*x] = 8;	
 			printf("| x = %i , y = %i -> tmp = %i |\n",*x,*y,tmp);
 
 		}
@@ -112,14 +112,14 @@ void getdown(int* x , int* y, int* resultat,int *arrd  ,int* count, int tot,int 
 }
 
 
-void Prettprint(int* arrd,int qrsize)
+void Prettprint(int arrd[20][21])
 {
 
-	for(int y =0 ; y<qrsize; y++)
+	for(int y =0 ; y<20; y++)
 	{
-		for(int x = 0 ;x < qrsize ; x ++)
+		for(int x = 0 ;x < 21 ; x ++)
 		{
-			int res = arrd[(y*qrsize)+x];
+			int res = arrd[y][x];
 			if(res<0)
 			{
 				printf("%i",res);
@@ -136,24 +136,18 @@ void Prettprint(int* arrd,int qrsize)
 
 }
 
-void getall( int* arrd , int tot, int qrsize)
+void getall(int *x , int *y , int *resultat , int arrd[20][21] , int tot)
 {
-	int y = qrsize ;
-	int x = qrsize ;
-
-	int* resultat(sizeof(int)*tot);
 
 	int cou = 0 ;
-
 	while (cou!=tot)
 	{
-		getup(&x,&y,resultat,arrd,&cou,tot);
+		getup(x,y,resultat,arrd,&cou,tot);
 
-		getdown(&x,&y,resultat,arrd,&cou,tot);
+		getdown(x,y,resultat,arrd,&cou,tot);
 
 	}
-	print("Last x = %i || Last y = %i \n",x ,y );
-	return resultat;
+	return;
 
 
 
@@ -220,14 +214,17 @@ void getencodingmode(int res)
 int main()
 {
 	Prettprint(arr);
+	int tot = 90;
+	int y = 19 ; 
+	int x = 20;
+	int* res = malloc(sizeof(int)*40);
 
 
-
-	int* bins = getall(arrd,tot,qrsize);
+	getall(&x,&y,res,arr,tot);
 
 	printf("x= %i , y= %i ",x,y);
 
-	int mode = bintoint(bins,0,4 );
+	int mode = bintoint(res,0,4 );
 	printf("encoding mode to dec = %i \n",mode);
 
 	getencodingmode(mode);
