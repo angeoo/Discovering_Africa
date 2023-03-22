@@ -22,6 +22,9 @@ void getup(int* x , int* y, int* resultat,int* arrd  ,int* count,int tot,int qrs
 		int tmp = arrd[(*y)*qrsize+ *x];
 		if(tmp!=-2)
 		{
+			//getchar();
+			printf("x = %i | y = %i  | count = %i  => res = %i\n",*x , *y ,*count, tmp);
+			//Prettprint(arrd , qrsize , *x ,*y );
 			resultat[*count]=tmp;
 			*count = *count +1 ;
 			arrd[(*y)*qrsize+(*x)]= 8;
@@ -29,16 +32,20 @@ void getup(int* x , int* y, int* resultat,int* arrd  ,int* count,int tot,int qrs
 			{
 				break;
 			}
-		*x=*x-1;
-		tmp = arrd[(*y)*qrsize+*x];
-		if (tmp!=-2)
-		{
-			resultat[*count]=tmp;
-			*count = *count + 1 ;
-			arrd[(*y)*qrsize+*x] = 8;
+			*x=*x-1;
+			tmp = arrd[(*y)*qrsize+*x];
+			if (tmp!=-2)
+			{
+				//getchar();
+				printf("x = %i | y = %i  | count = %i => res = %i\n",*x , *y ,*count ,  tmp);
+				//Prettprint(arrd , qrsize , *x ,*y );
+				resultat[*count]=tmp;
+				*count = *count + 1 ;
+				arrd[(*y)*qrsize+*x] = 8;
+			}
+			*x= *x + 1;
+			*y = *y -1;
 		}
-		*x= *x + 1;
-		*y = *y -1;
 	}
 	*y = *y +1;
 	*x=*x-2;
@@ -55,7 +62,9 @@ void getdown(int* x , int* y, int* resultat,int *arrd  ,int* count, int tot,int 
 		int tmp = arrd[(*y * qrsize) +*x];
 		if(tmp!=-2)
 		{
-
+			//getchar();
+			printf("x = %i | y = %i | count = %i => res = %i\n",*x , *y , *count,tmp);
+			//Prettprint(arrd , qrsize , *x ,*y );
 			resultat[*count]=tmp;
 			*count = *count +1 ;
 			arrd[(*y * qrsize) + *x] = 8;
@@ -71,6 +80,9 @@ void getdown(int* x , int* y, int* resultat,int *arrd  ,int* count, int tot,int 
 
 		if (tmp!=-2)
 		{
+			//getchar();
+			printf("x = %i | y = %i | count = %i => res = %i \n",*x , *y ,*count ,  tmp);
+			//Prettprint(arrd , qrsize , *x ,*y );
 			resultat[*count]=tmp;
 			*count = *count + 1 ;
 			arrd[(*y * qrsize ) + *x] = 8;	
@@ -86,7 +98,7 @@ void getdown(int* x , int* y, int* resultat,int *arrd  ,int* count, int tot,int 
 }
 
 
-void Prettprint(int* arrd,int qrsize)
+void Prettprint(int* arrd,int qrsize,int i , int j)
 {
 
 	for(int y =0 ; y<qrsize; y++)
@@ -96,12 +108,29 @@ void Prettprint(int* arrd,int qrsize)
 			int res = arrd[(y*qrsize)+x];
 			if(res<0)
 			{
-				printf("%i",res);
+			
+				if(res == -2)
+				{
+					printf("\x1b[31m%i\x1b[0m", res);
+				}
+				else
+				{
+					printf("\x1b[34m%i\x1b[0m",res);
+				}
 			}
 			else
 			{
-				printf(" %i",res);
+				if(i ==x && j == y )
+				{
+
+					printf("\x1b[32m %i\x1b[0m",res);
+				}
+				else
+				{
+					printf(" %i",res);
+				}
 			}
+
 
 		}
 		printf("\n");
@@ -118,6 +147,8 @@ int* getall( int* arrd , int tot, int qrsize)
 	int* resultat =malloc(sizeof(int)*tot);
 
 	int cou = 0 ;
+	getup(&x,&y,resultat,arrd,&cou,4,qrsize);
+	
 
 	while (cou!=tot)
 	{
