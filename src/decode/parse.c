@@ -2,42 +2,40 @@
 #include <stdlib.h>
 
 
-
+void printres(int* arrd,int till )
+{
+	printf("resultat = ");
+	for(int e = 0 ; e<=till ; e++ )
+	{
+		printf(" e= %i -> %i",e,arrd[e]);
+	}
+	printf("\n");
+}
 
 
 
 
 void getup(int* x , int* y, int* resultat,int* arrd  ,int* count,int tot,int qrsize)
 {
-
-
-	while (*y>0 && arrd[(*y * 21)+ *x]!=-1 && *count!=tot)
+	while (*y>0 && arrd[(*y)*qrsize+ *x]!=-1 && *count!=tot)
 	{
-		int tmp = arrd[(*y * 21)+ *x];
+		int tmp = arrd[(*y)*qrsize+ *x];
 		if(tmp!=-2)
 		{
-			printf("x = %i | y  = %i , count = %i , tot = %i ", *x , *y , *count , tot);
-
 			resultat[*count]=tmp;
 			*count = *count +1 ;
-			arrd[(*y * 21) + *x]= 8;
-			printf("| x = %i , y = %i -> tmp = %i |\n",*x,*y,tmp);
+			arrd[(*y)*qrsize+(*x)]= 8;
 			if (*count==tot)
 			{
 				break;
 			}
-		}
 		*x=*x-1;
-		tmp = arrd[(*y * 21) + *x];
-		printf("x = %i | y  = %i , count = %i , tot = %i ", *x , *y , *count , tot);
-
-
+		tmp = arrd[(*y)*qrsize+*x];
 		if (tmp!=-2)
 		{
 			resultat[*count]=tmp;
 			*count = *count + 1 ;
-			arrd[(*y * 21)+ *x] = 8;
-			printf("| x = %i , y = %i -> tmp = %i |\n",*x,*y,tmp);
+			arrd[(*y)*qrsize+*x] = 8;
 		}
 		*x= *x + 1;
 		*y = *y -1;
@@ -61,7 +59,6 @@ void getdown(int* x , int* y, int* resultat,int *arrd  ,int* count, int tot,int 
 			resultat[*count]=tmp;
 			*count = *count +1 ;
 			arrd[(*y * qrsize) + *x] = 8;
-			printf("| x = %i , y = %i -> tmp = %i |\n",*x,*y,tmp);
 			if (*count==tot)
 			{
 
@@ -77,7 +74,6 @@ void getdown(int* x , int* y, int* resultat,int *arrd  ,int* count, int tot,int 
 			resultat[*count]=tmp;
 			*count = *count + 1 ;
 			arrd[(*y * qrsize ) + *x] = 8;	
-			printf("| x = %i , y = %i -> tmp = %i |\n",*x,*y,tmp);
 
 		}
 		*x=*x+1;
@@ -116,8 +112,8 @@ void Prettprint(int* arrd,int qrsize)
 
 int* getall( int* arrd , int tot, int qrsize)
 {
-	int y = 21 ;
-	int x = 21 ;
+	int y = qrsize-1 ;
+	int x = qrsize-1 ;
 
 	int* resultat =malloc(sizeof(int)*tot);
 

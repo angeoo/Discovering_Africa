@@ -214,7 +214,7 @@ void getencodingmode(int res)
 int main()
 {
 	Prettprint(arr);
-	int tot = 90;
+	int tot = 170;
 	int y = 19 ; 
 	int x = 20;
 	int* res = malloc(sizeof(int)*40);

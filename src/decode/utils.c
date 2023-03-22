@@ -164,11 +164,7 @@ int main (int argc, char *argv[])
 
 
 	Prettprint(data_matrix , w/size);
-	int x= w/size;
-	int y = w/size;
-	int count = 0;
-	int *res = malloc(sizeof(int)*30);
-	getup(&x , &y , res ,data_matrix, &count , 20 , w/size);
+	getall(data_matrix,20,w/size);
 
 	Prettprint(data_matrix , w/size);
 
