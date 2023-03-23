@@ -2,6 +2,17 @@
 #include <stdlib.h>
 
 
+
+typedef struct
+{
+	int x; 
+	int y;
+	int* resultat;
+	int count;
+
+}parser;
+
+
 void printres(int* arrd,int till )
 {
 	printf("resultat = ");
@@ -15,84 +26,84 @@ void printres(int* arrd,int till )
 
 
 
-void getup(int* x , int* y, int* resultat,int* arrd  ,int* count,int tot,int qrsize)
+void getup(parser* w,int* arrd  ,int tot,int qrsize)
 {
-	while (*y>0 && arrd[(*y)*qrsize+ *x]!=-1 && *count!=tot)
+	while (w->y>0 && arrd[(w->y)*qrsize+ w->x]!=-1 && w->count!=tot)
 	{
-		int tmp = arrd[(*y)*qrsize+ *x];
+		int tmp = arrd[(w->y)*qrsize+ w->x];
 		if(tmp!=-2)
 		{
 			//getchar();
-			printf("x = %i | y = %i  | count = %i  => res = %i\n",*x , *y ,*count, tmp);
+			printf("x = %i | y = %i  | count = %i  => res = %i\n",w->x , w->y ,w->count, tmp);
 			//Prettprint(arrd , qrsize , *x ,*y );
-			resultat[*count]=tmp;
-			*count = *count +1 ;
-			arrd[(*y)*qrsize+(*x)]= 8;
-			if (*count==tot)
+			w->resultat[w->count]=tmp;
+			w->count = w->count +1 ;
+			arrd[(w->y)*qrsize+(w->x)]= 8;
+			if (w->count==tot)
 			{
 				break;
 			}
-			*x=*x-1;
-			tmp = arrd[(*y)*qrsize+*x];
+			w->x=w->x-1;
+			tmp = arrd[(w->y)*qrsize+w->x];
 			if (tmp!=-2)
 			{
 				//getchar();
-				printf("x = %i | y = %i  | count = %i => res = %i\n",*x , *y ,*count ,  tmp);
+				printf("x = %i | y = %i  | count = %i => res = %i\n",w->x , w->y ,w->count ,  tmp);
 				//Prettprint(arrd , qrsize , *x ,*y );
-				resultat[*count]=tmp;
-				*count = *count + 1 ;
-				arrd[(*y)*qrsize+*x] = 8;
+				w->resultat[w->count]=tmp;
+				w->count = w->count + 1 ;
+				arrd[(w->y)*qrsize+w->x] = 8;
 			}
-			*x= *x + 1;
-			*y = *y -1;
+			w->x= w->x + 1;
+			w->y = w->y -1;
 		}
 	}
-	*y = *y +1;
-	*x=*x-2;
+	w->y = w->y +1;
+	w->x=w->x-2;
 	return ;
 
 }
 
-void getdown(int* x , int* y, int* resultat,int *arrd  ,int* count, int tot,int qrsize)
+void getdown(parser* w ,int *arrd  , int tot,int qrsize)
 {
 
 
-	while (*y<qrsize && arrd[(*y * qrsize)+*x]!=-1 && *count!=tot)
+	while (w->y<qrsize && arrd[(w->y * qrsize)+w->x]!=-1 && w->count!=tot)
 	{
-		int tmp = arrd[(*y * qrsize) +*x];
+		int tmp = arrd[(w->y * qrsize) +w->x];
 		if(tmp!=-2)
 		{
 			//getchar();
-			printf("x = %i | y = %i | count = %i => res = %i\n",*x , *y , *count,tmp);
+			printf("x = %i | y = %i | count = %i => res = %i\n",w->x , w->y , w->count,tmp);
 			//Prettprint(arrd , qrsize , *x ,*y );
-			resultat[*count]=tmp;
-			*count = *count +1 ;
-			arrd[(*y * qrsize) + *x] = 8;
-			if (*count==tot)
+			w->resultat[w->count]=tmp;
+			w->count = w->count +1 ;
+			arrd[(w->y * qrsize) + w->x] = 8;
+			if (w->count==tot)
 			{
 
 				break;
 			}
 
 		}
-		*x=*x-1;
-		tmp = arrd[(*y * qrsize)+*x];
+		w->x=w->x-1;
+		tmp = arrd[(w->y * qrsize)+w->x];
 
 		if (tmp!=-2)
 		{
 			//getchar();
-			printf("x = %i | y = %i | count = %i => res = %i \n",*x , *y ,*count ,  tmp);
+			printf("x = %i | y = %i | count = %i => res = %i \n",w->x , w->y ,w->count ,  tmp);
 			//Prettprint(arrd , qrsize , *x ,*y );
-			resultat[*count]=tmp;
-			*count = *count + 1 ;
-			arrd[(*y * qrsize ) + *x] = 8;	
+			w->resultat[w->count]=tmp;
+			w->count = w->count + 1 ;
+			arrd[(w->y * qrsize ) + w->x] = 8;	
 
 		}
-		*x=*x+1;
-		*y = *y +1;
+		w->x=w->x+1;
+		w->y = w->y +1;
 	}
-	*y = *y -1;
-	*x = *x-2;
+	w->y = w->y -1;
+	w->x = w->x-2;
 	return ;
 
 }
@@ -141,24 +152,27 @@ void Prettprint(int* arrd,int qrsize,int i , int j)
 
 int* getall( int* arrd , int tot, int qrsize)
 {
-	int y = qrsize-1 ;
-	int x = qrsize-1 ;
 
-	int* resultat =malloc(sizeof(int)*tot);
+	parser mypars;
+	mypars.x = qrsize-1;
+	mypars.y = qrsize-1;
+	mypars.resultat = malloc(tot*sizeof(int));
+	mypars.count = 0 ;
 
-	int cou = 0 ;
-	getup(&x,&y,resultat,arrd,&cou,4,qrsize);
+	getup(&mypars,arrd,4,qrsize);
+	mypars.y=mypars.y-1;
+	mypars.x= mypars.x+2;
 	
 
-	while (cou!=tot)
+	while (mypars.count!=tot)
 	{
-		getup(&x,&y,resultat,arrd,&cou,tot,qrsize);
+		getup(&mypars,arrd,tot,qrsize);
 
-		getdown(&x,&y,resultat,arrd,&cou,tot,qrsize);
+		getdown(&mypars,arrd,tot,qrsize);
 
 	}
-	printf ("Last x = %i || Last y = %i \n",x ,y );
-	return resultat;
+	printf ("Last x = %i || Last y = %i \n",mypars.x ,mypars.y );
+	return mypars.resultat;
 
 
 
@@ -217,6 +231,7 @@ void getencodingmode(int res)
 	}
 	printf("\n");
 }
+
 
 
 

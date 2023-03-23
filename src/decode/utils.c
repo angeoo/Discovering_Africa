@@ -58,6 +58,8 @@ int* QR(SDL_Surface *surface, int mod_size)
 
 	return mat;
 }
+
+
 int* mat_data (int* matrice , size_t taille )
 {
 	int count=0;
@@ -69,11 +71,11 @@ int* mat_data (int* matrice , size_t taille )
 			for (size_t y = 0; y<taille ; y+=1)
 			{
 				res[x*taille+y]=matrice[x*taille+y];
-				if (((x<9)&&(y<8))||((x<8)&&(y>=taille-8))||((x>=taille-8)&&(y<9)))
+				if (((x<7)&&(y<7))||((x<7)&&(y>=taille-7))||((x>=taille-7)&&(y<7)))
 				{
 					res[x*taille+y]=-1;
 				}
-				if (((((x>7)&&(x<taille-7))&& y==6) ||(((y>7)&&(y<taille-8))&& x==6 )))
+				if (((((x>6)&&(x<taille-7))&& y==6) ||(((y>6)&&(y<taille-7))&& x==6 )))
 				{
 					res[x*taille+y]=-2;
 					count+=1;
@@ -91,11 +93,11 @@ int* mat_data (int* matrice , size_t taille )
 			{
 
 				res[x*taille+y]=matrice[x*taille+y];
-				if (((x<9)&&(y<9))||((x<9)&&(y>=taille-8))||((x>=taille-8)&&(y<9)))
+				if (((x<7)&&(y<7))||((x<7)&&(y>=taille-7))||((x>=taille-7)&&(y<7)))
 				{
 					res[x*taille+y]=-1;
 				}
-				if (((((x>7)&&(x<taille-8))&& y==6) ||(((y>7)&&(y<taille-8))&& x==6 ))||(((x>=taille-9)&&(x<taille-4))&&((y>=taille-9)&&(y<taille-4))))
+				if (((((x>6)&&(x<taille-7))&& y==6) ||(((y>6)&&(y<taille-7))&& x==6 ))||(((x>=taille-9)&&(x<taille-4))&&((y>=taille-9)&&(y<taille-4))))
 				{
 					res[x*taille+y]=-2;
 					count+=1;
@@ -106,8 +108,7 @@ int* mat_data (int* matrice , size_t taille )
 
 		}
 	}
-	res[8*21+6] = -1;
-	res[13*21+6] = -1;
+	
 	return res;
 
 }
