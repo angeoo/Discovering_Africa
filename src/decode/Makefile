@@ -6,7 +6,8 @@ LDLIBS=-lm -lSDL_ttf -lSDL_gfx `pkg-config --libs sdl SDL_image`
 
 utils:utils.o
 
-utils.o:utils.c utils.h masking.c masking.h parse.c parse.h
+utils.o:utils.c utils.h masking.c masking.h parse.c parse.h prints.c 
+
 
 
 clean:

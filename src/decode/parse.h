@@ -1,10 +1,19 @@
 #ifndef PARSE_H
 #define PARSE_H
+typedef struct
+{
+	int x; 
+	int y;
+	int* resultat;
+	int count;
+	int* xs;
+	int* ys;
+	int tot;
 
-void Prettprint(int* arrd , int qrsize);
-void getup(int* x , int* y, int* resultat,int* arrd  ,int* count,int tot,int qrsize)
+}parser;
+void Prettprint(int* arrd ,int qrsize,parser w);
 
-int* getall(int* arrd , int tot , int qrsize);
+void getall(int* arrd , int tot , int qrsize);
 
 int bintoint(int* read , int start , int len) ;
 
