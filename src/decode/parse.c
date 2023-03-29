@@ -142,10 +142,10 @@ int bintoint(int* read , int start , int len )
 	int c= 1 ;
 	int res = 0 ; 
 
-	for(int e =start; e<start+len ; e++)
+	for(int e =start+len-1; e>=start ; e--)
 	{
 		res = res + c*read[e];
-		c=c+1;
+		c=c*2;
 
 	}
 	return res;
