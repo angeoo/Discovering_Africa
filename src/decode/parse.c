@@ -11,7 +11,7 @@ void getup(parser* w,int* arrd  ,int tot,int qrsize)
 	while (w->y>0 && arrd[(w->y)*qrsize+ w->x]!=-1 && w->count!=tot)
 	{
 		int tmp = arrd[(w->y)*qrsize+ w->x];
-		//getchar();
+		getchar();
 		if(tmp!=-2)
 		{
 			printf("x = %i | y = %i  | count = %i  => res = %i\n",w->x , w->y ,w->count, tmp);
@@ -27,7 +27,7 @@ void getup(parser* w,int* arrd  ,int tot,int qrsize)
 		}
 		w->x=w->x-1;
 		tmp = arrd[(w->y)*qrsize+w->x];
-		//getchar();
+		getchar();
 		if (tmp!=-2)
 		{
 			printf("x = %i | y = %i  | count = %i => res = %i\n",w->x , w->y ,w->count ,  tmp);

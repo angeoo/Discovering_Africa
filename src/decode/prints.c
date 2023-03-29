@@ -2,10 +2,8 @@
 #include <stdlib.h>
 #include "parse.h"
 
-
 void printres(parser w , int tot)
 {
-	printf("resultat = ");
 	for(int e = 0 ; e<=tot; e++ )
 	{
 		printf("%i", w.resultat[e]);
@@ -14,6 +12,7 @@ void printres(parser w , int tot)
 
 void Prettprint(int* arrd,int qrsize,parser w )
 {
+	printf("\033[2J");
 
 	for(int y =0 ; y<qrsize; y++)
 	{
@@ -22,7 +21,7 @@ void Prettprint(int* arrd,int qrsize,parser w )
 			int res = arrd[(y*qrsize)+x];
 			if(res<0)
 			{
-			
+
 				if(res == -2)
 				{
 					printf("\x1b[31m%i\x1b[0m", res);
