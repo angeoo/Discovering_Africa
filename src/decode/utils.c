@@ -136,7 +136,7 @@ int main (int argc, char *argv[])
 
 	Rmask(data_matrix,w/size,data);
 
-\
+
 
 	int tot = 100;
 	getall(data_matrix,tot,w/size);

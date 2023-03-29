@@ -18,8 +18,8 @@ void Rmask (int* data, int size,int*data2)
 		for (int y=0; y<size; y++)
 		{
 			if (data[x*size+y]>=0)
-			{
-				if (!(strcmp(mask,"000")))
+			{//xoring masking pattern with 10101
+				if (!(strcmp(mask,"101")))
 				{
 					if((x+y)%2==0)
 					{
@@ -29,7 +29,7 @@ void Rmask (int* data, int size,int*data2)
 							data[x*size+y]=1;
 					}
 				}
-				if(!(strcmp(mask,"001")))
+				if(!(strcmp(mask,"100")))
 				{
 					if(x%2==0)
 					{
@@ -39,7 +39,7 @@ void Rmask (int* data, int size,int*data2)
 							data[x*size+y]=1;
 					}
 				}
-				if(!(strcmp(mask,"010")))
+				if(!(strcmp(mask,"111")))
 				{
 					if(y%3==0)
 					{
@@ -49,7 +49,7 @@ void Rmask (int* data, int size,int*data2)
 							data[x*size+y]=1;
 					}
 				}
-				if(!(strcmp(mask,"011")))
+				if(!(strcmp(mask,"110")))
 				{
 					if((x+y)%3==0)
 					{
@@ -59,7 +59,7 @@ void Rmask (int* data, int size,int*data2)
 							data[x*size+y]=1;
 					}
 				}
-				if(!(strcmp(mask,"100")))
+				if(!(strcmp(mask,"001")))
 				{
 					if(((x/2)+(y/3))%2==0)
 					{	
@@ -69,7 +69,7 @@ void Rmask (int* data, int size,int*data2)
 							data[x*size+y]=1;
 					}
 				}
-				if(!(strcmp(mask,"101")))
+				if(!(strcmp(mask,"000")))
 				{
 					if(((x*y)%2)+((x*y)%3)==0)
 					{
@@ -79,7 +79,7 @@ void Rmask (int* data, int size,int*data2)
 							data[x*size+y]=1;
 					}
 				}
-				if(!(strcmp(mask,"110")))
+				if(!(strcmp(mask,"011")))
 				{
 					if((((x*y)%2)+((x*y)%3))%2==0)
 					{	
@@ -90,7 +90,7 @@ void Rmask (int* data, int size,int*data2)
 					}
 				}
 				
-				if(!(strcmp(mask,"111")))
+				if(!(strcmp(mask,"010")))
 				{
 					if((((x*y)%3)+((x+y)%2))%2==0)
 					{	
