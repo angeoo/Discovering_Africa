@@ -9,6 +9,7 @@ typedef struct
 	int* xs;
 	int* ys;
 	int tot;
+	int lens;
 
 }parser;
 void Prettprint(int* arrd ,int qrsize,parser w);

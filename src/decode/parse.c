@@ -18,8 +18,8 @@ void getup(parser* w,int* arrd  ,int tot,int qrsize)
 			w->resultat[w->count]=tmp;
 			w->xs[w->count]=w->x;
 			w->ys[w->count]=w->y;
-			Prettprint(arrd , qrsize , *w);
 			w->count = w->count +1 ;
+			Prettprint(arrd , qrsize , *w);
 			if (w->count==tot)
 			{
 				break;
@@ -30,12 +30,13 @@ void getup(parser* w,int* arrd  ,int tot,int qrsize)
 		getchar();
 		if (tmp!=-2)
 		{
+			
 			printf("x = %i | y = %i  | count = %i => res = %i\n",w->x , w->y ,w->count ,  tmp);
 			w->resultat[w->count]=tmp;
 			w->xs[w->count]=w->x;
 			w->ys[w->count]=w->y;
-			Prettprint(arrd , qrsize , *w );
 			w->count = w->count + 1 ;
+			Prettprint(arrd , qrsize , *w );
 		}
 		w->x= w->x + 1;
 		w->y = w->y -1;
@@ -61,26 +62,29 @@ void getdown(parser* w ,int *arrd  , int tot,int qrsize)
 			w->resultat[w->count]=tmp;
 			w->xs[w->count]=w->x;
 			w->ys[w->count]=w->y;
-			Prettprint(arrd , qrsize , *w );
 			w->count = w->count +1 ;
+			Prettprint(arrd , qrsize , *w );
+
+
+
 			if (w->count==tot)
 			{
 
 				break;
 			}
 		}
-			w->x=w->x-1;
-			tmp = arrd[(w->y * qrsize)+w->x];
-			getchar();
-
+		w->x=w->x-1;
+		tmp = arrd[(w->y * qrsize)+w->x];
+		getchar();
+		
 		if(tmp!=-2)
 		{
 			printf("x = %i | y = %i | count = %i => res = %i \n",w->x , w->y ,w->count ,  tmp);
 			w->resultat[w->count]=tmp;
 			w->xs[w->count]=w->x;
 			w->ys[w->count]=w->y;
-			Prettprint(arrd , qrsize , *w );
 			w->count = w->count + 1 ;
+			Prettprint(arrd , qrsize , *w );
 		}
 		w->x=w->x+1;
 		w->y = w->y +1;
@@ -91,8 +95,12 @@ void getdown(parser* w ,int *arrd  , int tot,int qrsize)
 
 }
 
+void fixpos(parser* w)
+{
+	w->x = w->x+2;
+	w->y = w->y-1;
 
-
+}
 
 void getall( int* arrd , int tot, int qrsize)
 {
@@ -101,9 +109,9 @@ void getall( int* arrd , int tot, int qrsize)
 	parser mypars;
 	mypars.x = qrsize-1;
 	mypars.y = qrsize-1;
-	mypars.resultat = malloc(tot*sizeof(int));
-	mypars.xs = malloc(tot*sizeof(int));
-	mypars.ys = malloc(tot*sizeof(int));
+	mypars.resultat =(int*) malloc(tot*sizeof(int));
+	mypars.xs =(int*) malloc(tot*sizeof(int));
+	mypars.ys =(int*) malloc(tot*sizeof(int));
 	mypars.count = 0 ;
 	mypars.tot = tot;
 
@@ -111,19 +119,34 @@ void getall( int* arrd , int tot, int qrsize)
 	Prettprint(arrd,qrsize,mypars);
 
 
+	//getting the mode
+	getup(&mypars,arrd,4,qrsize);
+	fixpos(&mypars);
+
+	//getting the character len
+	getup(&mypars,arrd,12,qrsize);
+	fixpos(&mypars);
+
+	//calculating len
+	int len = bintoint(mypars.resultat,4,8);
+	mypars.lens=len;
 	
+	int total = mypars.count+8 + 8*len ;
 
-	while (mypars.count!=tot)
+
+
+	while (mypars.count!=total)
 	{
-		getup(&mypars,arrd,tot,qrsize);
+		getup(&mypars,arrd,total,qrsize);
 
-		getdown(&mypars,arrd,tot,qrsize);
+		getdown(&mypars,arrd,total,qrsize);
 
 	}
-	printf ("Last x = %i || Last y = %i \n",mypars.x ,mypars.y );
+	free(mypars.resultat);
+	free(mypars.xs);
+	free(mypars.ys);
 
 
-	printf("bin to int %i",bintoint(mypars.resultat,0,4));
 
 
 
