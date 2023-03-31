@@ -62,7 +62,7 @@ void Prettprint(int* arrd,int qrsize,parser w )
 		}
 		if(y==0)
 		{
-			printf("                _____________________________");
+			printf("                __________________________________________________________________________________________________________");
 		}
 		
 		if(y==1)
@@ -77,7 +77,7 @@ void Prettprint(int* arrd,int qrsize,parser w )
 		}
 		if(y==2)
 		{
-			printf("                |____________________________");
+			printf("                |___________________________________________________________________________________________________________");
 		}
 		if(y==3)
 		{
@@ -90,61 +90,68 @@ void Prettprint(int* arrd,int qrsize,parser w )
 		}
 		if(y==4)
 		{
-			printf("                |____________________________");
+			printf("                |________________________________________________");
 		}
 		if(y==5)
 		{
-			printf("                |");
-			printf("count = %i",w.count);
+			printf("                |count = %i",w.count);
 		}
 		if(y==6)
 		{
-			printf("                |____________________________");
+			printf("                |________________________________________________");
 		}
 		if(y==7)
 		{
-			printf("                |");
 			if(w.count<12 && w.count>4)
 			{
-				printf("detecting lenght of the data encoded ... ");
+				printf("                |detecting lenght of the data encoded ...                    | ");
 
 			}
 			else
 			{
 				if(w.count>=12)
 				{
-					printf("data lenght : %i",bintoint(w.resultat,4,8));
+					printf("                |data lenght : %i",bintoint(w.resultat,4,8));
 			
 				}
 			}
 		}
 		if(y==8)
 		{
-			printf("                |____________________________");
+			printf("                |________________________________________________");
 		}
 		if(y==9)
 		{
 			printf("                |");	
-			if(w.count>12 && w.count<20)
+			if(w.count>12 && (w.count-12)%8!=0)
 			{
-				printf("starting to decode the message");
+				printf("Searching for a letter ... ");
 
 			}
 			if(w.count>=20 && (w.count-12)%8==0)
 			{
 		
 				int asc = bintoint(w.resultat,w.count-8,8);
-				printf("nb : %i    | ",asc);	
 				int c = (w.count-12)/8 ;
 				w.finalmsg[c-1]=(char)asc;
-				printf("charcater %i found! %c ",c,(char)asc);
-				printf("   ||| msg : %s",w.finalmsg);
+				printf("Charcater %i found ! => %c ",c,(char)asc);
 			}
 
 		}
 		if(y==10)
 		{
-			printf("                |____________________________");
+			printf("                |________________________________________________");
+		}
+		if(y==11)
+		{
+			printf("                |Message found : %s    ",w.finalmsg);
+
+
+		}
+		if(y==12)
+		{
+			printf("                |________________________________________________");
+
 		}	
 		printf("\n");
 	}

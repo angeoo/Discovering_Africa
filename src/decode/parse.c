@@ -133,7 +133,7 @@ void getall( int* arrd , int tot, int qrsize)
 	mypars.finalmsg = (char*) calloc(((len+1)*8),sizeof(char));
 	mypars.finalmsg[len]='\0';
 	
-	int total = mypars.count+8 + 8*len ;
+	int total = mypars.count+ 8*len ;
 
 
 
