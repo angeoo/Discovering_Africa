@@ -8,7 +8,7 @@
 
 void getup(parser* w,int* arrd  ,int tot,int qrsize)
 {
-	while (w->y>0 && arrd[(w->y)*qrsize+ w->x]!=-1 && w->count!=tot)
+	while (w->y>0 && arrd[(w->y)*qrsize+ w->x]!=-1 && arrd[(w->y)*qrsize+ w->x]!=-3 && w->count!=tot)
 	{
 		int tmp = arrd[(w->y)*qrsize+ w->x];
 		getchar();
@@ -52,7 +52,7 @@ void getdown(parser* w ,int *arrd  , int tot,int qrsize)
 {
 
 
-	while (w->y<qrsize && arrd[(w->y * qrsize)+w->x]!=-1 && w->count!=tot)
+	while (w->y<qrsize && arrd[(w->y * qrsize)+w->x]!=-1 && arrd[(w->y * qrsize)+w->x]!=-3 && w->count!=tot)
 	{
 		int tmp = arrd[(w->y * qrsize) +w->x];
 		getchar();
@@ -130,6 +130,8 @@ void getall( int* arrd , int tot, int qrsize)
 	//calculating len
 	int len = bintoint(mypars.resultat,4,8);
 	mypars.lens=len;
+	mypars.finalmsg = (char*) calloc(((len+1)*8),sizeof(char));
+	mypars.finalmsg[len]='\0';
 	
 	int total = mypars.count+8 + 8*len ;
 
@@ -145,6 +147,7 @@ void getall( int* arrd , int tot, int qrsize)
 	free(mypars.resultat);
 	free(mypars.xs);
 	free(mypars.ys);
+	free(mypars.finalmsg);
 
 
 

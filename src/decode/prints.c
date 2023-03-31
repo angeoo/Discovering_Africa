@@ -29,9 +29,14 @@ void Prettprint(int* arrd,int qrsize,parser w )
 				{
 					printf("\x1b[31m%i\x1b[0m", res);
 				}
-				else
+				if(res== -1)
 				{
 					printf("\x1b[34m%i\x1b[0m",res);
+				}
+				if(res==-3)
+				{
+					printf("\x1b[36m%i\x1b[0m",res);
+
 				}
 			}
 			else
@@ -55,33 +60,50 @@ void Prettprint(int* arrd,int qrsize,parser w )
 
 
 		}
-		
 		if(y==0)
 		{
+			printf("                _____________________________");
+		}
+		
+		if(y==1)
+		{
+			
+			printf("                |");
 			if(w.count>=1)
 			{
-			printf("                ");
+
 			printres(w);
 			}
 		}
-		if(y==1)
+		if(y==2)
 		{
-			printf("                ");
+			printf("                |____________________________");
+		}
+		if(y==3)
+		{
+			printf("                |");
 			if(w.count>=4)
 			{
 				getencodingmode(bintoint(w.resultat,0,4));
 			}
 
 		}
-		if(y==3)
-		{
-			printf("                ");
-			printf("count = %i",w.count);
-		}
-
 		if(y==4)
 		{
-			printf("                ");
+			printf("                |____________________________");
+		}
+		if(y==5)
+		{
+			printf("                |");
+			printf("count = %i",w.count);
+		}
+		if(y==6)
+		{
+			printf("                |____________________________");
+		}
+		if(y==7)
+		{
+			printf("                |");
 			if(w.count<12 && w.count>4)
 			{
 				printf("detecting lenght of the data encoded ... ");
@@ -96,12 +118,13 @@ void Prettprint(int* arrd,int qrsize,parser w )
 				}
 			}
 		}
-		if(y==6)
+		if(y==8)
 		{
-		
-			printf("                ");
-
-
+			printf("                |____________________________");
+		}
+		if(y==9)
+		{
+			printf("                |");	
 			if(w.count>12 && w.count<20)
 			{
 				printf("starting to decode the message");
@@ -113,9 +136,15 @@ void Prettprint(int* arrd,int qrsize,parser w )
 				int asc = bintoint(w.resultat,w.count-8,8);
 				printf("nb : %i    | ",asc);	
 				int c = (w.count-12)/8 ;
-				printf("charcater %i found! %c",c,(char)asc);
+				w.finalmsg[c-1]=(char)asc;
+				printf("charcater %i found! %c ",c,(char)asc);
+				printf("   ||| msg : %s",w.finalmsg);
 			}
 
+		}
+		if(y==10)
+		{
+			printf("                |____________________________");
 		}	
 		printf("\n");
 	}
