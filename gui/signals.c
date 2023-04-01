@@ -53,7 +53,13 @@ void on_buttonWebsite_activate(GtkWidget *widget, gpointer *userdata)
 
 void on_decButton_activate(GtkWidget *widget, gpointer *userdata){
 	
-	g_print("Decoder clisked !\n");
+	g_print("Decoder clicked !\n");
 	display_decWindow();
 }
 
+void on_preButton_clicked(GtkWidget *widget, gpointer *userdata){
+
+	system(""); // ./executable image chargee
+	display_image(""); //display result from executable
+
+}

@@ -32,6 +32,7 @@ GtkWidget *decButton;
 
 // decWindow
 GtkWidget *buttonLoad1;
+GtkWidget *preButton;
 
 // Bakcground image
 GtkWidget *bg_image;
@@ -59,6 +60,9 @@ void display_image(char * path){
 			NULL);
 
 	gtk_image_set_from_pixbuf(bg_image,new_image);
+
+	display_pretraitement_button();
+
 }
 
 void display_secondWindow(){
@@ -74,6 +78,11 @@ void display_decWindow(){
 	g_print("\n display_decWindow()\n");
 	gtk_widget_hide(secondWindow);
 	gtk_widget_show(decWindow);
+}
+
+void display_pretraitement_button(){
+
+	gtk_widget_show(preButton);
 }
 
 int main(int argc, char **argv)
@@ -135,7 +144,7 @@ int main(int argc, char **argv)
 
 	// dec
 	buttonLoad1 = GTK_WIDGET(gtk_builder_get_object(builder, "buttonLoad1"));
-
+	preButton = GTK_WIDGET(gtk_builder_get_object(builder, "preButton"));
 
 	// Display the ui
 	gtk_widget_show(mainWindow);

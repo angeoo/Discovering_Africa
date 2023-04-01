@@ -63,6 +63,19 @@ DB Size : 230 MB</property>
             <property name="y">27</property>
           </packing>
         </child>
+        <child>
+          <object class="GtkButton" id="preButton">
+            <property name="label" translatable="yes">Decode</property>
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+          </object>
+          <packing>
+            <property name="x">494</property>
+            <property name="y">95</property>
+          </packing>
+        </child>
       </object>
     </child>
   </object>
