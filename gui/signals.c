@@ -30,6 +30,8 @@ void on_buttonLoad_activate(GtkWidget *widget, gpointer *userdata)
 
 void on_startButton_activate(GtkWidget *widget,gpointer *userdata){
 	g_print("\non_startButton_activated()\n");
+	system("cd .. && make");
+	g_print("\nmake all done\n");
 	display_secondWindow();
 }
 

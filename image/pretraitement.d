@@ -10,7 +10,7 @@ pretraitement.o: pretraitement.c \
  /run/current-system/sw/include/bits/long-double.h \
  /run/current-system/sw/include/gnu/stubs.h \
  /run/current-system/sw/include/gnu/stubs-64.h \
- /nix/store/65v2c245h5qa9mpc7dxhqkfjinl6phx0-gcc-11.3.0/lib/gcc/x86_64-unknown-linux-gnu/11.3.0/include/stddef.h \
+ /nix/store/3cjvw93ly6cx2af13f2l3pw4yzbi8wp6-gcc-11.3.0/lib/gcc/x86_64-unknown-linux-gnu/11.3.0/include/stddef.h \
  /run/current-system/sw/include/bits/waitflags.h \
  /run/current-system/sw/include/bits/waitstatus.h \
  /run/current-system/sw/include/bits/floatn.h \
@@ -40,6 +40,7 @@ pretraitement.o: pretraitement.c \
  /run/current-system/sw/include/bits/pthreadtypes.h \
  /run/current-system/sw/include/bits/thread-shared-types.h \
  /run/current-system/sw/include/bits/pthreadtypes-arch.h \
+ /run/current-system/sw/include/bits/atomic_wide_counter.h \
  /run/current-system/sw/include/bits/struct_mutex.h \
  /run/current-system/sw/include/bits/struct_rwlock.h \
  /run/current-system/sw/include/alloca.h \
@@ -50,7 +51,7 @@ pretraitement.o: pretraitement.c \
  /run/current-system/sw/include/SDL/SDL_config.h \
  /run/current-system/sw/include/SDL/SDL_platform.h \
  /run/current-system/sw/include/stdio.h \
- /nix/store/65v2c245h5qa9mpc7dxhqkfjinl6phx0-gcc-11.3.0/lib/gcc/x86_64-unknown-linux-gnu/11.3.0/include/stdarg.h \
+ /nix/store/3cjvw93ly6cx2af13f2l3pw4yzbi8wp6-gcc-11.3.0/lib/gcc/x86_64-unknown-linux-gnu/11.3.0/include/stdarg.h \
  /run/current-system/sw/include/bits/types/__fpos_t.h \
  /run/current-system/sw/include/bits/types/__mbstate_t.h \
  /run/current-system/sw/include/bits/types/__fpos64_t.h \
