@@ -79,3 +79,43 @@ void update_surface(SDL_Surface* screen, SDL_Surface* image)
 
     SDL_UpdateRect(screen, 0, 0, image->w, image->h);
 }
+
+void draw_module(SDL_Suface *output, int i, int j, Uint32 pixel, int m){
+
+	for(int x=i;x<m;x++){
+		for(int y=j;y<m;y++){
+			put_pixel(output,x,y,pixel);
+		}
+	}
+
+}
+
+// mat[i*size+j] matrice de 0 et de 1 a tranformee en qr code
+// 1 : noir | 0 : blanc
+// size : nb cols
+// filename : nom du fichier image .bmp 
+// m : version du qr code
+void new_image(int* mat, int size, char* filename, int m){
+
+	SDL_Surface *output = SDL_CreateRGBSurface(0,size,size,32,0,0,0,0);
+
+	Uint32 black,white;
+	black = SDL_MapRGB(output->format,0,0,0);
+	white = SDL_MapRGB(output->format,255,255,255);
+
+	int ox = 0;
+	int oy = 0;
+
+	for(int u=0;u<size;u++){
+		for(int v=0;v<size;v++){
+			if(mat[u*size+v]==1){
+				draw_module(output,u*m,v*m,black,m);
+			}
+
+			draw_module(out,u*m,v*m,white,m);
+
+		}
+	}
+
+	SDL_SaveBMP(output,filename);
+}
