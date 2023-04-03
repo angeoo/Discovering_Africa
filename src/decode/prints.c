@@ -159,4 +159,59 @@ void Prettprint(int* arrd,int qrsize,parser w )
 
 }
 
+void Prettprintv2(int* arrd,int qrsize,parser w )
+{
+	printf("\033[2J");
+	
+
+	for(int y =0 ; y<qrsize; y++)
+	{
+		for(int x = 0 ;x < qrsize ; x ++)
+		{
+			
+			int res = arrd[(y*qrsize)+x];
+			if(res<0)
+			{
+
+				if(res == -2)
+				{
+					printf("\x1b[31m%i\x1b[0m", res);
+				}
+				if(res== -1)
+				{
+					printf("\x1b[34m%i\x1b[0m",res);
+				}
+				if(res==-3)
+				{
+					printf("\x1b[36m%i\x1b[0m",res);
+
+				}
+			}
+			else
+			{	
+				int found = 0 ;
+				for (int e = 0; e < w.tot; e++)
+				{
+					if(w.xs[e] == x && w.ys[e]==y)
+					{
+						printf("\x1b[32m %i\x1b[0m",res);
+						found = 1;
+						break;
+
+					}
+				}
+				if(!found)
+				{
+					printf(" %i",res);
+				}
+			}
+
+
+		}
+		printf("\n");
+	}
+	return ; 
+
+}
+
 

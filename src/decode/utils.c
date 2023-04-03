@@ -2,6 +2,8 @@
 #include "masking.c"
 #include "parse.c"
 #include "prints.c"
+#include "data_encodation.c"
+#include "qr.c"
 
 
 int module_size(SDL_Surface * surface)
@@ -147,15 +149,32 @@ int main (int argc, char *argv[])
 
 	Rmask(data_matrix,w/size,data);
 
+    //creer une matrice
+    int* created = creer_matric();
+    
+    //ajouter les neg
+    int* negcreated = mat_data(created,21);
 
 
+
+    //getting the word as a string
+    printf("enter your word");
+    char* word  = malloc(sizeof(char)*100);
+    scanf("%s",word);
+
+    //word to binary
+    int* res = BitStream(word);
+
+    
+    putall(negcreated,19*8+12,21,res);
 	int tot = 100;
-	getall(data_matrix,tot,w/size);
+	getall(negcreated,tot,21);
 
 	
 
-
-
+    free(created);
+    free(negcreated);
+    free(word);
 	free(data);
 	free(data_matrix);
 
