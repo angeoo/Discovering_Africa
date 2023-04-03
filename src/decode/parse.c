@@ -8,7 +8,7 @@
 
 void getup(parser* w,int* arrd  ,int tot,int qrsize)
 {
-	while (w->y>0 && arrd[(w->y)*qrsize+ w->x]!=-1 && arrd[(w->y)*qrsize+ w->x]!=-3 && w->count!=tot)
+	while (w->y>=0 && arrd[(w->y)*qrsize+ w->x]!=-1 && arrd[(w->y)*qrsize+ w->x]!=-3 && w->count!=tot)
 	{
 		int tmp = arrd[(w->y)*qrsize+ w->x];
 		getchar();
@@ -104,7 +104,7 @@ void fixpos(parser* w)
 
 void putup(parser* w,int* arrd  ,int tot,int qrsize)
 {
-    while (w->y>0 && arrd[(w->y)*qrsize+ w->x]!=-1 && arrd[(w->y)*qrsize+ w->x]!=-3 && w->count!=tot)
+    while (w->y>=0 && arrd[(w->y)*qrsize+ w->x]!=-1 && arrd[(w->y)*qrsize+ w->x]!=-3 && w->count!=tot)
     {
         int tmp = arrd[(w->y)*qrsize+ w->x];
         getchar();
