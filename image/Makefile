@@ -14,6 +14,6 @@ clean:
 	${RM} *.o
 	${RM} *.d
 	${RM} main
-	${RM} out.bmp
+	${RM} output.bmp
 
 #END

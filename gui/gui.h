@@ -8,6 +8,12 @@ void display_image(char* path);
 
 void display_secondWindow();
 
+void display_decWindow();
+
+void display_pretraitement_button();
+
+void execute_utils();
+
 void on_buttonSave_activate(GtkWidget *widget, gpointer *userdata);
 
 void on_buttonReload_activate(GtkWidget *widget, gpointer *userdata);

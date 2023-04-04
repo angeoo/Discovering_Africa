@@ -70,11 +70,38 @@ DB Size : 230 MB</property>
             <property name="height-request">80</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <signal name="clicked" handler="on_decodeButton_clicked" swapped="no"/>
           </object>
           <packing>
             <property name="x">494</property>
             <property name="y">95</property>
           </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkWindow" id="encWindow">
+    <property name="can-focus">False</property>
+    <child>
+      <object class="GtkFixed" id="encWindowFixed">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <child>
+          <object class="GtkMenuBar" id="encMenu">
+            <property name="width-request">55</property>
+            <property name="height-request">30</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <child>
+              <object class="GtkMenuItem" id="buttonExit3">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Quit</property>
+                <property name="use-underline">True</property>
+                <signal name="activate" handler="on_buttonExit_activate" swapped="no"/>
+              </object>
+            </child>
+          </object>
         </child>
       </object>
     </child>

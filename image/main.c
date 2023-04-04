@@ -14,6 +14,6 @@ int main(int argc, char* argv[]){
 	init_sdl();
 	SDL_Surface *img = load_image(argv[1]);
 
-	size_t r = image(img);
+	image(img);
 	return 0;
 }

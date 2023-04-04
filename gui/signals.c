@@ -7,7 +7,7 @@ void on_buttonSave_activate(GtkWidget *widget, gpointer *userdata)
 	g_print("Button Save clicked !\n");
 }
 
-void on_buttonLoad_activate(GtkWidget *widget, gpointer *userdata)
+void on_buttonLoad_activate(GtkWidget *widget,gpointer *userdata)
 {
 	GtkWidget *p_dialog = NULL;
 	p_dialog = gtk_file_chooser_dialog_new ("Ouvrir un fichier", NULL,
@@ -35,7 +35,7 @@ void on_startButton_activate(GtkWidget *widget,gpointer *userdata){
 	display_secondWindow();
 }
 
-void on_buttonExit_activate(GtkWidget *widget, gpointer *userdata)
+void on_buttonExit_activate(GtkWidget *widget,gpointer *userdata)
 {
 	g_print("Button Exit clicked !\n");
 	exit(0);
@@ -43,7 +43,7 @@ void on_buttonExit_activate(GtkWidget *widget, gpointer *userdata)
 
 // About menu
 
-void on_buttonWebsite_activate(GtkWidget *widget, gpointer *userdata)
+void on_buttonWebsite_activate(GtkWidget *widget,gpointer *userdata)
 {
 	g_print("button Website clisked !\n");
 	system("chromium https://fr.wikipedia.org/wiki/Code_QR");
@@ -51,16 +51,44 @@ void on_buttonWebsite_activate(GtkWidget *widget, gpointer *userdata)
 
 // secondWindow
 
-void on_decButton_activate(GtkWidget *widget, gpointer *userdata){
+void on_decButton_activate(GtkWidget *widget,gpointer *userdata){
 	
 	g_print("Decoder clicked !\n");
 	display_decWindow();
 }
+/*
+void on_encButton_clicked(GtkWidget *widget,gpointer *userdata){
+	g_print("Encoder clicked !\n");
+	display_encWindow();
+}*/
 
-void on_preButton_clicked(GtkWidget *widget, gpointer *userdata){
 
-	char *request =
-	system("cd ../image && ./main @"); // ./executable image chargee
-	display_image(""); //display result from executable
+// decWindow
+
+void on_decodeButton_clicked(GtkWidget *widget,gpointer *userdata){
+
+
+	execute_utils();
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -33,6 +33,7 @@ GtkWidget *decButton;
 // decWindow
 GtkWidget *buttonLoad1;
 GtkWidget *preButton;
+char * decImage;
 
 // Bakcground image
 GtkWidget *bg_image;
@@ -60,7 +61,8 @@ void display_image(char * path){
 			NULL);
 
 	gtk_image_set_from_pixbuf(bg_image,new_image);
-
+	decImage = path;
+	g_print("\n\ndecImage maj : %s\n\n",path);
 	display_pretraitement_button();
 
 }
@@ -83,6 +85,20 @@ void display_decWindow(){
 void display_pretraitement_button(){
 
 	gtk_widget_show(preButton);
+}
+
+void execute_utils(){
+	
+	char* request;
+	int l = asprintf(&request,"cd ../src/decode && ./utils %s",decImage);
+
+	if(l==-1){
+		errx(EXIT_FAILURE,"error while forming request for ./utils");
+	}
+
+	system(request);
+
+
 }
 
 int main(int argc, char **argv)

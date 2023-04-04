@@ -48,7 +48,7 @@ SDL_Surface* grayscale(SDL_Surface* img){
 	return img;
 }
 
-size_t image(SDL_Surface * img){
+void image(SDL_Surface * img){
 	
 	img = grayscale(img);
 
@@ -84,18 +84,34 @@ size_t image(SDL_Surface * img){
 	int new_h = h-2*coordh;
 
 	SDL_Surface *output = SDL_CreateRGBSurface(0,new_w,new_h,32,0,0,0,0);
+
+	Uint32 black = SDL_MapRGB(img->format,0,0,0);
+	Uint32 white = SDL_MapRGB(img->format,0,0,0);
+	
 	for(int u=coordw;u<new_w+coordw-1;u++){
 		for(int v=coordh;v<new_h+coordh-1;v++){
 			pixel = get_pixel(img,u,v);
+			SDL_GetRGB(pixel,img->format,&r,&g,&b);
+			if(r==0){
 
-			put_pixel(output,u-coordw,v-coordh,pixel);
+				put_pixel(output,u-coordw,v-coordh,black);
+			}
+			else{
+				put_pixel(output,u-coordw,v-coordh,white);
+			}
+			//put_pixel(output,u-coordw,v-coordh,pixel);
 
 		}
 	}
+	
+	/*for(int i=0;i<new_w;i++){
+		for(int j=0;j<new_h;j++){
+			pixel = get_pixel(img,
+			put_pixel(output,i,j,white);
+		}
+	}*/
 
-	SDL_SaveBMP(output,"out.bmp");
+	SDL_SaveBMP(output,"output.bmp");
 
-	return 0;
-
-
+	free(output);
 }
