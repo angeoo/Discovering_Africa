@@ -38,7 +38,7 @@ DB Size : 230 MB</property>
         <child>
           <object class="GtkButton" id="buttonLoad1">
             <property name="label" translatable="yes">Load QR Code to decode</property>
-            <property name="width-request">42</property>
+            <property name="width-request">46</property>
             <property name="height-request">60</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
@@ -46,8 +46,8 @@ DB Size : 230 MB</property>
             <signal name="clicked" handler="on_buttonLoad_activate" swapped="no"/>
           </object>
           <packing>
-            <property name="x">258</property>
-            <property name="y">300</property>
+            <property name="x">488</property>
+            <property name="y">111</property>
           </packing>
         </child>
         <child>
@@ -59,7 +59,7 @@ DB Size : 230 MB</property>
             <property name="pixbuf">img/download.png</property>
           </object>
           <packing>
-            <property name="x">140</property>
+            <property name="x">144</property>
             <property name="y">27</property>
           </packing>
         </child>
@@ -73,8 +73,26 @@ DB Size : 230 MB</property>
             <signal name="clicked" handler="on_decodeButton_clicked" swapped="no"/>
           </object>
           <packing>
-            <property name="x">494</property>
-            <property name="y">95</property>
+            <property name="x">311</property>
+            <property name="y">260</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkMenuBar" id="toEncode">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <child>
+              <object class="GtkMenuItem" id="goToEncode">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Let's Encode</property>
+                <property name="use-underline">True</property>
+                <signal name="activate" handler="on_goToEncode_clicked" swapped="no"/>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="x">714</property>
           </packing>
         </child>
       </object>
@@ -102,6 +120,52 @@ DB Size : 230 MB</property>
               </object>
             </child>
           </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="encButton">
+            <property name="label" translatable="yes">Encode </property>
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <signal name="clicked" handler="on_encodeButton_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">321</property>
+            <property name="y">262</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">img/download.png</property>
+          </object>
+          <packing>
+            <property name="x">255</property>
+            <property name="y">30</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkMenuBar" id="toDecode">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <child>
+              <object class="GtkMenuItem" id="goToDecode">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Let's Decode</property>
+                <property name="use-underline">True</property>
+                <signal name="activate" handler="on_goToDecode_clicked" swapped="no"/>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="x">672</property>
+          </packing>
         </child>
       </object>
     </child>
@@ -294,6 +358,7 @@ DB Size : 230 MB</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <signal name="clicked" handler="on_encButton_clicked" swapped="no"/>
           </object>
           <packing>
             <property name="x">130</property>

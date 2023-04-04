@@ -56,11 +56,11 @@ void on_decButton_activate(GtkWidget *widget,gpointer *userdata){
 	g_print("Decoder clicked !\n");
 	display_decWindow();
 }
-/*
+
 void on_encButton_clicked(GtkWidget *widget,gpointer *userdata){
 	g_print("Encoder clicked !\n");
 	display_encWindow();
-}*/
+}
 
 
 // decWindow
@@ -72,7 +72,23 @@ void on_decodeButton_clicked(GtkWidget *widget,gpointer *userdata){
 
 }
 
+void on_goToEncode_clicked(GtkWidget *widget, gpointer *userdata){
+	
+	goToEncode();
+}
 
+// encWindow
+
+void on_encodeButton_clicked(GtkWidget *widget, gpointer *userdata){
+
+	execute_utils_enc();
+}
+
+
+void on_goToDecode_clicked(GtkWidget *widget, gpointer *userdata){
+
+	goToDecode();
+}
 
 
 

@@ -10,12 +10,16 @@ GtkWidget *secondWindowFixed;
 GtkWidget *decWindow;
 GtkWidget *decWindowFixed;
 
+GtkWidget *encWindow;
+GtkWidget *encWindowFixed;
+
 // --------------------MENU MAIN-----------------------
 
 // Main Menu
 GtkWidget *mainMenu;
 GtkWidget *secondMenu;
 GtkWidget *decMenu;
+GtkWidget *encMenu;
 
 // Buttons
 
@@ -34,6 +38,10 @@ GtkWidget *decButton;
 GtkWidget *buttonLoad1;
 GtkWidget *preButton;
 char * decImage;
+
+// encWindow
+GtkWidget *encButton;
+
 
 // Bakcground image
 GtkWidget *bg_image;
@@ -82,9 +90,28 @@ void display_decWindow(){
 	gtk_widget_show(decWindow);
 }
 
+void goToEncode(){
+
+	g_print("\n Let's encode\n");
+	gtk_widget_hide(decWindow);
+	gtk_widget_show(encWindow);
+}
+
+void goToDecode(){
+	g_print("\n Let's decode\n");
+	gtk_widget_hide(encWindow);
+	gtk_widget_show(decWindow);
+}
+
 void display_pretraitement_button(){
 
 	gtk_widget_show(preButton);
+}
+
+void display_encWindow(){
+
+	gtk_widget_hide(secondWindow);
+	gtk_widget_show(encWindow);
 }
 
 void execute_utils(){
@@ -101,6 +128,19 @@ void execute_utils(){
 
 }
 
+void execute_utils_enc(){
+	
+	char* request;
+	int l = asprintf(&request,"cd ../src/decode && ./utils %s","1");
+
+	if(l==-1){
+		errx(EXIT_FAILURE,"error while forming request for ./utils");
+	}
+
+	system(request);
+}
+
+
 int main(int argc, char **argv)
 {
 	// Init gtk
@@ -116,6 +156,8 @@ int main(int argc, char **argv)
 
 	decWindow = GTK_WIDGET(gtk_builder_get_object(builder,"decWindow"));
 
+	encWindow = GTK_WIDGET(gtk_builder_get_object(builder,"encWindow"));
+
 	// Background color
 	GdkRGBA white;
 	white.red = 0xfff;
@@ -126,13 +168,14 @@ int main(int argc, char **argv)
 	gtk_widget_override_background_color(mainWindow,GTK_STATE_NORMAL,&white);
 	gtk_widget_override_background_color(secondWindow,GTK_STATE_NORMAL,&white);
 	gtk_widget_override_background_color(decWindow,GTK_STATE_NORMAL,&white);
-
+	gtk_widget_override_background_color(encWindow,GTK_STATE_NORMAL,&white);
 
 	// Exit ui when user closed the window
 	g_signal_connect(mainWindow, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 	g_signal_connect(secondWindow,"destroy",G_CALLBACK(gtk_main_quit),NULL);
 	g_signal_connect(decWindow,"destroy",G_CALLBACK(gtk_main_quit),NULL);
-	
+	g_signal_connect(encWindow,"destroy",G_CALLBACK(gtk_main_quit),NULL);
+
 	// Load signals from builder
 	gtk_builder_connect_signals(builder, NULL);
 
@@ -140,10 +183,12 @@ int main(int argc, char **argv)
 	mainWindowFixed = GTK_WIDGET(gtk_builder_get_object(builder, "mainWindowFixed"));
 	secondWindowFixed = GTK_WIDGET(gtk_builder_get_object(builder, "secondWindowFixed"));
 	decWindowFixed = GTK_WIDGET(gtk_builder_get_object(builder, "decWindowFixed"));
-	
+	encWindowFixed = GTK_WIDGET(gtk_builder_get_object(builder, "encWindowFixed"));
+
 	mainMenu = GTK_WIDGET(gtk_builder_get_object(builder, "mainMenu"));
 	secondMenu = GTK_WIDGET(gtk_builder_get_object(builder, "secondMenu"));
 	decMenu = GTK_WIDGET(gtk_builder_get_object(builder, "decMenu"));
+	encMenu = GTK_WIDGET(gtk_builder_get_object(builder, "encMenu"));
 
 	// Buttons
 	
@@ -161,6 +206,9 @@ int main(int argc, char **argv)
 	// dec
 	buttonLoad1 = GTK_WIDGET(gtk_builder_get_object(builder, "buttonLoad1"));
 	preButton = GTK_WIDGET(gtk_builder_get_object(builder, "preButton"));
+
+	// enc
+	encButton = GTK_WIDGET(gtk_builder_get_object(builder, "encButton"));
 
 	// Display the ui
 	gtk_widget_show(mainWindow);

@@ -10,9 +10,17 @@ void display_secondWindow();
 
 void display_decWindow();
 
+void goToEncode();
+
+void goToDecode();
+
+void display_encWindow();
+
 void display_pretraitement_button();
 
 void execute_utils();
+
+void execute_utils_enc();
 
 void on_buttonSave_activate(GtkWidget *widget, gpointer *userdata);
 
