@@ -5,9 +5,11 @@ LDFLAGS=
 LDLIBS=-lm -lSDL_ttf -lSDL_gfx `pkg-config --libs sdl SDL_image`
 
 utils:utils.o
+initQR:../../image/pixel_operations.o initQR.o 
 
-utils.o:utils.c utils.h masking.c masking.h parse.c parse.h prints.c data_encodation.c data_encodation.h qr.c qr.h
-
+utils.o:utils.c masking.c parse.c prints.c data_encodation.c qr.c
+../../image/pixel_operations.o: ../../image/pixel_operations.h
+initQR.o: ../../image/pixel_operations.o initQR.h 
 
 
 clean:

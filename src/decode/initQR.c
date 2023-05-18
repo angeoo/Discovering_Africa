@@ -1,3 +1,4 @@
+#include "../../image/pixel_operations.h"
 #include "initQR.h"
 
 int module_size(SDL_Surface * surface)
@@ -133,19 +134,21 @@ int main (int argc, char *argv[])
     int w=qr->w;
     int size=module_size(qr);
     int *data=QR(qr,size);
-    int *data_matrix=mat_data(data,w/size);
-    for (int i=0; i<w; i++){
-	    for (int j=0;j<size;j++){
-		    if (data_matrix[i*size+j]<0)
-			    printf("%d |",data_matrix[i*size+j]);
+    //int *data_matrix=mat_data(data,w/size);
+    for (int i=0; i<w/size; i++){
+	    for (int j=0;j<w/size;j++){
+		    if (data[i*size+j]<0)
+			    printf("%d |",data[i*size+j]);
 		    else
-			    printf(" %d |",data_matrix[i*size+j]);
-		    if (w%i==0)
-			    printf("\n");
+			    printf(" %d |",data[i*size+j]);
+		    /*if (i==25)
+			    printf("\n");*/
 	    }
+	    printf("\n");
     }
+    new_image(data,21,"test.bmp",10);
     free(data);
-    free(data_matrix);
+    //free(data_matrix);
 
     return 0;
 }
