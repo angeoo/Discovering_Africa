@@ -146,7 +146,7 @@ int main (int argc, char *argv[])
 	    }
 	    printf("\n");
     }
-    new_image(data,21,"test.bmp",10);
+    new_image(data,21,"test.bmp",20);
     free(data);
     //free(data_matrix);
 
