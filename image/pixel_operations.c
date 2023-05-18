@@ -100,8 +100,8 @@ void new_image(int* mat, int size, char* filename, int m){
 	SDL_Surface *output = SDL_CreateRGBSurface(0,size*m,size*m,32,0,0,0,0);
 
 	Uint32 black,white;
-	black = SDL_MapRGB(output->format,0,0,0);
-	white = SDL_MapRGB(output->format,255,255,255);
+	black = SDL_MapRGB(output->format,255,0,0);
+	white = SDL_MapRGB(output->format,0,255,255);
 
 
 	for(int u=0;u<size;u++){
