@@ -97,7 +97,7 @@ void draw_module(SDL_Surface *output, int i, int j, Uint32 pixel, int m){
 // m : version du qr code
 void new_image(int* mat, int size, char* filename, int m){
 
-	SDL_Surface *output = SDL_CreateRGBSurface(0,size,size,32,0,0,0,0);
+	SDL_Surface *output = SDL_CreateRGBSurface(0,size*m,size*m,32,0,0,0,0);
 
 	Uint32 black,white;
 	black = SDL_MapRGB(output->format,0,0,0);
