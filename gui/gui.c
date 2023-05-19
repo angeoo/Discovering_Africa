@@ -13,6 +13,9 @@ GtkWidget *decWindowFixed;
 GtkWidget *encWindow;
 GtkWidget *encWindowFixed;
 
+GtkWidget *terminalWindow;
+GtkWidget *terminalWindowFixed;
+
 // --------------------MENU MAIN-----------------------
 
 // Main Menu
@@ -20,7 +23,7 @@ GtkWidget *mainMenu;
 GtkWidget *secondMenu;
 GtkWidget *decMenu;
 GtkWidget *encMenu;
-
+GtkWidget *terminalMenu;
 // Buttons
 
 // mainWindow
@@ -42,6 +45,17 @@ char * decImage;
 // encWindow
 GtkWidget *encButton;
 
+// terminalWindow
+GtkWidget *buttonExit4;
+GtkTextBuffer* textbuffer1;
+GtkWidget *textView;
+
+GtkTextIter start,end;
+PangoFontDescription *font_desc;
+GdkRGBA rgba;
+GtkTextTag *tag;
+GtkCssProvider *provider;
+GtkStyleContext *context;
 
 // Bakcground image
 GtkWidget *bg_image;
@@ -84,7 +98,7 @@ void display_secondWindow(){
 }
 
 void display_decWindow(){
-	
+
 	g_print("\n display_decWindow()\n");
 	gtk_widget_hide(secondWindow);
 	gtk_widget_show(decWindow);
@@ -115,7 +129,7 @@ void display_encWindow(){
 }
 
 void execute_utils(){
-	
+
 	char* request;
 	int l = asprintf(&request,"cd ../src/decode && ./utils %s",decImage);
 
@@ -129,7 +143,7 @@ void execute_utils(){
 }
 
 void execute_utils_enc(){
-	
+
 	char* request;
 	int l = asprintf(&request,"cd ../src/decode && ./utils %s","1");
 
@@ -151,12 +165,14 @@ int main(int argc, char **argv)
 
 	// Load the windows
 	mainWindow = GTK_WIDGET(gtk_builder_get_object(builder, "mainWindow"));
-	
+
 	secondWindow = GTK_WIDGET(gtk_builder_get_object(builder,"secondWindow"));
 
 	decWindow = GTK_WIDGET(gtk_builder_get_object(builder,"decWindow"));
 
 	encWindow = GTK_WIDGET(gtk_builder_get_object(builder,"encWindow"));
+
+	terminalWindow = GTK_WIDGET(gtk_builder_get_object(builder,"terminalWindow"));
 
 	// Background color
 	GdkRGBA white;
@@ -175,6 +191,7 @@ int main(int argc, char **argv)
 	g_signal_connect(secondWindow,"destroy",G_CALLBACK(gtk_main_quit),NULL);
 	g_signal_connect(decWindow,"destroy",G_CALLBACK(gtk_main_quit),NULL);
 	g_signal_connect(encWindow,"destroy",G_CALLBACK(gtk_main_quit),NULL);
+	g_signal_connect(terminalWindow,"destroy",G_CALLBACK(gtk_main_quit),NULL);
 
 	// Load signals from builder
 	gtk_builder_connect_signals(builder, NULL);
@@ -185,13 +202,17 @@ int main(int argc, char **argv)
 	decWindowFixed = GTK_WIDGET(gtk_builder_get_object(builder, "decWindowFixed"));
 	encWindowFixed = GTK_WIDGET(gtk_builder_get_object(builder, "encWindowFixed"));
 
+	terminalWindowFixed = GTK_WIDGET(gtk_builder_get_object(builder,"terminalWindowFixed"));
+
 	mainMenu = GTK_WIDGET(gtk_builder_get_object(builder, "mainMenu"));
 	secondMenu = GTK_WIDGET(gtk_builder_get_object(builder, "secondMenu"));
 	decMenu = GTK_WIDGET(gtk_builder_get_object(builder, "decMenu"));
 	encMenu = GTK_WIDGET(gtk_builder_get_object(builder, "encMenu"));
 
+	terminalMenu = GTK_WIDGET(gtk_builder_get_object(builder,"terminalMenu"));
+
 	// Buttons
-	
+
 	// main
 	buttonSave = GTK_WIDGET(gtk_builder_get_object(builder, "buttonSave"));
 	buttonLoad = GTK_WIDGET(gtk_builder_get_object(builder, "buttonLoad"));
@@ -210,9 +231,35 @@ int main(int argc, char **argv)
 	// enc
 	encButton = GTK_WIDGET(gtk_builder_get_object(builder, "encButton"));
 
-	// Display the ui
-	gtk_widget_show(mainWindow);
+	// terminalWindow
+	textView = gtk_text_view_new();
+	textbuffer1 = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textView));
+	gtk_text_buffer_set_text(textbuffer1,"Hello, this is some text",-1);
+	gtk_text_view_set_buffer(textView,textbuffer1);
 
+	/* Change default font and color throughout the widget */
+	provider = gtk_css_provider_new();
+	gtk_css_provider_load_from_data(provider,"textview { font: 15px serif;color: green;}",-1,NULL);
+	context = gtk_widget_get_style_context (textView);
+	gtk_style_context_add_provider (context,
+			GTK_STYLE_PROVIDER (provider),
+			GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+	/* Change left margin throughout the widget */
+	gtk_text_view_set_left_margin (GTK_TEXT_VIEW (textView), 30);
+
+	/* Use a tag to change the color for just one part of the widget */
+	tag = gtk_text_buffer_create_tag (textbuffer1, "blue_foreground",
+			"foreground", "blue",
+			NULL);
+	gtk_text_buffer_get_iter_at_offset (textbuffer1, &start, 7);
+	gtk_text_buffer_get_iter_at_offset (textbuffer1, &end, 12);
+	gtk_text_buffer_apply_tag (textbuffer1, tag, &start, &end);
+
+
+	// Display the ui
+	//gtk_widget_show(mainWindow);
+	gtk_widget_show(terminalWindow);
 	// Wait the ui closed
 	gtk_main();
 
