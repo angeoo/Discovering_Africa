@@ -37,9 +37,10 @@ int* QR(SDL_Surface *surface, int mod_size)
     Uint8 r,g,b;
     int size=(int)(w/mod_size)*(int)(w/mod_size);
     int* mat=calloc(size,sizeof(int));
-
+    if (mat==NULL)
+	    errx(1,"malloc()");
     int ix=0;
-    for (int i=mod_size/2; i<h && ix<(w/mod_size) ; i+=mod_size )
+    for (int i=mod_size/2; i<h  && ix<(w/mod_size) ; i+=mod_size )
     {
         int iy=0;
         for (int j=mod_size/2; j<w && iy<(w/mod_size); j+=mod_size )
@@ -47,7 +48,7 @@ int* QR(SDL_Surface *surface, int mod_size)
             pixel=getpixel(surface,i,j);
             SDL_GetRGB(pixel,surface->format,&r,&g,&b);
             if (r==0){
-                *(mat+(iy*(w/mod_size)+ix))=1;
+                *(mat+(ix*(w/mod_size)+iy))=1;
             }
             iy++;
         }
@@ -137,10 +138,10 @@ int main (int argc, char *argv[])
     //int *data_matrix=mat_data(data,w/size);
     for (int i=0; i<w/size; i++){
 	    for (int j=0;j<w/size;j++){
-		    if (data[i*size+j]<0)
-			    printf("%d |",data[i*size+j]);
+		    if (data[i*w/size+j]<0)
+			    printf("%d |",data[i*w/size+j]);
 		    else
-			    printf(" %d |",data[i*size+j]);
+			    printf(" %d |",data[i*w/size+j]);
 		    /*if (i==25)
 			    printf("\n");*/
 	    }

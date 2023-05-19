@@ -24,16 +24,6 @@ int *BitStream(char *input)
 			bitstream[g-j]=input[i]>>j & 1;
 		g+=8;
 	}
-	if (((len*8)+12)%8!=0){
-		size_t k=(len*8)+12+((len*8)+12)%8;
-		int *Bitstream=realloc(bitstream,k*sizeof(int));
-		if (Bitstream==NULL)
-			errx(1,"realloc()");
-		for(size_t i=(len*8)+12; i<k; i++)
-			Bitstream[i]=0;
-		return Bitstream;
-	}
-
 	//determine the number of pad_codeword to add
 	/*int index=0;
 	while (((12+(len*8))+index)%8!=0)
@@ -69,15 +59,14 @@ int main (int argc, char* argv[])
 	if (argc!=2)
 		errx(1,"too many arguments");
 	int *bitstream=BitStream(argv[1]);
-	size_t len=strlen(argv[1]);
-	size_t k=12+(len*8);
-	size_t p=k%8;
-	for (size_t i=0; i<k+p; i++)
+	int len=strlen(argv[1]);
+	//int k=19;
+	for (int i=0; i<12+(len*8); i++)
 	{
 		if (i==12)
 			printf("  ");
-		if (i==k)
-			printf("  ");
+		/*if (i>=12+(len*8))
+			printf("  ");*/
 		printf("%d", bitstream[i]);
 	}
 	printf("\n");
