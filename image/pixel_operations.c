@@ -82,8 +82,8 @@ void update_surface(SDL_Surface* screen, SDL_Surface* image)
 
 void draw_module(SDL_Surface *output, int i, int j, Uint32 pixel, int m){
 
-	for(int x=i;x<m;x++){
-		for(int y=j;y<m;y++){
+	for(int x=i;x<i+m;x++){
+		for(int y=j;y<j+m;y++){
 			put_pixel(output,x,y,pixel);
 		}
 	}
@@ -109,8 +109,8 @@ void new_image(int* mat, int size, char* filename, int m){
 			if(mat[u*size+v]==1){
 				draw_module(output,u*m,v*m,black,m);
 			}
-
-			draw_module(output,u*m,v*m,white,m);
+			else
+				draw_module(output,u*m,v*m,white,m);
 
 		}
 	}
