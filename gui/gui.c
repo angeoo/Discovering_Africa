@@ -47,16 +47,8 @@ GtkWidget *encButton;
 
 // terminalWindow
 GtkWidget *buttonExit4;
-GtkTextBuffer* textbuffer1;
-GtkWidget *textView;
-
-GtkTextIter start,end;
-PangoFontDescription *font_desc;
-GdkRGBA rgba;
-GtkTextTag *tag;
-GtkCssProvider *provider;
-GtkStyleContext *context;
-
+GtkWidget *nextButton;
+int size = 21;
 // Bakcground image
 GtkWidget *bg_image;
 
@@ -232,32 +224,23 @@ int main(int argc, char **argv)
 	encButton = GTK_WIDGET(gtk_builder_get_object(builder, "encButton"));
 
 	// terminalWindow
-	textView = gtk_text_view_new();
-	textbuffer1 = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textView));
-	gtk_text_buffer_set_text(textbuffer1,"Hello, this is some text",-1);
-	gtk_text_view_set_buffer(textView,textbuffer1);
+	
+	//size = 21;
+	nextButton = GTK_WIDGET(gtk_builder_get_object(builder,"nextButton"));
+	GtkWidget* test[size*size];
+	
+	char name[] = ".";
 
-	/* Change default font and color throughout the widget */
-	provider = gtk_css_provider_new();
-	gtk_css_provider_load_from_data(provider,"textview { font: 15px serif;color: green;}",-1,NULL);
-	context = gtk_widget_get_style_context (textView);
-	gtk_style_context_add_provider (context,
-			GTK_STYLE_PROVIDER (provider),
-			GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-
-	/* Change left margin throughout the widget */
-	gtk_text_view_set_left_margin (GTK_TEXT_VIEW (textView), 30);
-
-	/* Use a tag to change the color for just one part of the widget */
-	tag = gtk_text_buffer_create_tag (textbuffer1, "blue_foreground",
-			"foreground", "blue",
-			NULL);
-	gtk_text_buffer_get_iter_at_offset (textbuffer1, &start, 7);
-	gtk_text_buffer_get_iter_at_offset (textbuffer1, &end, 12);
-	gtk_text_buffer_apply_tag (textbuffer1, tag, &start, &end);
-
-
-	// Display the ui
+	for(int i = 0;i<size;i++){
+		//me[0] = '0'+i;
+		for(int j =0;j<size;j++){
+		
+		test[i*size+j] = gtk_button_new_with_label(name);
+		gtk_widget_set_size_request(test[i*size+j],30,30);
+		gtk_fixed_put(terminalWindowFixed,test[i*size+j],50+i*55,j*45+50);
+		gtk_widget_show(test[i*size+j]);
+		}
+	}
 	//gtk_widget_show(mainWindow);
 	gtk_widget_show(terminalWindow);
 	// Wait the ui closed

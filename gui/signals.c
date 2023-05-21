@@ -90,7 +90,14 @@ void on_goToDecode_clicked(GtkWidget *widget, gpointer *userdata){
 	goToDecode();
 }
 
+// terminalWindow
 
+
+void on_nextButton_clicked(GtkWidget *widget,gpointer *userdata){
+
+	//TODO
+
+}
 
 
 

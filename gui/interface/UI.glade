@@ -383,7 +383,6 @@ DB Size : 230 MB</property>
       </object>
     </child>
   </object>
-  <object class="GtkTextBuffer" id="textbuffer1"/>
   <object class="GtkWindow" id="terminalWindow">
     <property name="can-focus">False</property>
     <property name="default-width">440</property>
@@ -468,19 +467,21 @@ DB Size : 230 MB</property>
           </object>
         </child>
         <child>
-          <object class="GtkTextView" id="TextView1">
-            <property name="width-request">300</property>
-            <property name="height-request">200</property>
+          <object class="GtkButton" id="nextButton">
+            <property name="label" translatable="yes">Next</property>
+            <property name="width-request">40</property>
+            <property name="height-request">40</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
-            <property name="buffer">textbuffer1</property>
+            <property name="receives-default">True</property>
           </object>
           <packing>
-            <property name="x">210</property>
-            <property name="y">27</property>
+            <property name="x">524</property>
+            <property name="y">201</property>
           </packing>
         </child>
       </object>
     </child>
   </object>
+  <object class="GtkTextBuffer" id="textbuffer1"/>
 </interface>
