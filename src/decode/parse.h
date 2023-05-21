@@ -13,9 +13,11 @@ typedef struct
 	char* finalmsg;
 
 }parser;
+
+
 void Prettprint(int* arrd ,int qrsize,parser w);
 
-void getall(int* arrd , int tot , int qrsize);
+void getall(parser* w , int* arrd , int tot , int qrsize);
 
 int bintoint(int* read , int start , int len) ;
 

@@ -1,314 +1,317 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "parse.h"
-
-
-
-
-
-void getup(parser* w,int* arrd  ,int tot,int qrsize)
+int convertbittoint(int* seq , int gap) // convert a sequence of gap bits to an int/ sens contraire  
 {
-	while (w->y>=0 && arrd[(w->y)*qrsize+ w->x]!=-1 && arrd[(w->y)*qrsize+ w->x]!=-3 && w->count!=tot)
-	{
-		int tmp = arrd[(w->y)*qrsize+ w->x];
-		getchar();
-		if(tmp!=-2)
-		{
-			printf("x = %i | y = %i  | count = %i  => res = %i\n",w->x , w->y ,w->count, tmp);
-			w->resultat[w->count]=tmp;
-			w->xs[w->count]=w->x;
-			w->ys[w->count]=w->y;
-			w->count = w->count +1 ;
-			Prettprint(arrd , qrsize , *w);
-			if (w->count==tot)
-			{
-				break;
-			}
-		}
-		w->x=w->x-1;
-		tmp = arrd[(w->y)*qrsize+w->x];
-		getchar();
-		if (tmp!=-2)
-		{
-			
-			printf("x = %i | y = %i  | count = %i => res = %i\n",w->x , w->y ,w->count ,  tmp);
-			w->resultat[w->count]=tmp;
-			w->xs[w->count]=w->x;
-			w->ys[w->count]=w->y;
-			w->count = w->count + 1 ;
-			Prettprint(arrd , qrsize , *w );
-		}
-		w->x= w->x + 1;
-		w->y = w->y -1;
-		
-	}
-	w->y = w->y +1;
-	w->x=w->x-2;
-	return ;
-
-}
-
-void getdown(parser* w ,int *arrd  , int tot,int qrsize)
-{
-
-
-	while (w->y<qrsize && arrd[(w->y * qrsize)+w->x]!=-1 && arrd[(w->y * qrsize)+w->x]!=-3 && w->count!=tot)
-	{
-		int tmp = arrd[(w->y * qrsize) +w->x];
-		getchar();
-		if(tmp!=-2)
-		{
-			printf("x = %i | y = %i | count = %i => res = %i\n",w->x , w->y , w->count,tmp);
-			w->resultat[w->count]=tmp;
-			w->xs[w->count]=w->x;
-			w->ys[w->count]=w->y;
-			w->count = w->count +1 ;
-			Prettprint(arrd , qrsize , *w );
-
-
-
-			if (w->count==tot)
-			{
-
-				break;
-			}
-		}
-		w->x=w->x-1;
-		tmp = arrd[(w->y * qrsize)+w->x];
-		getchar();
-		
-		if(tmp!=-2)
-		{
-			printf("x = %i | y = %i | count = %i => res = %i \n",w->x , w->y ,w->count ,  tmp);
-			w->resultat[w->count]=tmp;
-			w->xs[w->count]=w->x;
-			w->ys[w->count]=w->y;
-			w->count = w->count + 1 ;
-			Prettprint(arrd , qrsize , *w );
-		}
-		w->x=w->x+1;
-		w->y = w->y +1;
-	}
-	w->y = w->y -1;
-	w->x = w->x-2;
-	return ;
-
-}
-
-void fixpos(parser* w)
-{
-	w->x = w->x+2;
-	w->y = w->y-1;
-
-}
-
-void putup(parser* w,int* arrd  ,int tot,int qrsize)
-{
-    while (w->y>=0 && arrd[(w->y)*qrsize+ w->x]!=-1 && arrd[(w->y)*qrsize+ w->x]!=-3 && w->count!=tot)
+    int res=0;   //resultat
+    int m=1;     //multiplicatuer
+    for(int c=0 ; c<gap ; c++)
     {
-        int tmp = arrd[(w->y)*qrsize+ w->x];
-        getchar();
-        if(tmp!=-2)
-        {
-            arrd[(w->y)*qrsize+w->x]=w->resultat[w->count];
-            w->xs[w->count]=w->x;
-            w->ys[w->count]=w->y;
-            w->count = w->count +1 ;
-            Prettprintv2(arrd,qrsize,*w);
+        res = res+ seq[gap-1-c]*m;
+        m=m*2;
+    }
+    return res;
+}
+
+
+void storemsg(parser* w)
+{
+    if(w->count-12 > 0 && (w->count-12)%8==0 )
+    {
+        int tmpo=convertbittoint(w->resultat+w->count -8 ,8);
+        printf("char decoded to int = %i\n",tmpo);
+        w->finalmsg[((w->count-12) /8)-1 ] = (char)tmpo;
+        printf("char is %c \n", (char)tmpo);
+    }
+    else
+    {
+        printf("searching word is not ready");
+    }
+}
+
+
+// w      : parseur 
+// arrd   : the 1D array containing the QR code
+// tot    : number of cases to parse
+// qrsize : lenght or width of the QR code 
+
+void getup(parser* w , int* arrd , int tot , int qrsize)
+{
+    while(w->count<tot)                              //while the parser hasnt done all the cases needed
+    {
+        int val = arrd[(w->y)*qrsize + w->x];
+
+        if(val!=-2 )                             //if we are not on a case to ignore
+        {               
+            w->xs[w->count] = w->x;          //store the case'X that we saw
+            w->ys[w->count] = w->y;          //store the case'Y that we saw
+            w->resultat[w->count] = val;     //store the value in the result array
+            w->count = w->count +1;          //we add to count 1;
+            storemsg(w);
             getchar();
-            if (w->count==tot)
-            {
-                break;
-            }
+            NormalPrint(arrd,qrsize,w);
+            parseprint(w);
         }
-        w->x=w->x-1;
-        tmp = arrd[(w->y)*qrsize+w->x];
-        if (tmp!=-2)
+        if(w->count>=tot)                        //break if weve done all the cases
         {
-            arrd[(w->y)*qrsize+w->x]=w->resultat[w->count];
-            w->xs[w->count]=w->x;
-            w->ys[w->count]=w->y;
-            w->count = w->count + 1 ;
-            Prettprintv2(arrd,qrsize,*w);
-
+            break;
         }
-        w->x= w->x + 1;
-        w->y = w->y -1;
-
-    }
-    w->y = w->y +1;
-    w->x=w->x-2;
-    return ;
-}
-void putdown(parser* w ,int *arrd  , int tot,int qrsize)
-{
-
-
-    while (w->y<qrsize && arrd[(w->y * qrsize)+w->x]!=-1 && arrd[(w->y * qrsize)+w->x]!=-3 && w->count!=tot)
-    {
-        int tmp = arrd[(w->y * qrsize) +w->x];
-        getchar();
-        if(tmp!=-2)
+        w->x = w->x - 1;                        //go 1 case to the left by decrementing x
+        val = arrd[(w->y)*qrsize + w->x];       //getting the value of the next case
+        if(val!=-2)
         {
-            arrd[(w->y)*qrsize+w->x]=w->resultat[w->count];
-            w->xs[w->count]=w->x;
-            w->ys[w->count]=w->y;
-            w->count = w->count +1 ;
-            Prettprintv2(arrd,qrsize,*w);
+            w->xs[w->count] = w->x;        //same as before
+            w->ys[w->count] = w->y;
+            w->resultat[w->count] = val;
+            w->count = w->count + 1;
+            storemsg(w);
             getchar();
-            if (w->count==tot)
-            {
-
-                break;
-            }
+            NormalPrint(arrd,qrsize,w);
+            parseprint(w);
         }
-        w->x=w->x-1;
-        tmp = arrd[(w->y * qrsize)+w->x];
-
-        if(tmp!=-2)
+        if(w->y-1<0 || arrd[(w->y -1)*qrsize + w->x]==-3)
         {
-            arrd[(w->y)*qrsize+w->x]=w->resultat[w->count];
-            w->xs[w->count]=w->x;
-            w->ys[w->count]=w->y;
-            Prettprintv2(arrd,qrsize,*w);
-            w->count = w->count + 1 ;
+            w->x=w->x-1;                                           //if outside , we push to the left (well go down)
+            break;
         }
-        w->x=w->x+1;
-        w->y = w->y +1;
+        else                                               
+        {
+            w->x = w->x +1;                                        //if inside we just update to go up 
+            w->y = w->y-1;
+            val=arrd[(w->y)*qrsize+w->x];
+        }
     }
-    w->y = w->y -1;
-    w->x = w->x-2;
-    return ;
-
 }
 
-void putall(int* arrd , int tot , int qrsize, int* toput)
+void getdown(parser* w , int* arrd , int tot , int qrsize)
 {
-    //defining parse struct
-    parser mypars;
-    mypars.x = qrsize-1;
-    mypars.y = qrsize-1;
-    mypars.xs =(int*) malloc(tot*sizeof(int));
-    mypars.ys =(int*) malloc(tot*sizeof(int));
-    mypars.finalmsg = calloc(50,sizeof(char));
-    mypars.resultat = toput;
-    mypars.count =0;
-    mypars.tot=tot;
 
-
-    
-    //printing first
-    Prettprint(arrd,qrsize,mypars);
-
-    while(mypars.count!=tot)
+    while(w->count<tot)                              //while the parser hasnt done all the cases needed
     {
-        putup(&mypars,arrd,tot,qrsize);
-        putdown(&mypars,arrd,tot,qrsize);
-    }
-    free(mypars.resultat);
-    free(mypars.xs);
-    free(mypars.ys);
+        int val = arrd[(w->y)*qrsize + w->x];
 
+        if(val!=-2 )                             //if we are not on a case to ignore
+        {               
+            w->xs[w->count] = w->x;          //store the case'X that we saw
+            w->ys[w->count] = w->y;          //store the case'Y that we saw
+            w->resultat[w->count] = val;     //store the value in the result array
+            w->count = w->count +1;          //we add to count 1;
+            storemsg(w);
+            getchar();
+            NormalPrint(arrd,qrsize,w);
+            parseprint(w);
+        }
+        //getchar();
+        if(w->count>=tot)                        //break if weve done all the cases
+        {
+            break;
+        }
+        w->x = w->x - 1;                        //go 1 case to the left by decrementing x
+        val = arrd[(w->y)*qrsize + w->x];       //getting the value of the next case
+        if(val!=-2)
+        {
+            w->xs[w->count] = w->x;        //same as before
+            w->ys[w->count] = w->y;
+            w->resultat[w->count] = val;
+            w->count = w->count + 1;
+            storemsg(w);
+            getchar();
+            NormalPrint(arrd,qrsize,w);
+            parseprint(w);
+        }
+        //getchar();
+        if(w->y + 1 >=qrsize  )         //check that we are not outside the data
+        {
+            w->x=w->x-1;                                           //if outside , we push to the left (well go down)
+            break;
+        }
+        else                                               
+        {
+            w->x = w->x +1;                                        //if inside we just update to go down 
+            w->y = w->y+1;
+            val=arrd[(w->y)*qrsize+w->x];
+        }
+    }
+}
+
+void getall(parser* w , int* arrd , int tot , int qrsize)
+{
+    while(w->count<tot)
+    {
+        getup(w,arrd,tot,qrsize);
+        getdown(w,arrd,tot,qrsize);
+    }
+    return;
+}
+
+void putup(parser* w , int* arrd , int tot , int qrsize)
+{
+    while(w->count<tot)                              //while the parser hasnt done all the cases needed
+    {
+        int val = arrd[(w->y)*qrsize + w->x];
+
+        if(val!=-2 )                             //if we are not on a case to ignore
+        {
+            w->xs[w->count] = w->x;          //store the case'X that we saw
+            w->ys[w->count] = w->y;          //store the case'Y that we saw
+            arrd[w->y*qrsize + w->x]=w->resultat[w->count];     //store the value in the qrcode matrix
+            w->count = w->count +1;          //we add to count 1;
+            getchar();
+            NormalPrint(arrd,qrsize,w);
+            parseprint(w);
+ 
+        }
+        //getchar();
+        if(w->count>=tot)                        //break if weve done all the cases
+        {
+            break;
+        }
+        w->x = w->x - 1;                        //go 1 case to the left by decrementing x
+        val = arrd[(w->y)*qrsize + w->x];       //getting the value of the next case
+        if(val!=-2)
+        {
+            w->xs[w->count] = w->x;        //same as before
+            w->ys[w->count] = w->y;
+            arrd[w->y*qrsize + w->x]=w->resultat[w->count];
+            w->count = w->count + 1;
+            getchar();
+            NormalPrint(arrd,qrsize,w);
+            parseprint(w);
+                    }
+        //getchar();
+        if(w->y - 1 <0 || arrd[(w->y - 1)*qrsize + w->x]==-3 )         //check that we are not outside the data
+        {
+            w->x=w->x-1;                                           //if outside , we push to the left (well go down)
+            break;
+        }
+        else
+        {
+            w->x = w->x +1;                                        //if inside we just update to go up 
+            w->y = w->y-1;
+            val=arrd[(w->y)*qrsize+w->x];
+        }
+    }
     return;
 }
 
 
-void getall( int* arrd , int tot, int qrsize)
+
+
+void putdown(parser* w , int* arrd , int tot , int qrsize)
 {
-    //defining everything
-    parser mypars;
-    mypars.x = qrsize-1;
-    mypars.y = qrsize-1;
-    mypars.resultat =(int*) malloc(tot*sizeof(int));
-    mypars.xs =(int*) malloc(tot*sizeof(int));
-    mypars.ys =(int*) malloc(tot*sizeof(int));
-    mypars.count = 0 ;
-    mypars.tot = tot;
-
-    //printing first
-    Prettprint(arrd,qrsize,mypars);
-    //getting the mode
-    getup(&mypars,arrd,4,qrsize);
-    fixpos(&mypars);
-    //getting the character len
-    getup(&mypars,arrd,12,qrsize);
-    fixpos(&mypars);
-    //calculating len
-    int len = bintoint(mypars.resultat,4,8);
-    mypars.lens=len;
-    mypars.finalmsg = (char*) calloc(((len+1)*8),sizeof(char));
-    mypars.finalmsg[len]='\0';
-    int total = mypars.count+ 8*len ;
-    mypars.ys = (int*) realloc(mypars.ys,total);
-    mypars.xs = (int*) realloc(mypars.xs,total);
-    mypars.tot=total;
-
-    while (mypars.count!=total)
+    while(w->count<tot)                              //while the parser hasnt done all the cases needed
     {
-        getup(&mypars,arrd,total,qrsize);
+        int val = arrd[(w->y)*qrsize + w->x];
 
-        getdown(&mypars,arrd,total,qrsize);
+        if(val!=-2 )                             //if we are not on a case to ignore
+        {
+            w->xs[w->count] = w->x;          //store the case'X that we saw
+            w->ys[w->count] = w->y;          //store the case'Y that we saw
+            arrd[w->y*qrsize + w->x]=w->resultat[w->count];     //store the value in the qrcode matrix
+            w->count = w->count +1;          //we add to count 1;
+            getchar();
+            NormalPrint(arrd,qrsize,w);
+            parseprint(w);
+            
+        }
+        if(w->count>=tot)                        //break if weve done all the cases
+        {
+            break;
+        }
+        w->x = w->x - 1;                        //go 1 case to the left by decrementing x
+        val = arrd[(w->y)*qrsize + w->x];       //getting the value of the next case
+        if(val!=-2)
+        {
+            w->xs[w->count] = w->x;        //same as before
+            w->ys[w->count] = w->y;
+            arrd[w->y*qrsize + w->x]=w->resultat[w->count];
+            w->count = w->count + 1;
+            getchar();
+            NormalPrint(arrd,qrsize,w);
+            parseprint(w);
+                   }
+        if(w->y + 1  >=qrsize )         //check that we are not outside the data
+        {
+            w->x=w->x-1;                                           //if outside , we push to the left (well go down)
+            break;
+        }
+        else
+        {
+            w->x = w->x +1;                                        //if inside we just update to go up
+            w->y = w->y+1;
+            val=arrd[(w->y)*qrsize+w->x];
+        }
+    }
+    return;
+}
+
+
+
+
+
+void putall(parser* w , int*arrd , int tot , int qrsize)
+{
+    while(w->count<tot)
+    {
+        putup(w,arrd,tot,qrsize);
+        putdown(w,arrd,tot,qrsize);
 
     }
-    free(mypars.resultat);
-    free(mypars.xs);
-    free(mypars.ys);
-    free(mypars.finalmsg);
     return ;
 }
 
 
 
 
+
+   
 int bintoint(int* read , int start , int len )
 {
-	int c= 1 ;
-	int res = 0 ; 
+    int c= 1 ;
+    int res = 0 ; 
 
-	for(int e =start+len-1; e>=start ; e--)
-	{
-		res = res + c*read[e];
-		c=c*2;
+    for(int e =start+len-1; e>=start ; e--)
+    {
+        res = res + c*read[e];
+        c=c*2;
 
-	}
-	return res;
-
-
+    }
+    return res;
 }
 
 
 void getencodingmode(int res)
 {
-	printf("encoding mode is : ");
-	if(res==7)
-	{
-		printf("ECI");
-	}
-	if(res==1)
-	{
-		printf("Numeric");
-	}
-	if(res==2)
-	{
-		printf("Alphanumeric");
-	}
-	if(res==4)
-	{
-		printf("8-bit Byte");
-	}
-	if(res==8)
-	{
-		printf("Kanji");
-	}
-	if(res==3)
-	{
-		printf("Structured Apped");
-	}
-	if(res==0)
-	{
-		printf("end of message");
-	}
-	return;
+    printf("encoding mode is : ");
+    if(res==7)
+    {
+        printf("ECI");
+    }
+    if(res==1)
+    {
+        printf("Numeric");
+    }
+    if(res==2)
+    {
+        printf("Alphanumeric");
+    }
+    if(res==4)
+    {
+        printf("8-bit Byte");
+    }
+    if(res==8)
+    {
+        printf("Kanji");
+    }
+    if(res==3)
+    {
+        printf("Structured Apped");
+    }
+    if(res==0)
+    {
+        printf("end of message");
+    }
+    return;
 }
 
 

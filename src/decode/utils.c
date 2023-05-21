@@ -150,7 +150,30 @@ int main (int argc, char *argv[])
         int* data = QR(qr,size);
         int* data_matrix=mat_data(data,w/size);
         Rmask(data_matrix,w/size,data);
-        getall(data_matrix,100,w/size);
+
+
+
+
+        parser* toget = malloc(sizeof(parser));
+        toget->x=w/size-1;
+        toget->y=w/size-1;
+        toget->resultat=calloc(200, sizeof(int));
+        toget->count=0;
+        toget->xs=malloc(200*sizeof(int));
+        toget->ys=malloc(200*sizeof(int));
+        toget->tot=200;
+        toget->finalmsg=calloc(200+1,sizeof(char));
+        toget->finalmsg[200]='\0';
+        getall(toget,data_matrix,200,w/size);
+
+        int mode = convertbittoint(toget->resultat,4);
+        printf("mode = %i\n",mode);
+        getencodingmode(mode);
+
+        int lens = convertbittoint(toget->resultat+4,8);
+        printf("lens = %i\n",lens);
+
+        //getall(data_matrix,100,w/size);
     }
     else
     {
@@ -164,17 +187,63 @@ int main (int argc, char *argv[])
 
 
         //getting the word as a string
-        printf("enter your word");
+        printf("enter your word :  ");
         char* word  = malloc(sizeof(char)*100);
         scanf("%s",word);
 
+        int c=0;
+        while(word[c]!='\0')
+        {
+            c=c+1;
+        }
+        int size =21;
+
+
+        int totals =8 * c + 12;
         //word to binary
-        int* res = BitStream(word);
+        int* res2 = BitStream(word);
+        int* county = malloc(sizeof(int));
+        *county = 0;
+        int* res = pad_codewords(res2,totals,county);
+        totals += *county*8;
+        printf("totals = %i\n",totals);
+        parser* toput = malloc(sizeof(parser));
+        toput->x=size-1;
+        toput->y=size-1;
+        toput->resultat = res;
+        toput->count=0;
+        toput->xs = malloc(totals*sizeof(int));
+        toput->ys = malloc(totals*sizeof(int));
+        toput->tot=  totals;
+        putall(toput , negcreated , totals, size);
+        parser* toget = malloc(sizeof(parser));
+        toget->x=size-1;
+        toget->y=size-1;
+        toget->resultat=calloc(totals, sizeof(int));
+        toget->count=0;
+        toget->xs=malloc(totals*sizeof(int));
+        toget->ys=malloc(totals*sizeof(int));
+        toget->tot=totals-(*county * 8);
+        toget->finalmsg=calloc(totals+1,sizeof(char));
+        toget->finalmsg[totals]='\0';
+        getall(toget,negcreated,toget->tot,size);
 
+        int* finres = creer_matric();
 
-        putall(negcreated,19*8+12,21,res);
-        int tot = 100;
-        getall(negcreated,tot,21);
+        RemoveNeg(negcreated , finres,size);
+
+        printf("final msg is : %s \n" ,toget->finalmsg);
+
+        getchar();
+        for(int y=0; y<size ; y++)
+        {
+            for(int x =0 ; x<size; x++)
+            {
+                printf(" %i",finres[y*size + x]);
+            }
+            printf("\n");
+        }
+
 
 
 
