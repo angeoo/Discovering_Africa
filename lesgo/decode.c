@@ -1,3 +1,4 @@
+//pipi
 #include "decode.h"
 
 int convertbittoint(int* seq , int gap) // convert a sequence of gap bits to an int/ sens contraire  
