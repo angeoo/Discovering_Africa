@@ -163,63 +163,48 @@ int main (int argc, char *argv[])
         //ajouter les neg
         int* negcreated = mat_data(created,21);
 
-
-
         //getting the word as a string
         printf("enter your word :  ");
         char* word  = malloc(sizeof(char)*100);
         scanf("%s",word);
 
+	//calculating the len
         int c=0;
         while(word[c]!='\0')
         {
             c=c+1;
         }
+	//totals is the len og the string
+	int totals =8 * c + 12;
+
+	//qr size is 
         int size =21;
 
-
-        int totals =8 * c + 12;
-        //word to binary
+	
+        //Fill up the bitstream with the word
         int* res2 = BitStream(word);
         int* county = malloc(sizeof(int));
         *county = 0;
         int* res = pad_codewords(res2,totals,county);
+	//updating the len of the bitstream
         totals += *county*8;
-        printf("totals = %i\n",totals);
-        parser* toput = malloc(sizeof(parser));
-        toput->x=size-1;
-        toput->y=size-1;
-        toput->resultat = res;
-        toput->count=0;
-        toput->xs = malloc(totals*sizeof(int));
-        toput->ys = malloc(totals*sizeof(int));
-        putall(toput , negcreated , totals, size);
-        parser* toget = malloc(sizeof(parser));
-        toget->x=size-1;
-        toget->y=size-1;
-        toget->resultat=calloc(totals, sizeof(int));
-        toget->count=0;
-        toget->xs=malloc(totals*sizeof(int));
-        toget->ys=malloc(totals*sizeof(int));
-        toget->finalmsg=calloc(totals+1,sizeof(char));
-        toget->finalmsg[totals]='\0';
-        getall(toget,negcreated,totals-(*county*8),size);
 
+	//Filling the QR code
+	putQRcode(negcreated,size,res,totals);
+
+	//Retrieving the info
+	getQRcode(negcreated,size);
+       	
+	//creer matrice vide
         int* finres = creer_matric();
 
+	//enlever les negatifs
         RemoveNeg(negcreated , finres,size);
 
-        printf("final msg is : %s \n" ,toget->finalmsg);
-
+	//imprimer la matrice
         getchar();
-        for(int y=0; y<size ; y++)
-        {
-            for(int x =0 ; x<size; x++)
-            {
-                printf(" %i",finres[y*size + x]);
-            }
-            printf("\n");
-        }
+        
+	NoParsePrint(finres,size);
 
 
 

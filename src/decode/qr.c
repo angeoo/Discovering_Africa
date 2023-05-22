@@ -314,17 +314,6 @@ int* creer_matric(){
 	placer_motif_recherche(matr + 294, 21);
 	placer_motif_synchronisation(matr+6*22,21);
 	placer_bit_format(0,matr,21);
-
-	int i = 0;
-	for(int x = 0; x<21;x++)
-	{
-		for(int y=0;y<21;y++)
-		{
-			printf("%i ",matr[x*21+y]);
-		}
-		printf("\n");
-	}
-
 	return matr;
 
 }

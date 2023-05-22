@@ -282,10 +282,9 @@ void RemoveNeg(int* init , int* res , int size)
 
 void getQRcode(int* QR , int size)
 {
-	printf("hey\n");	
 	//Malloc the parser
 	parser* w = malloc(sizeof(parser));
-
+	w->tot = 12;
 	w->count=0;
 
 	//Inititating the Parser
@@ -300,26 +299,29 @@ void getQRcode(int* QR , int size)
 	w->resultat=calloc(12,sizeof(int));
 
 	//get the encoding mode and size
-	printf("hey\n");
 	getall(w,QR,12,size);
-	printf("stopped\n");
-	getchar();
 
 	//getting the len
 	int len = convertbittoint(w->resultat+4,8)*8 +12;
+	int lens = (len-12)/8;
+
 
 	//mallocing the msg 
-	w->finalmsg=malloc(len*sizeof(char) + 1);
-	w->finalmsg[len]='\0';
+	w->finalmsg=malloc(lens*sizeof(char) + 1);
+	w->finalmsg[lens]='\0';
 
 	//reallocing the resultat array and ys and xs
 	w->resultat= realloc(w->resultat,len*sizeof(int));
 	w->ys=realloc(w->ys,len*sizeof(int));
 	w->xs=realloc(w->xs,len*sizeof(int));
+	
+	//update tot
+	w->tot =len;
+
 	//getting the rest of the array
 	getall(w,QR,len,size);
 
-	printf("final msg is : %s ", w->finalmsg);
+	printf("final msg is : %s \n", w->finalmsg);
 
 
 
@@ -327,6 +329,40 @@ void getQRcode(int* QR , int size)
 	free(w->ys);
 	free(w->resultat);
 	free(w->finalmsg);
+	free(w);
+
+	return;
+
+
+
+}
+
+
+void putQRcode(int* QR , int size, int* toput ,int sizetoput )
+{
+
+	//Malloc the parser
+	parser* w = malloc(sizeof(parser));
+
+	w->count=0;
+	w->tot = sizetoput;
+	//Inititating the Parser
+	
+	w->x=size-1;
+	w->y=size-1;
+
+	//Everything is set to 12 in order to get the size	
+
+	w->xs=malloc(sizeof(int)*sizetoput);
+	w->ys=malloc(sizeof(int)*sizetoput);
+	w->resultat=toput;
+
+	//get the encoding mode and size
+	putall(w,QR,sizetoput,size);
+
+	free(w->xs);
+	free(w->ys);
+	free(w->resultat);
 	free(w);
 
 	return;
