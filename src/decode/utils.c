@@ -151,29 +151,8 @@ int main (int argc, char *argv[])
         int* data_matrix=mat_data(data,w/size);
         Rmask(data_matrix,w/size,data);
 
-
-
-
-        parser* toget = malloc(sizeof(parser));
-        toget->x=w/size-1;
-        toget->y=w/size-1;
-        toget->resultat=calloc(200, sizeof(int));
-        toget->count=0;
-        toget->xs=malloc(200*sizeof(int));
-        toget->ys=malloc(200*sizeof(int));
-        toget->tot=200;
-        toget->finalmsg=calloc(200+1,sizeof(char));
-        toget->finalmsg[200]='\0';
-        getall(toget,data_matrix,200,w/size);
-
-        int mode = convertbittoint(toget->resultat,4);
-        printf("mode = %i\n",mode);
-        getencodingmode(mode);
-
-        int lens = convertbittoint(toget->resultat+4,8);
-        printf("lens = %i\n",lens);
-
-        //getall(data_matrix,100,w/size);
+	//get QR code
+	getQRcode(data_matrix,w/size);
     }
     else
     {
@@ -214,7 +193,6 @@ int main (int argc, char *argv[])
         toput->count=0;
         toput->xs = malloc(totals*sizeof(int));
         toput->ys = malloc(totals*sizeof(int));
-        toput->tot=  totals;
         putall(toput , negcreated , totals, size);
         parser* toget = malloc(sizeof(parser));
         toget->x=size-1;
@@ -223,10 +201,9 @@ int main (int argc, char *argv[])
         toget->count=0;
         toget->xs=malloc(totals*sizeof(int));
         toget->ys=malloc(totals*sizeof(int));
-        toget->tot=totals-(*county * 8);
         toget->finalmsg=calloc(totals+1,sizeof(char));
         toget->finalmsg[totals]='\0';
-        getall(toget,negcreated,toget->tot,size);
+        getall(toget,negcreated,totals-(*county*8),size);
 
         int* finres = creer_matric();
 

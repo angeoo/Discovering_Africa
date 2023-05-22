@@ -13,6 +13,5 @@ int* appendArray(int* dest, int src[], int destSize, int srcSize);
 int* pad_codewords(int* bitstream,size_t len,int* count);
 
 
-void RemoveNeg(int* init , int* res ,int size);
 
 #endif

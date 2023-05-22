@@ -261,55 +261,113 @@ void putall(parser* w , int*arrd , int tot , int qrsize)
 }
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+void RemoveNeg(int* init , int* res , int size)
+{
+	for(int x=0; x<size ; x++)
+	{
+		for(int y =0 ; y<size; y++)
+		{
+			if(init[y*size + x]>0)
+			{
+				res[y*size+x] = init[y*size+x];
+			}
+		}
+	}
+	return;
+}
 
+
+
+
+void getQRcode(int* QR , int size)
+{
+	printf("hey\n");	
+	//Malloc the parser
+	parser* w = malloc(sizeof(parser));
+
+	w->count=0;
+
+	//Inititating the Parser
+	
+	w->x=size-1;
+	w->y=size-1;
+
+	//Everything is set to 12 in order to get the size	
+
+	w->xs=malloc(sizeof(int)*12);
+	w->ys=malloc(sizeof(int)*12);
+	w->resultat=calloc(12,sizeof(int));
+
+	//get the encoding mode and size
+	printf("hey\n");
+	getall(w,QR,12,size);
+	printf("stopped\n");
+	getchar();
+
+	//getting the len
+	int len = convertbittoint(w->resultat+4,8)*8 +12;
+
+	//mallocing the msg 
+	w->finalmsg=malloc(len*sizeof(char) + 1);
+	w->finalmsg[len]='\0';
+
+	//reallocing the resultat array and ys and xs
+	w->resultat= realloc(w->resultat,len*sizeof(int));
+	w->ys=realloc(w->ys,len*sizeof(int));
+	w->xs=realloc(w->xs,len*sizeof(int));
+	//getting the rest of the array
+	getall(w,QR,len,size);
+
+	printf("final msg is : %s ", w->finalmsg);
+
+
+
+	free(w->xs);
+	free(w->ys);
+	free(w->resultat);
+	free(w->finalmsg);
+	free(w);
+
+	return;
+
+
+
+}
 
 
    
-int bintoint(int* read , int start , int len )
-{
-    int c= 1 ;
-    int res = 0 ; 
-
-    for(int e =start+len-1; e>=start ; e--)
-    {
-        res = res + c*read[e];
-        c=c*2;
-
-    }
-    return res;
-}
-
 
 void getencodingmode(int res)
 {
     printf("encoding mode is : ");
     if(res==7)
     {
-        printf("ECI");
+        return("ECI");
     }
     if(res==1)
     {
-        printf("Numeric");
+        return("Numeric");
     }
     if(res==2)
     {
-        printf("Alphanumeric");
+        return("Alphanumeric");
     }
     if(res==4)
     {
-        printf("8-bit Byte");
+        return("8-bit Byte");
     }
     if(res==8)
     {
-        printf("Kanji");
+        return("Kanji");
     }
     if(res==3)
     {
-        printf("Structured Apped");
+        return("Structured Apped");
     }
     if(res==0)
     {
-        printf("end of message");
+        return("end of message");
     }
     return;
 }

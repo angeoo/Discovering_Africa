@@ -120,19 +120,7 @@ int * pad_codewords(int* bitstream,size_t len,int* count){
 	return Bitstream;
 }
 
-void RemoveNeg(int* init , int* res , int size)
-{
-    for(int x=0; x<size ; x++)
-    {
-        for(int y =0 ; y<size; y++)
-        {
-            if(init[y*size + x]>0)
-            {
-                res[y*size+x] = init[y*size+x];
-            }
-        }
-    }
-}
+
 
 
 /*
@@ -177,4 +165,6 @@ int main (int argc, char* argv[])
 	free(Bitstream);
 	return 0;
 }
+
+
 */
