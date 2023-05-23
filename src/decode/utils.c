@@ -40,6 +40,18 @@ int GiveVersion(int len)
 	{
 		return 7;
 	}
+	if(len<=192)
+	{
+		return 8;
+	}
+	if(len<=224)
+	{
+		return 9;
+	}
+	if(len<=259)
+	{
+		return 10;
+	}
 	else
 	{
 		printf("Can't give you a version\n");
