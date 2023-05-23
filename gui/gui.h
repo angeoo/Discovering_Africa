@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <gtk/gtk.h>
 
-void display_image(char* path);
+void displayimage(char* path);
 
 void display_secondWindow();
 

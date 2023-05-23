@@ -1,6 +1,6 @@
 CC ?= gcc
 PKGCONFIG = $(shell which pkg-config)
-CFLAGS = $(shell $(PKGCONFIG) --cflags gtk+-3.0) -w -Wall -Wextra -rdynamic
+CFLAGS = $(shell $(PKGCONFIG) --cflags gtk+-3.0) -Wall -Wextra -rdynamic
 LIBS = $(shell $(PKGCONFIG) --libs gtk+-3.0)
 
 SRC = gui.c signals.c

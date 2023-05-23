@@ -4,7 +4,6 @@
 #include <SDL/SDL.h>
 #include <err.h>
 #include <SDL/SDL_ttf.h>
-#include <SDL/SDL_rotozoom.h>
 #include <SDL/SDL_image.h>
 
 SDL_Surface* digitToSdl(char *str,SDL_Color c){
@@ -15,8 +14,7 @@ SDL_Surface* digitToSdl(char *str,SDL_Color c){
 	//SDL_Color noir = {255,255,255,255};
 	SDL_Surface *texte = TTF_RenderText_Blended(police,str,c);
 
-	texte = zoomSurface(texte,1,1,0);
-
+		
 	TTF_CloseFont(police);
 	TTF_Quit();
 
@@ -48,23 +46,28 @@ void fillgrid(SDL_Surface* output,int *res, int size){
 	}
 }
 
-int main(int argc, char[] argv){
+int main(){
 
-	if(argc!=2){
-		printf("display.c : error argument");
-		return;
-	}
 
-	SDL_Surface *output = SDL_CreateRGBSurface(0,21*54,21*54,32,0,0,0,0);
-	int *mat = calloc(21*21,sizeof(int));
-	for(int i=0;i<21;i++){
-		for(int j=0;j<21;j++){
-			mat[i*21+j] = j%3;
+	int size = 21;
+	SDL_Surface *output = SDL_CreateRGBSurface(0,size*54,size*54,32,0,0,0,0);
+	Uint32 white = SDL_MapRGB(output->format,255,255,255);
+
+	for(int i=0;i<size*54;i++){
+		for(int j=0;j<54*size;j++){
+			put_pixel(output,i,j,white);
 		}
 	}
-	fillgrid(output,mat,21);
 
-	SDL_SaveBMP(output,"fillgrid");
+	int *mat = calloc(size*size,sizeof(int));
+	for(int i=0;i<size;i++){
+		for(int j=0;j<size;j++){
+			mat[i*size+j] = j%3;
+		}
+	}
+	fillgrid(output,mat,size);
+
+	SDL_SaveBMP(output,"fillgrid.bmp");
 	free(mat);
 	free(output);
 	return 0;

@@ -22,7 +22,7 @@ void on_buttonLoad_activate(GtkWidget *widget,gpointer *userdata)
 		filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (p_dialog));
 		g_print("%s\n",filename);
 
-		display_image(filename);
+		displayimage(filename);
 	}
 	gtk_widget_destroy (p_dialog);
 
@@ -98,7 +98,6 @@ void on_nextButton_clicked(GtkWidget *widget,gpointer *userdata){
 	//TODO
 
 }
-
 
 
 

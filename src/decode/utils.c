@@ -328,6 +328,7 @@ int* mat_data (int* matrice , size_t taille )
 int main (int argc, char *argv[])
 {
 
+<<<<<<< Updated upstream
 	init_sdl();
 	if (argc!=2)
 	{
@@ -341,6 +342,23 @@ int main (int argc, char *argv[])
 		int* data = QR(qr,size);
 		int* data_matrix=mat_data(data,w/size);
 		Rmask(data_matrix,w/size,data);
+=======
+	FILE *file = freopen("filename.txt","w",stdout);
+
+    init_sdl();
+    if (argc!=2)
+    {
+        errx(1,"arguments not 2\n");
+    }
+    if (strcmp(argv[1],"1")!=0)
+    {
+        SDL_Surface *qr=load_image(argv[1]);
+        int w=qr->w;
+        int size = module_size(qr);
+        int* data = QR(qr,size);
+        int* data_matrix=mat_data(data,w/size);
+        Rmask(data_matrix,w/size,data);
+>>>>>>> Stashed changes
 
 		//get QR code
 		getQRcode(data_matrix,w/size);
@@ -418,6 +436,7 @@ int main (int argc, char *argv[])
 
 
 
+<<<<<<< Updated upstream
 	//	free(created);
 		free(negcreated);
 		free(word);
@@ -425,4 +444,13 @@ int main (int argc, char *argv[])
 		//free(data_matrix);
 	}
 
+=======
+        free(created);
+        free(negcreated);
+        free(word);
+        //free(data);
+        //free(data_matrix);
+    }
+	fclose(file);
+>>>>>>> Stashed changes
 }

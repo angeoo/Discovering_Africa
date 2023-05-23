@@ -171,6 +171,15 @@ DB Size : 230 MB</property>
     </child>
   </object>
   <object class="GtkFileFilter" id="filefilter1"/>
+  <object class="GtkWindow" id="homeWindow">
+    <property name="can-focus">False</property>
+    <child>
+      <object class="GtkFixed" id="homeWindowFixed">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+      </object>
+    </child>
+  </object>
   <object class="GtkWindow" id="mainWindow">
     <property name="can-focus">False</property>
     <property name="default-width">440</property>
@@ -466,22 +475,56 @@ DB Size : 230 MB</property>
             </child>
           </object>
         </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkWindow" id="testWindow">
+    <property name="can-focus">False</property>
+    <child>
+      <object class="GtkFixed" id="testWindowFixed">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
         <child>
-          <object class="GtkButton" id="nextButton">
-            <property name="label" translatable="yes">Next</property>
-            <property name="width-request">40</property>
-            <property name="height-request">40</property>
+          <object class="GtkBox" id="test1">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
+            <property name="can-focus">False</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
           </object>
           <packing>
-            <property name="x">524</property>
-            <property name="y">201</property>
+            <property name="x">112</property>
+            <property name="y">106</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkCheckButton">
+            <property name="label" translatable="yes">checkbutton</property>
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">False</property>
+            <property name="draw-indicator">True</property>
+          </object>
+          <packing>
+            <property name="x">358</property>
+            <property name="y">103</property>
           </packing>
         </child>
       </object>
     </child>
   </object>
-  <object class="GtkTextBuffer" id="textbuffer1"/>
 </interface>
