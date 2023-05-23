@@ -77,30 +77,28 @@ void NormalPrint(int* qrmat , int qrsize , parser* w)
 	}
 }
 
-
-
-void NoParsePrint(int* matrice, int taille)
+void NoParsePrint(int* matrice, int s)
 {
-	if (taille<22)
+	if (s<22)
 	{
-		for (size_t x = 0 ; x<taille ; x +=1)
+		for (size_t x = 0 ; x<s ; x +=1)
 		{
-			for (size_t y = 0; y<taille ; y+=1)
+			for (size_t y = 0; y<s ; y+=1)
 			{
-				int res=matrice[x*taille+y];
-				if (((x<8)&&(y<8))||((x<8)&&(y>=taille-8))||((x>=taille-8)&&(y<8)))
+				int res=matrice[x*s+y];
+				if (((x<8)&&(y<8))||((x<8)&&(y>=s-8))||((x>=s-8)&&(y<8)))
 				{
 					printf("\x1b[34m %i\x1b[0m",res);
 				}
 				else
 				{
-					if (((((x>7)&&(x<taille-8))&& y==6) ||(((y>7)&&(y<taille-8))&& x==6 )) || (x==taille-8 && y==8))
+					if (((((x>7)&&(x<s-8))&& y==6) ||(((y>7)&&(y<s-8))&& x==6 )) || (x==s-8 && y==8) )
 					{
 						printf("\x1b[31m %i\x1b[0m",res);
 					}
 					else
 					{
-						if(((x==8)&&(( y<=8 && y!=6) || (y>=taille-8))) || ((y==8)&&(x>=taille-7 || x<=8)&& x!=6))
+						if(((x==8)&&(( y<=8 && y!=6) || (y>=s-8))) || ((y==8)&&(x>=s-7 || x<=8)&& x!=6))
 						{
 							printf("\x1b[36m %i\x1b[0m",res);
 						}
@@ -116,38 +114,82 @@ void NoParsePrint(int* matrice, int taille)
 	}
 	else
 	{
-		for (size_t x = 0 ; x<taille ; x +=1)
+		if(s<44)
 		{
-			for (size_t y = 0; y<taille ; y+=1)
+			for (size_t x = 0 ; x<s ; x +=1)
 			{
-				int res=matrice[x*taille+y];
-				if (((x<8)&&(y<8))||((x<8)&&(y>=taille-8))||((x>=taille-8)&&(y<8)))
+				for (size_t y = 0; y<s ; y+=1)
 				{
-					printf("\x1b[34m %i\x1b[0m",res);
-
-				}
-				else
-				{
-					if (((((x>7)&&(x<taille-8))&& y==6) ||(((y>7)&&(y<taille-8))&& x==6 ))||(((x>=taille-9)&&(x<taille-4))&&((y>=taille-9)&&(y<taille-4)))|| (x==taille-8 && y==8))
+					int res=matrice[x*s+y];
+					if (((x<8)&&(y<8))||((x<8)&&(y>=s-8))||((x>=s-8)&&(y<8)))
 					{
-						printf("\x1b[31m %i\x1b[0m",res);
+						printf("\x1b[34m %i\x1b[0m",res);
+
 					}
 					else
 					{
-						if(((x==8)&&(( y<=8 && y!=6) || (y>=taille-8))) || ((y==8)&&(x>=taille-7 || x<=8)&& x!=6))
+						if (((((x>7)&&(x<s-8))&& y==6) ||(((y>7)&&(y<s-8))&& x==6 ))||(((x>=s-9)&&(x<s-4))&&((y>=s-9)&&(y<s-4)))|| (x==s-8 && y==8))
 						{
-							printf("\x1b[36m %i\x1b[0m",res);
+							printf("\x1b[31m %i\x1b[0m",res);
 						}
 						else
 						{
-							printf(" %i",res);
+							if(((x==8)&&(( y<=8 && y!=6) || (y>=s-8))) || ((y==8)&&(x>=s-7 || x<=8)&& x!=6))
+							{
+								printf("\x1b[36m %i\x1b[0m",res);
+							}
+							else
+							{
+								printf(" %i",res);
+							}
 						}
 					}
 				}
+				printf("\n");
 			}
-			printf("\n");
+		}
+		else
+		{
+			for (size_t x = 0 ; x<s ; x +=1)
+			{
+				for (size_t y = 0; y<s ; y+=1)
+				{
+					int res=matrice[x*s+y];
+					if (((x<8)&&(y<8))||((x<8)&&(y>=s-8))||((x>=s-8)&&(y<8)))
+					{
+						printf("\x1b[34m %i\x1b[0m",res);
+
+					}
+					else
+					{
+						if (((((x>7)&&(x<s-8))&& y==6) ||(((y>7)&&(y<s-8))&& x==6 ))||(((x>=s-9)&&(x<s-4))&&((y>=s-9)&&(y<s-4)))|| (x==s-8 && y==8) || ( (x<=s-21 && x>=s-25) &&
+									((y<=s-5 && y>=s-9) || (y<=s-21 && y>=s-25) || (y<=s-37 && y>=s-41)  )) || ( (y<=s-21 && y>=s-25) && ( (x<=s-37 && x>=s-41) || (x<=s-5 && x>=s-9))  ))
+						{
+							printf("\x1b[31m %i\x1b[0m",res);
+						}
+						else
+						{
+							if(((x==8)&&(( y<=8 && y!=6) || (y>=s-8))) || ((y==8)&&(x>=s-7 || x<=8)&& x!=6))
+							{
+								printf("\x1b[36m %i\x1b[0m",res);
+							}
+							else
+							{
+								printf(" %i",res);
+							}
+						}
+					}
+				}
+				printf("\n");
+			}
+
 		}
 	}
+
+
+
 	return;
 }
+
+
 
