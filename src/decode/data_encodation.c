@@ -1,7 +1,8 @@
 #include "data_encodation.h"
 
-const size_t VE_data_capacity[28]={7,11,14,17,14,20,26,32,24,32,42,53,34,46,62,
-	78,44,60,84,106,58,74,106,134,64,86,122,154};
+const size_t VE_data_capacity[40]={7,11,14,17,14,20,26,32,24,32,42,53,34,46,62,
+	78,44,60,84,106,58,74,106,134,64,86,122,154,84,108,152,192,98,130,180,230,
+    119,151,213,271};
 
 int *BitStream(char *input)
 {
@@ -77,7 +78,7 @@ int * appendArray(int* dest, int src[], int destSize, int srcSize) {
 int * pad_codewords(int* bitstream,size_t len,int* count){
 
 	size_t i=0;
-	while (i<28 && len>VE_data_capacity[i]*8)
+	while (i<40 && len>VE_data_capacity[i]*8)
 		i++;
 	size_t version=1+i/4, ECL=i%4;
 	switch (ECL) {
