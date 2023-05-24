@@ -4,18 +4,21 @@ CFLAGS= -w -Wall -Wextra -std=c99 -O3 -g
 LDFLAGS=
 LDLIBS=-lm -lSDL_ttf -lSDL_gfx `pkg-config --libs sdl SDL_image`
 
-utils:utils.o
-initQR:../../image/pixel_operations.o initQR.o 
+utils:utils.h ../../image/pixel_operations.o utils.o masking.o parse.o prints.o data_encodation.o qr.o 
+initQR:image/pixel_operations.o initQR.o 
 
-utils.o:utils.c masking.c parse.c prints.c data_encodation.c qr.c 
+
 ../../image/pixel_operations.o: ../../image/pixel_operations.h
-initQR.o: ../../image/pixel_operations.o initQR.h 
+utils.o:utils.h masking.h parse.h prints.h data_encodation.h qr.h 
+initQR.o: image/pixel_operations.o initQR.h 
 
 
 clean:
 	${RM} *.o
 	${RM} *.d
 	${RM} utils
+	${RM} nomask.bmp
 
+	#${RM} mask.bmp
 #END
 

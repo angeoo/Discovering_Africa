@@ -177,6 +177,108 @@ DB Size : 230 MB</property>
       <object class="GtkFixed" id="homeWindowFixed">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
+        <child>
+          <object class="GtkImage" id="home_image">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">img/download.png</property>
+          </object>
+          <packing>
+            <property name="x">255</property>
+            <property name="y">30</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkMenuBar">
+            <property name="width-request">39</property>
+            <property name="height-request">17</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <child>
+              <object class="GtkMenuItem">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Quit</property>
+                <property name="use-underline">True</property>
+                <signal name="activate" handler="on_buttonExit_activate" swapped="no"/>
+                <child type="submenu">
+                  <object class="GtkMenu">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkImageMenuItem">
+                        <property name="label">gtk-new</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="use-underline">True</property>
+                        <property name="use-stock">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem">
+                        <property name="label">gtk-open</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="use-underline">True</property>
+                        <property name="use-stock">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem">
+                        <property name="label">gtk-save</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="use-underline">True</property>
+                        <property name="use-stock">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem">
+                        <property name="label">gtk-save-as</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="use-underline">True</property>
+                        <property name="use-stock">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem">
+                        <property name="label">gtk-quit</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="use-underline">True</property>
+                        <property name="use-stock">True</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="buttonToTest">
+            <property name="label" translatable="yes">Let's see which destination in Africa suits you best</property>
+            <property name="width-request">100</property>
+            <property name="height-request">32</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <signal name="clicked" handler="on_buttonToTest_activate" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">188</property>
+            <property name="y">262</property>
+          </packing>
+        </child>
       </object>
     </child>
   </object>
@@ -196,30 +298,12 @@ DB Size : 230 MB</property>
               <object class="GtkMenuItem" id="menuFiles">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">_Files</property>
+                <property name="label" translatable="yes">Quit</property>
                 <property name="use-underline">True</property>
                 <child type="submenu">
                   <object class="GtkMenu" id="menuSubFiles">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <child>
-                      <object class="GtkMenuItem" id="buttonSave">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Save</property>
-                        <property name="use-underline">True</property>
-                        <signal name="activate" handler="on_buttonSave_activate" swapped="no"/>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkMenuItem" id="buttonLoad">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Load</property>
-                        <property name="use-underline">True</property>
-                        <signal name="activate" handler="on_buttonLoad_activate" swapped="no"/>
-                      </object>
-                    </child>
                     <child>
                       <object class="GtkMenuItem" id="buttonExit">
                         <property name="visible">True</property>
@@ -285,7 +369,7 @@ DB Size : 230 MB</property>
         </child>
         <child>
           <object class="GtkButton" id="startButton">
-            <property name="label" translatable="yes">Start</property>
+            <property name="label" translatable="yes">Behind the scene</property>
             <property name="width-request">100</property>
             <property name="height-request">80</property>
             <property name="visible">True</property>
@@ -294,7 +378,7 @@ DB Size : 230 MB</property>
             <signal name="clicked" handler="on_startButton_activate" swapped="no"/>
           </object>
           <packing>
-            <property name="x">310</property>
+            <property name="x">278</property>
             <property name="y">260</property>
           </packing>
         </child>
@@ -475,6 +559,33 @@ DB Size : 230 MB</property>
             </child>
           </object>
         </child>
+        <child>
+          <object class="GtkImage" id="term_image">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">img/download.png</property>
+          </object>
+          <packing>
+            <property name="x">250</property>
+            <property name="y">30</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="nextButton">
+            <property name="label" translatable="yes">Next</property>
+            <property name="width-request">80</property>
+            <property name="height-request">30</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+          </object>
+          <packing>
+            <property name="x">550</property>
+            <property name="y">30</property>
+          </packing>
+        </child>
       </object>
     </child>
   </object>
@@ -485,44 +596,80 @@ DB Size : 230 MB</property>
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <child>
-          <object class="GtkBox" id="test1">
-            <property name="width-request">100</property>
-            <property name="height-request">80</property>
+          <object class="GtkMenuBar">
+            <property name="width-request">45</property>
+            <property name="height-request">22</property>
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="orientation">vertical</property>
             <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
+              <object class="GtkMenuItem" id="buttonExitTest">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Quit</property>
+                <property name="use-underline">True</property>
+                <signal name="activate" handler="on_buttonExit_activate" swapped="no"/>
+                <child type="submenu">
+                  <object class="GtkMenu">
+                    <property name="width-request">-1</property>
+                    <property name="height-request">-1</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkImageMenuItem">
+                        <property name="label">gtk-new</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="use-underline">True</property>
+                        <property name="use-stock">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem">
+                        <property name="label">gtk-open</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="use-underline">True</property>
+                        <property name="use-stock">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem">
+                        <property name="label">gtk-save</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="use-underline">True</property>
+                        <property name="use-stock">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem">
+                        <property name="label">gtk-save-as</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="use-underline">True</property>
+                        <property name="use-stock">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem">
+                        <property name="label">gtk-quit</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="use-underline">True</property>
+                        <property name="use-stock">True</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
             </child>
           </object>
-          <packing>
-            <property name="x">112</property>
-            <property name="y">106</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkCheckButton">
-            <property name="label" translatable="yes">checkbutton</property>
-            <property name="width-request">100</property>
-            <property name="height-request">80</property>
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">False</property>
-            <property name="draw-indicator">True</property>
-          </object>
-          <packing>
-            <property name="x">358</property>
-            <property name="y">103</property>
-          </packing>
         </child>
       </object>
     </child>

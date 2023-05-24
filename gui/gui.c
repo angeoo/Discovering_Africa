@@ -1,5 +1,4 @@
 #include "gui.h"
-
 // --------------------WINDOWS-------------------------
 GtkWidget *mainWindow;
 GtkWidget *mainWindowFixed;
@@ -18,6 +17,10 @@ GtkWidget *terminalWindowFixed;
 
 GtkWidget *testWindow;
 GtkWidget *testWindowFixed;
+
+GtkWidget *homeWindow;
+GtkWidget *homeWindowFixed;
+
 // --------------------MENU MAIN-----------------------
 
 // Main Menu
@@ -50,8 +53,12 @@ GtkWidget *encButton;
 // terminalWindow
 GtkWidget *buttonExit4;
 GtkWidget *nextButton;
-GtkWidget *mat_image;
+GtkImage *term_image;
+
 int size = 21;
+
+// testWindow teshanini la plus sexy
+int nx=0,ny=0,nz=0;
 
 
 // Bakcground image
@@ -86,10 +93,6 @@ void displayimage(char * path){
 
 }
 
-void display_mat(char* path){
-	mat_image = gtk_image_new_from_file("../image/fillgrid.bmp");
-
-}
 
 void display_secondWindow(){
 
@@ -101,20 +104,17 @@ void display_secondWindow(){
 
 void display_decWindow(){
 
-	g_print("\n display_decWindow()\n");
 	gtk_widget_hide(secondWindow);
 	gtk_widget_show(decWindow);
 }
 
 void goToEncode(){
 
-	g_print("\n Let's encode\n");
 	gtk_widget_hide(decWindow);
 	gtk_widget_show(encWindow);
 }
 
 void goToDecode(){
-	g_print("\n Let's decode\n");
 	gtk_widget_hide(encWindow);
 	gtk_widget_show(decWindow);
 }
@@ -130,6 +130,13 @@ void display_encWindow(){
 	gtk_widget_show(encWindow);
 }
 
+void display_termWindow(){
+
+	gtk_widget_hide(encWindow);
+	gtk_widget_show_all(terminalWindow);
+
+}
+
 void execute_utils(){
 
 	char* request;
@@ -142,98 +149,75 @@ void execute_utils(){
 	system(request);
 
 
+
+
 }
 
+void goToTest(){
+
+	gtk_widget_hide(homeWindow);
+	gtk_widget_show_all(testWindow);
+}
+
+
 void execute_utils_enc(char* word){
-	/*
+
 	   char* request;
-	   int l = asprintf(&request,"cd ../src/decode && ./utils %s","1");
+	   int l = asprintf(&request,"cd ../src/decode && ./utils 1 %s",word);
 
 	   if(l==-1){
 	   errx(EXIT_FAILURE,"error while forming request for ./utils");
 	   }
 
 	   system(request);
-	   */
+
+	   update_termWindow();
+	   
+}
 
 
-/*
+void goToQR(){
 
-	//creer une matrice
-	int* created = creer_matric();
 
-	//ajouter les neg
-	int* negcreated = mat_data(created,21);
-
-	//getting the word as a string
-	//printf("enter your word :  ");
-	//char* word  = malloc(sizeof(char)*100);
-	//scanf("%s",word);
-
-	int c=0;
-	while(word[c]!='\0')
-	{
-		c=c+1;
+	int res=0;
+	if(nx>ny){
+		if(nx>nz){
+			res=0;
+		}
+		else{
+			res=2;
+		}
 	}
-	int size =21;
-
-
-	int totals =8 * c + 12;
-	//word to binary
-	int* res2 = BitStream(word);
-	int* county = malloc(sizeof(int));
-	*county = 0;
-	int* res = pad_codewords(res2,totals,county);
-	totals += *county*8;
-
-
-	parser* toput = malloc(sizeof(parser));
-	toput->x=size-1;
-	toput->y=size-1;
-	toput->resultat = res;
-	toput->count=0;
-	toput->xs = malloc(totals*sizeof(int));
-	toput->ys = malloc(totals*sizeof(int));
-	putall(toput , negcreated , totals, size);
-	parser* toget = malloc(sizeof(parser));
-	toget->x=size-1;
-	toget->y=size-1;
-	toget->resultat=calloc(totals, sizeof(int));
-	toget->count=0;
-	toget->xs=malloc(totals*sizeof(int));
-	toget->ys=malloc(totals*sizeof(int));
-	toget->finalmsg=calloc(totals+1,sizeof(char));
-	toget->finalmsg[totals]='\0';
-	getall(toget,negcreated,totals-(*county*8),size);
-
-	int* finres = creer_matric();
-
-	RemoveNeg(negcreated , finres,size);
-
-
-	getchar();
-	
-
-	SDL_Surface *output = SDL_CreateRGBSurface(0,size*54,size*54,32,0,0,0,0);
-	Uint32 white = SDL_MapRGB(output->format,255,255,255);
-
-	for(int i=0;i<size*54;i++){
-		for(int j=0;j<54*size;j++){
-			put_pixel(output,i,j,white);
+	else{
+		if(ny>nz){
+			res =1;
+		}
+		else{
+			res =2;
 		}
 	}
 
-	fillgrid(output,finres,size);
+	char* links ={
+		"https://www.routard.com/guide_voyage_lieu/1498-le_caire_et_ses_environs.html",
+		"https://www.zanzibar-voyage.com/",
+		"https://www.canalmonde.fr/r-annuaire-tourisme/monde/guides/info-tourisme.php?o=764"
+	};
 
-	SDL_SaveBMP(output,"fillgrid.bmp");
-	free(mat);
-	free(output);
+	gtk_widget_hide(testWindow);
 
-	free(created);
-	free(negcreated);
-	free(word);
-*/
+	//execute_utils_enc(res);
+	//
+	//changer bg_image avec le QR genere
+	gtk_widget_show_all(mainWindow);
 }
+
+void update_termWindow(){
+
+	   GdkPixbuf *p = gdk_pixbuf_new_from_file("../src/decode/mask.bmp",NULL);
+	   gtk_image_set_from_pixbuf(term_image,p);
+	   g_object_unref(p);
+}
+
 
 void on_submit_button_clicked(GtkButton *button, gpointer *user_data) {
 	GtkEntry *entry = GTK_ENTRY(user_data);
@@ -241,7 +225,17 @@ void on_submit_button_clicked(GtkButton *button, gpointer *user_data) {
 	execute_utils_enc(sentence);
 }
 
+void user_cairo(){
+	nx+=1;
+}
 
+void user_zanzibar(){
+	ny+=1;
+}
+
+void user_addis(){
+	nz+=1;
+}
 
 int main(int argc, char **argv)
 {
@@ -265,6 +259,7 @@ int main(int argc, char **argv)
 
 	testWindow =  GTK_WIDGET(gtk_builder_get_object(builder,"testWindow"));
 
+	homeWindow = GTK_WIDGET(gtk_builder_get_object(builder,"homeWindow"));
 	// Background color
 	GdkRGBA white;
 	white.red = 0xfff;
@@ -277,6 +272,7 @@ int main(int argc, char **argv)
 	gtk_widget_override_background_color(decWindow,GTK_STATE_NORMAL,&white);
 	gtk_widget_override_background_color(encWindow,GTK_STATE_NORMAL,&white);
 
+	gtk_widget_override_background_color(terminalWindow,GTK_STATE_NORMAL,&white);
 	// Exit ui when user closed the window
 	g_signal_connect(mainWindow, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 	g_signal_connect(secondWindow,"destroy",G_CALLBACK(gtk_main_quit),NULL);
@@ -296,6 +292,8 @@ int main(int argc, char **argv)
 	terminalWindowFixed = GTK_WIDGET(gtk_builder_get_object(builder,"terminalWindowFixed"));
 
 	testWindowFixed = GTK_WIDGET(gtk_builder_get_object(builder,"testWindowFixed"));
+
+	homeWindowFixed = GTK_WIDGET(gtk_builder_get_object(builder,"homeWindowFixed"));
 
 	mainMenu = GTK_WIDGET(gtk_builder_get_object(builder, "mainMenu"));
 	secondMenu = GTK_WIDGET(gtk_builder_get_object(builder, "secondMenu"));
@@ -324,8 +322,10 @@ int main(int argc, char **argv)
 	// enc
 	encButton = GTK_WIDGET(gtk_builder_get_object(builder, "encButton"));
 
+
 	// testWindow
-	
+
+
 	GtkWidget* testbox[5];
 
 	char* q[]={"Choose a favourite food :",
@@ -350,38 +350,48 @@ int main(int argc, char **argv)
 		"Walk in the newboorhood"};
 
 	GtkWidget *l,*rep1,*rep2,*rep3;
-	
+
 	for(int i=0;i<5;i++){
 
-	testbox[i] = gtk_box_new(GTK_ORIENTATION_VERTICAL,10);
-	if(i%2==0){
-	gtk_fixed_put(testWindowFixed,testbox[i],150+i*250,150);
-	}
-	else{
-	gtk_fixed_put(testWindowFixed,testbox[i],150+(i-1)*250,300);
-	}
-	l =  gtk_label_new(q[i*4]); 
-	gtk_box_pack_start(testbox[i],l,TRUE, TRUE, 0);
-	rep1 = gtk_check_button_new_with_label(q[i*4+1]);
-	rep2 = gtk_check_button_new_with_label(q[i*4+2]);
-	rep3 = gtk_check_button_new_with_label(q[i*4+3]);
+		testbox[i] = gtk_box_new(GTK_ORIENTATION_VERTICAL,10);
+		if(i%2==0){
+			gtk_fixed_put(testWindowFixed,testbox[i],150+i*250,150);
+		}
+		else{
+			gtk_fixed_put(testWindowFixed,testbox[i],150+(i-1)*250,300);
+		}
+		l =  gtk_label_new(q[i*4]); 
+		gtk_box_pack_start(testbox[i],l,TRUE, TRUE, 0);
+		rep1 = gtk_check_button_new_with_label(q[i*4+1]);
+		rep2 = gtk_check_button_new_with_label(q[i*4+2]);
+		rep3 = gtk_check_button_new_with_label(q[i*4+3]);
 
-	gtk_box_pack_start(GTK_BOX(testbox[i]),rep1,TRUE,TRUE,0);
-	gtk_box_pack_start(GTK_BOX(testbox[i]),rep2,TRUE,TRUE,0);
-	gtk_box_pack_start(GTK_BOX(testbox[i]),rep3,TRUE,TRUE,0);
+		g_signal_connect(rep1,"toggled",G_CALLBACK(on_rep1_toggled),NULL);
+		g_signal_connect(rep2,"toggled",G_CALLBACK(on_rep2_toggled),NULL);
+		g_signal_connect(rep3,"toggled",G_CALLBACK(on_rep3_toggled),NULL);
+
+		gtk_box_pack_start(GTK_BOX(testbox[i]),rep1,TRUE,TRUE,0);
+		gtk_box_pack_start(GTK_BOX(testbox[i]),rep2,TRUE,TRUE,0);
+		gtk_box_pack_start(GTK_BOX(testbox[i]),rep3,TRUE,TRUE,0);
 	}
 
+	GtkWidget * send_test = gtk_button_new_with_label("Send");
+	gtk_fixed_put(testWindowFixed,send_test,250*6,150);
 
+	g_signal_connect(send_test,"clicked",G_CALLBACK(on_send_test),NULL);
 
 	// terminalWindow
 
 	//size = 21;
 	nextButton = GTK_WIDGET(gtk_builder_get_object(builder,"nextButton"));
+	term_image = GTK_IMAGE(gtk_builder_get_object(builder,"term_image"));
+
+	g_signal_connect(nextButton,"clicked",G_CALLBACK(on_nextButton_clicked),NULL);
 
 	// Create a vertical box to hold the widgets
 	GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
 	//gtk_container_add(GTK_CONTAINER(terminalWindowFixed), box);
-	gtk_fixed_put(terminalWindowFixed,box,150,150);
+	gtk_fixed_put(GTK_WIDGET(terminalWindowFixed),box,275,300);
 
 	// Create a label
 	GtkWidget *label = gtk_label_new("Enter a sentence:");
@@ -414,7 +424,7 @@ int main(int argc, char **argv)
 	}
 	}*/
 	//k_widget_show(mainWindow);
-	gtk_widget_show_all(testWindow);
+	gtk_widget_show_all(homeWindow);
 	// Wait the ui closed
 	gtk_main();
 

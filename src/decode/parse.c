@@ -22,13 +22,7 @@ void storemsg(parser* w)
     if(w->count-12 > 0 && (w->count-12)%8==0 )
     {
         int tmpo=convertbittoint(w->resultat+w->count -8 ,8);
-        printf("char decoded to int = %i\n",tmpo);
         w->finalmsg[((w->count-12) /8)-1 ] = (char)tmpo;
-        printf("char is %c \n", (char)tmpo);
-    }
-    else
-    {
-        printf("searching word is not ready");
     }
 }
 
@@ -51,7 +45,6 @@ void getup(parser* w , int* arrd , int tot , int qrsize)
             w->resultat[w->count] = val;     //store the value in the result array
             w->count = w->count +1;          //we add to count 1;
             storemsg(w);
-            getchar();
             NormalPrint(arrd,qrsize,w);
            parseprint(w);
         }
@@ -68,7 +61,6 @@ void getup(parser* w , int* arrd , int tot , int qrsize)
             w->resultat[w->count] = val;
             w->count = w->count + 1;
             storemsg(w);
-            getchar();
             NormalPrint(arrd,qrsize,w);
             parseprint(w);
         }
@@ -100,7 +92,6 @@ void getdown(parser* w , int* arrd , int tot , int qrsize)
             w->resultat[w->count] = val;     //store the value in the result array
             w->count = w->count +1;          //we add to count 1;
             storemsg(w);
-            getchar();
             NormalPrint(arrd,qrsize,w);
             parseprint(w);
         }
@@ -118,7 +109,6 @@ void getdown(parser* w , int* arrd , int tot , int qrsize)
             w->resultat[w->count] = val;
             w->count = w->count + 1;
             storemsg(w);
-            getchar();
             NormalPrint(arrd,qrsize,w);
            parseprint(w);
         }
@@ -159,7 +149,6 @@ void putup(parser* w , int* arrd , int tot , int qrsize)
             w->ys[w->count] = w->y;          //store the case'Y that we saw
             arrd[w->y*qrsize + w->x]=w->resultat[w->count];     //store the value in the qrcode matrix
             w->count = w->count +1;          //we add to count 1;
-            getchar();
             NormalPrint(arrd,qrsize,w);
             parseprint(w);
  
@@ -177,7 +166,6 @@ void putup(parser* w , int* arrd , int tot , int qrsize)
             w->ys[w->count] = w->y;
             arrd[w->y*qrsize + w->x]=w->resultat[w->count];
             w->count = w->count + 1;
-            getchar();
             NormalPrint(arrd,qrsize,w);
             parseprint(w);
                     }
@@ -212,7 +200,6 @@ void putdown(parser* w , int* arrd , int tot , int qrsize)
             w->ys[w->count] = w->y;          //store the case'Y that we saw
             arrd[w->y*qrsize + w->x]=w->resultat[w->count];     //store the value in the qrcode matrix
             w->count = w->count +1;          //we add to count 1;
-            getchar();
             NormalPrint(arrd,qrsize,w);
             parseprint(w);
             
@@ -229,7 +216,6 @@ void putdown(parser* w , int* arrd , int tot , int qrsize)
             w->ys[w->count] = w->y;
             arrd[w->y*qrsize + w->x]=w->resultat[w->count];
             w->count = w->count + 1;
-            getchar();
             NormalPrint(arrd,qrsize,w);
             parseprint(w);
                    }
@@ -322,7 +308,6 @@ void getQRcode(int* QR , int size)
 	//getting the rest of the array
 	getall(w,QR,len,size);
 
-	printf("final msg is : %s \n", w->finalmsg);
 
 
 
@@ -378,7 +363,6 @@ void putQRcode(int* QR , int size, int* toput ,int sizetoput )
 
 void getencodingmode(int res)
 {
-    printf("encoding mode is : ");
     if(res==7)
     {
         return("ECI");

@@ -1,5 +1,4 @@
 #include "masking.h"
-#include "utils.h"
 
 void Mask (int* data, int mask,int size)
 {

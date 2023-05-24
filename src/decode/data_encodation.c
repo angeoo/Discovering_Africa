@@ -57,7 +57,7 @@ int * pad_codewords(int* bitstream,size_t len,int* count, int* retecl){
         i++;
     size_t version=1+i/4, ECL=i%4; 
     *retecl= ECL;
-    switch (ECL) {
+    /*switch (ECL) {
         case 0:
             printf("this input can fit in a "
                     "%ld-H Qr code\n",version);
@@ -77,7 +77,7 @@ int * pad_codewords(int* bitstream,size_t len,int* count, int* retecl){
         default:
             errx(1,"this input is too big\n");
             break;
-    }
+    }*/
     int pad_codeword1[8]={1,1,1,0,1,1,0,0};
     int pad_codeword2[8]={0,0,0,1,0,0,0,1};
     int c=0;
@@ -144,16 +144,12 @@ int* FormatInfo (int ECL, int MASK){
             format_info[k]=1;
         else
             format_info[k]=0;
-        printf("%d",format_info[k]);
     }
-    printf("\n");
     for (int k=0;k<15;k++){
         //if (format_info[k]==1)
         //    break;
         index++;
-        printf("%d",Gx[k]);
     }
-    printf("\n");
     ecl=appendArray(ecl,format_info+5,5,10);
     int Xor[15]={1,0,1,0,1,0,0,0,0,0,1,0,0,1,0};
     for (int j=0; j<15; j++){

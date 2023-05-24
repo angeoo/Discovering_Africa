@@ -1,9 +1,22 @@
 CC ?= gcc
 PKGCONFIG = $(shell which pkg-config)
-CFLAGS = $(shell $(PKGCONFIG) --cflags gtk+-3.0) -Wall -Wextra -rdynamic
+CFLAGS = $(shell $(PKGCONFIG) --cflags gtk+-3.0) -rdynamic
 LIBS = $(shell $(PKGCONFIG) --libs gtk+-3.0)
 
-SRC = gui.c signals.c
+
+all: decode user image
+.PHONY : decode user image
+
+image:
+	cd ../image && ${MAKE}
+
+decode:
+	cd ../src/decode  && ${MAKE}
+
+user:
+	cd ../user_test && ${MAKE}
+
+SRC =  signals.c gui.c
 
 OBJS = $(SRC:.c=.o)
 
@@ -20,3 +33,8 @@ exampleapp: $(OBJS)
 clean:
 	rm -f $(OBJS)
 	rm -f exampleapp
+	(cd ../src/decode; make clean)
+	(cd ../user_test; make clean)
+	(cd ../image; make clean)
+
+

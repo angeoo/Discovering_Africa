@@ -1,10 +1,10 @@
 #include "utils.h"
-#include "masking.c"
-#include "parse.c"
-#include "prints.c"
-#include "data_encodation.c"
-#include "qr.c"
-#include "../../image/pixel_operations.c"
+#include "masking.h"
+#include "parse.h"
+#include "prints.h"
+#include "data_encodation.h"
+#include "qr.h"
+//#include "../../image/pixel_operations.h"
 
 void putformat(int* mat,int size , int* forinfo)
 {
@@ -30,7 +30,6 @@ void putformat(int* mat,int size , int* forinfo)
 int GiveVersion(int len)
 {
     int version;
-    printf("len = %i\n",len);
 
 
     if(len<=17)
@@ -199,7 +198,7 @@ int module_size(SDL_Surface * surface)
     int j=0;
     for (; j<h ; j++)
     {
-        pixel=getpixel(surface, 2,j);
+        pixel=get_pixel(surface, 2,j);
         SDL_GetRGB(pixel,surface->format,&r,&g,&b);
         if (r==255)
             break;
@@ -207,7 +206,7 @@ int module_size(SDL_Surface * surface)
     int mod_size=0;
     for(int k=0;k<w;k++)
     {
-        pixel=getpixel(surface,k,j/2);
+        pixel=get_pixel(surface,k,j/2);
         SDL_GetRGB(pixel,surface->format,&r,&g,&b);
         if (r==255)
         {
@@ -234,7 +233,7 @@ int* QR(SDL_Surface *surface, int mod_size)
         int iy=0;
         for (int j=mod_size/2; j<w && iy<(w/mod_size); j+=mod_size )
         {
-            pixel=getpixel(surface,i,j);
+            pixel=get_pixel(surface,i,j);
             SDL_GetRGB(pixel,surface->format,&r,&g,&b);
             if (r==0){
                 *(mat+(iy*(w/mod_size)+ix))=1;
@@ -352,10 +351,6 @@ int* mat_data (int* matrice , size_t taille )
 int main (int argc, char *argv[])
 {
 
-    if (argc!=2)
-    {
-        errx(1,"arguments not 2\n");
-    }
     if (strcmp(argv[1],"1")!=0)
     {
         SDL_Surface *qr=load_image(argv[1]);
@@ -374,39 +369,29 @@ int main (int argc, char *argv[])
         //int* negcreated = mat_data(created,21);
 
         //getting the word as a string
-        printf("enter your word :  ");
-        char* word  = malloc(sizeof(char)*100);
-        scanf("%s",word);
-        printf("calulating len\n");
-        getchar();
-        //calculating the len
+        
+	
+	char* word  = argv[2];
+        
+	//calculating the len
         int c=0;
         while(word[c]!='\0')
         {
             c=c+1;
         }
-        printf("getting the version\n");
-        getchar();
-        //get the version of the QR code
+        
+	//get the version of the QR code
         int version = GiveVersion(c);
         //totals is the len og the string
-        printf("getting the total of the len\n");
-        getchar();
         int totals =8 * c + 12;
 
         //create the Qr code matrix according to version
-        printf("initmat with the version got\n");
 
-        printf("version = %i \n",version );
-        getchar();
         tuple* cleanmat = init_mat(version);
         //create the negative matrix
-        printf("creating the negative matrix\n");
-        getchar();
         int* negcreated = mat_data(cleanmat->mat,cleanmat->size );
 
         //qr size is
-        printf("geting the size og the clean mat"); 
         int size = cleanmat->size;
 
         //errorcorrectionlevel
@@ -434,9 +419,7 @@ int main (int argc, char *argv[])
         //get format info array
         int* finf = FormatInfo(ecl , 1);
         //put format info in the final matrix without negatives
-        printf("printing negative matrix negcreated\n");
         //Printing the negative 
-        NoParsePrint(negcreated , size);
 
         //applying mask to finres into negcreated
         Mask(negcreated,1,size);
@@ -460,13 +443,6 @@ putformat(maskqr->mat,size,finf);
         new_image(maskqr->mat,size,"mask.bmp",size);
         new_image(finres->mat,finres->size,"nomask.bmp",size);
 
-        getchar();
-
-        printf("printing nomask\n");
-        NoParsePrint(finres->mat,finres->size);
-
-        printf("printing mask\n");
-        NoParsePrint(maskqr->mat,size); 
 
 
         //free(created);
@@ -475,4 +451,5 @@ putformat(maskqr->mat,size,finf);
         //free(data);
         //free(data_matrix);
     }
+    return 0;
 }

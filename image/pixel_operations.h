@@ -3,6 +3,17 @@
 
 #include <stdlib.h>
 #include "SDL/SDL.h"
+#include <SDL/SDL_ttf.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "SDL/SDL_image.h"
+#include "pixel_operations.h"
+
+
+
+
+SDL_Surface* digitToSdl(char *str,SDL_Color c);
+void fillgrid(int *res, int size);
 
 Uint32 get_pixel(SDL_Surface *surface, unsigned x, unsigned y);
 void put_pixel(SDL_Surface *surface, unsigned x, unsigned y, Uint32 pixel);

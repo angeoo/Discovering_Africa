@@ -12,6 +12,52 @@ Uint8* pixel_ref(SDL_Surface *surf, unsigned x, unsigned y)
     return (Uint8*)surf->pixels + y * surf->pitch + x * bpp;
 }
 
+SDL_Surface* digitToSdl(char *str,SDL_Color c){
+	TTF_Init();
+	TTF_Font* police = NULL;
+	police = TTF_OpenFont("fonts/Inter-Medium.ttf",40);
+
+	//SDL_Color noir = {255,255,255,255};
+	SDL_Surface *texte = TTF_RenderText_Blended(police,str,c);
+
+	texte = zoomSurface(texte,1,1,0);
+
+	TTF_CloseFont(police);
+	TTF_Quit();
+
+	return texte;
+}
+
+
+void fillgrid(int *res, int size){
+	
+	SDL_Surface *output = SDL_CreateRGBSurface(0,400,400,32,0,0,0,0);
+
+	SDL_Color c= {0,0,0,0};
+	char s[] = "x";
+	int tmp;
+
+	for(int i=0;i<size;i++){
+		for(int j=0;j<size;j++){
+			tmp = res[i*size+j];
+			s[0] = '0'+tmp;
+			
+			SDL_Rect cube = {5+j*54,15+i*54,54, 54};
+			SDL_Surface* outcube = digitToSdl(s,c);
+			cube.w = outcube->w;
+			cube.h = outcube->h;
+			int test = SDL_BlitSurface(outcube,NULL,output,
+					&cube);
+			if(test==1){
+				printf("%d",cube.x);
+				printf("error\n");
+			}
+		}
+	}
+
+	SDL_SaveBMP(output,"sdl_encode.bmp");
+}
+
 Uint32 get_pixel(SDL_Surface *surface, unsigned x, unsigned y)
 {
     Uint8 *p = pixel_ref(surface, x, y);

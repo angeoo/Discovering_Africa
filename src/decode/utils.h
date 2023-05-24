@@ -6,14 +6,14 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <err.h>
+#include "../../image/pixel_operations.h"
 
 
 
-
-Uint32 getpixel(SDL_Surface *surface, int x, int y)
+/*Uint32 getpixel(SDL_Surface *surface, int x, int y)
 {
 	int bpp = surface->format->BytesPerPixel;
-	/* Here p is the address to the pixel we want to retrieve */
+	 //Here p is the address to the pixel we want to retrieve 
 	Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
 
 	switch(bpp) {
@@ -40,7 +40,6 @@ Uint32 getpixel(SDL_Surface *surface, int x, int y)
 void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
 {
 	int bpp = surface->format->BytesPerPixel;
-	/* Here p is the address to the pixel we want to set */
 	Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
 
 	switch(bpp) {
@@ -77,6 +76,7 @@ void init_sdl()
     if(SDL_Init(SDL_INIT_VIDEO) == -1)
         errx(1,"Could not initialize SDL: %s.\n", SDL_GetError());
 }
+*/
 
 SDL_Surface* load_image(char *path)
 {
@@ -90,7 +90,7 @@ SDL_Surface* load_image(char *path)
 
     return img;
 }
-
+/*
 SDL_Surface* display_image(SDL_Surface *img)
 {
     SDL_Surface *screen;
@@ -113,7 +113,7 @@ SDL_Surface* display_image(SDL_Surface *img)
 
     // return the screen for further uses
     return screen;
-}
+}*/
 
 int* QR(SDL_Surface *surface, int mod_size);
 int module_size(SDL_Surface * surface);
