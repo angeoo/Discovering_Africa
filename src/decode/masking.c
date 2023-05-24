@@ -1,6 +1,100 @@
 #include "masking.h"
 #include "utils.h"
 
+void Mask (int* data, int mask,int size)
+{
+    for (int x=0; x<size; x++)
+    {
+        for (int y=0; y<size; y++)
+        {
+            if (data[x*size+y]>=0)
+            {
+                if (mask==0)
+                {
+                    if((x+y)%2==0)
+                    {
+                        if(data[x*size+y]==1)
+                            data[x*size+y]=0;
+                        else
+                            data[x*size+y]=1;
+                    }
+                }
+                if(mask==1)
+                {
+                    if(x%2==0)
+                    {
+                        if(data[x*size+y]==1)
+                            data[x*size+y]=0;
+                        else
+                            data[x*size+y]=1;
+                    }
+                }
+                if(mask==2)
+                {
+                    if(y%3==0)
+                    {
+                        if(data[x*size+y]==1)
+                            data[x*size+y]=0;
+                        else
+                            data[x*size+y]=1;
+                    }
+                }
+                if(mask==3)
+                {
+                    if((x+y)%3==0)
+                    {
+                        if(data[x*size+y]==1)
+                            data[x*size+y]=0;
+                        else
+                            data[x*size+y]=1;
+                    }
+                }
+                if(mask==4)
+                {
+                    if(((x/2)+(y/3))%2==0)
+                    {    
+                        if(data[x*size+y]==1)
+                            data[x*size+y]=0;
+                        else
+                            data[x*size+y]=1;
+                    }
+                }
+                if(mask==5)
+                {
+                    if(((x*y)%2)+((x*y)%3)==0)
+                    {
+                        if(data[x*size+y]==1)
+                            data[x*size+y]=0;
+                        else
+                            data[x*size+y]=1;
+                    }
+                }
+                if(mask==6)
+                {
+                    if((((x*y)%2)+((x*y)%3))%2==0)
+                    {    
+                        if(data[x*size+y]==1)
+                            data[x*size+y]=0;
+                        else
+                            data[x*size+y]=1;
+                    }
+                }
+                
+                if(mask==7)
+                {
+                    if((((x*y)%3)+((x+y)%2))%2==0)
+                    {    
+                        if(data[x*size+y]==1)
+                            data[x*size+y]=0;
+                        else
+                            data[x*size+y]=1;
+                    }
+                }
+                
+            }
+        }
+    }
+}
 char * Find_masking(int *data,int size)
 {
 	char* mask=calloc(3,sizeof(char));

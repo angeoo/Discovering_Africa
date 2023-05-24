@@ -4,7 +4,28 @@
 #include "prints.c"
 #include "data_encodation.c"
 #include "qr.c"
+#include "../../image/pixel_operations.c"
 
+void putformat(int* mat,int size , int* forinfo)
+{
+    for(int c =0;c<6;c++)
+    {
+        mat[8*size + c]=forinfo[c];
+        mat[(size-c-1)*size + 8]=forinfo[c];
+    }
+    mat[8*size+7]=forinfo[6];
+    mat[(size-7)*size + 8]=forinfo[6];
+    for(int c=0;c<2;c++)
+    {
+        mat[(8-c)*size + 8]=forinfo[c+6+1];
+        mat[8*size + (size-8+c)]=forinfo[c+6+1];
+    }
+    for(int c=0 ;c<6;c++)
+    {
+        mat[(5-c)*size +8]=forinfo[c+9];
+        mat[8*size + (size-6+c)]=forinfo[c+9];
+    }
+}
 
 int GiveVersion(int len)
 {
@@ -85,6 +106,8 @@ tuple* init_mat(int vers) {
 
     int alli[5][5]= {{1,1,1,1,1}, {1,0,0,0,1}, {1,0,1,0,1}, {1,0,0,0,1},
         {1,1,1,1,1}};
+    
+    ret[(size-8)*size + 8]=1;
 
     //haut-gauche find
     for(int x=0;x<7;x++) 
@@ -113,7 +136,7 @@ tuple* init_mat(int vers) {
 
 
     //timing patter
-    for(int e =8;e<size-9;e++)
+    for(int e =8;e<=size-9;e++)
     {
         if(e%2==0)
         {
@@ -352,9 +375,8 @@ int main (int argc, char *argv[])
 
         //getting the word as a string
         printf("enter your word :  ");
-       // char* word  = malloc(sizeof(char)*100);
-       // scanf("%s",word);
-       char* word = "dfssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss";
+        char* word  = malloc(sizeof(char)*100);
+        scanf("%s",word);
         printf("calulating len\n");
         getchar();
         //calculating the len
@@ -387,12 +409,13 @@ int main (int argc, char *argv[])
         printf("geting the size og the clean mat"); 
         int size = cleanmat->size;
 
-
+        //errorcorrectionlevel
+        int ecl;
         //Fill up the bitstream with the word
         int* res2 = BitStream(word);
         int* county = malloc(sizeof(int));
         *county = 0;
-        int* res = pad_codewords(res2,totals,county);
+        int* res = pad_codewords(res2,totals,county,&ecl);
         //updating the len of the bitstream
         totals += *county*8;
 
@@ -407,18 +430,49 @@ int main (int argc, char *argv[])
 
         //enlever les negatifs
         RemoveNeg(negcreated , finres->mat,finres->size);
+        
+        //get format info array
+        int* finf = FormatInfo(ecl , 1);
+        //put format info in the final matrix without negatives
+        printf("printing negative matrix negcreated\n");
+        //Printing the negative 
+        NoParsePrint(negcreated , size);
 
-        //imprimer la matrice
+        //applying mask to finres into negcreated
+        Mask(negcreated,1,size);
+
+        //create matrix to store the final masked mat in it
+        tuple* maskqr = init_mat(version);
+putformat(maskqr->mat,size,finf);
+        RemoveNeg(negcreated,maskqr->mat,size);
+        
+        
+        
+
+
+        //**************************************essayer masking
+
+
+
+        //**************************************essayer masking
+
+        
+        new_image(maskqr->mat,size,"mask.bmp",size);
+        new_image(finres->mat,finres->size,"nomask.bmp",size);
+
         getchar();
 
-        NoParsePrint(finres->mat,size);
+        printf("printing nomask\n");
+        NoParsePrint(finres->mat,finres->size);
+
+        printf("printing mask\n");
+        NoParsePrint(maskqr->mat,size); 
 
 
-
-
-        //	free(created);
+        //free(created);
         free(negcreated);
         free(word);
         //free(data);
         //free(data_matrix);
-}}
+    }
+}

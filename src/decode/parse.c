@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "parse.h"
+
+#define RAND_MAX 1;
+
 int convertbittoint(int* seq , int gap) // convert a sequence of gap bits to an int/ sens contraire  
 {
     int res=0;   //resultat
@@ -50,7 +53,7 @@ void getup(parser* w , int* arrd , int tot , int qrsize)
             storemsg(w);
             getchar();
             NormalPrint(arrd,qrsize,w);
-           // parseprint(w);
+           parseprint(w);
         }
         if(w->count>=tot)                        //break if weve done all the cases
         {
@@ -67,7 +70,7 @@ void getup(parser* w , int* arrd , int tot , int qrsize)
             storemsg(w);
             getchar();
             NormalPrint(arrd,qrsize,w);
-            //parseprint(w);
+            parseprint(w);
         }
         if(w->y-1<0 || arrd[(w->y -1)*qrsize + w->x]==-3)
         {
@@ -99,10 +102,10 @@ void getdown(parser* w , int* arrd , int tot , int qrsize)
             storemsg(w);
             getchar();
             NormalPrint(arrd,qrsize,w);
-            //parseprint(w);
+            parseprint(w);
         }
         //getchar();
-        if(w->count>=tot)                        //break if weve done all the cases
+        if(w->count >=tot)                        //break if weve done all the cases
         {
             break;
         }
@@ -117,10 +120,10 @@ void getdown(parser* w , int* arrd , int tot , int qrsize)
             storemsg(w);
             getchar();
             NormalPrint(arrd,qrsize,w);
-           // parseprint(w);
+           parseprint(w);
         }
         //getchar();
-        if(w->y + 1 >=qrsize  )         //check that we are not outside the data
+        if(w->y+1 >= qrsize)         //check that we are not outside the data
         {
             w->x=w->x-1;                                           //if outside , we push to the left (well go down)
             break;
@@ -158,7 +161,7 @@ void putup(parser* w , int* arrd , int tot , int qrsize)
             w->count = w->count +1;          //we add to count 1;
             getchar();
             NormalPrint(arrd,qrsize,w);
-            //parseprint(w);
+            parseprint(w);
  
         }
         //getchar();
@@ -176,7 +179,7 @@ void putup(parser* w , int* arrd , int tot , int qrsize)
             w->count = w->count + 1;
             getchar();
             NormalPrint(arrd,qrsize,w);
-            //parseprint(w);
+            parseprint(w);
                     }
         //getchar();
         if(w->y - 1 <0 || arrd[(w->y - 1)*qrsize + w->x]==-3 )         //check that we are not outside the data
@@ -211,7 +214,7 @@ void putdown(parser* w , int* arrd , int tot , int qrsize)
             w->count = w->count +1;          //we add to count 1;
             getchar();
             NormalPrint(arrd,qrsize,w);
-            //parseprint(w);
+            parseprint(w);
             
         }
         if(w->count>=tot)                        //break if weve done all the cases
@@ -228,7 +231,7 @@ void putdown(parser* w , int* arrd , int tot , int qrsize)
             w->count = w->count + 1;
             getchar();
             NormalPrint(arrd,qrsize,w);
-            //parseprint(w);
+            parseprint(w);
                    }
         if(w->y + 1  >=qrsize )         //check that we are not outside the data
         {
@@ -259,8 +262,6 @@ void putall(parser* w , int*arrd , int tot , int qrsize)
     }
     return ;
 }
-
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 void RemoveNeg(int* init , int* res , int size)
 {
@@ -359,6 +360,7 @@ void putQRcode(int* QR , int size, int* toput ,int sizetoput )
 
 	//get the encoding mode and size
 	putall(w,QR,sizetoput,size);
+
 
 	free(w->xs);
 	free(w->ys);
