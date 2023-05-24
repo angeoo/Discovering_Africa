@@ -1,16 +1,30 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "parse.h"
-#include "prints.h"
+
 void parseprint(parser* w)
 {
+	printf(" x  = %i , y  = %i\n",w->x,w->y);
+	printf("Xs = ");
 	for(int e = 0; e<w->count ; e++)
 	{
+		printf("%i.",w->xs[e]);
 	}
+	printf("\n");
+	printf("Ys = ");
 	for(int e = 0; e<w->count ; e++)
 	{
+		printf("%i.",w->ys[e]);
 	}
+	printf("\n");
+	printf("count = %i | tot = %i \n",w->count , w->tot);
+	printf("resultat= ");
 	for(int e = 0; e<w->count ; e++)
 	{
+		printf("%i.",w->resultat[e]);
 	}
+	printf("\n");
 	return;
 }
 void NormalPrint(int* qrmat , int qrsize , parser* w) 
@@ -25,12 +39,15 @@ void NormalPrint(int* qrmat , int qrsize , parser* w)
 			{
 				if(res == -2)
 				{
+					printf("\x1b[31m%i\x1b[0m", res); //format info in light blu
 				}
 				if(res== -1)
 				{
+					printf("\x1b[34m%i\x1b[0m",res); // allignment block in blue
 				}
 				if(res==-3)
 				{
+					printf("\x1b[36m%i\x1b[0m",res); // allignment pattern in red
 
 				}
 
@@ -44,15 +61,18 @@ void NormalPrint(int* qrmat , int qrsize , parser* w)
 				{
 					if(w->xs[e]== x && w->ys[e]== y) //if x case and y case found
 					{
+						printf("\x1b[32m %i\x1b[0m",res); //print in green
 						found=1;
 					}
 					e=e+1;
 				}
 				if(!found)
 				{
+					printf(" %i",res);
 				}
 			}
 		}
+		printf("\n");
 
 	}
 }
@@ -68,23 +88,28 @@ void NoParsePrint(int* matrice, int s)
 				int res=matrice[x*s+y];
 				if (((x<8)&&(y<8))||((x<8)&&(y>=s-8))||((x>=s-8)&&(y<8)))
 				{
+					printf("\x1b[34m %i\x1b[0m",res);
 				}
 				else
 				{
 					if (((((x>7)&&(x<s-8))&& y==6) ||(((y>7)&&(y<s-8))&& x==6 )) || (x==s-8 && y==8) )
 					{
+						printf("\x1b[31m %i\x1b[0m",res);
 					}
 					else
 					{
 						if(((x==8)&&(( y<=8 && y!=6) || (y>=s-8))) || ((y==8)&&(x>=s-7 || x<=8)&& x!=6))
 						{
+							printf("\x1b[36m %i\x1b[0m",res);
 						}
 						else
 						{
+							printf(" %i",res);
 						}
 					}
 				}
 			}
+			printf("\n");
 		}
 	}
 	else
@@ -98,24 +123,29 @@ void NoParsePrint(int* matrice, int s)
 					int res=matrice[x*s+y];
 					if (((x<8)&&(y<8))||((x<8)&&(y>=s-8))||((x>=s-8)&&(y<8)))
 					{
+						printf("\x1b[34m %i\x1b[0m",res);
 
 					}
 					else
 					{
 						if (((((x>7)&&(x<s-8))&& y==6) ||(((y>7)&&(y<s-8))&& x==6 ))||(((x>=s-9)&&(x<s-4))&&((y>=s-9)&&(y<s-4)))|| (x==s-8 && y==8))
 						{
+							printf("\x1b[31m %i\x1b[0m",res);
 						}
 						else
 						{
 							if(((x==8)&&(( y<=8 && y!=6) || (y>=s-8))) || ((y==8)&&(x>=s-7 || x<=8)&& x!=6))
 							{
+								printf("\x1b[36m %i\x1b[0m",res);
 							}
 							else
 							{
+								printf(" %i",res);
 							}
 						}
 					}
 				}
+				printf("\n");
 			}
 		}
 		else
@@ -127,6 +157,7 @@ void NoParsePrint(int* matrice, int s)
 					int res=matrice[x*s+y];
 					if (((x<8)&&(y<8))||((x<8)&&(y>=s-8))||((x>=s-8)&&(y<8)))
 					{
+						printf("\x1b[34m %i\x1b[0m",res);
 
 					}
 					else
@@ -135,18 +166,22 @@ void NoParsePrint(int* matrice, int s)
                         
 						if (((((x>7)&&(x<s-8))&& y==6) ||(((y>7)&&(y<s-8))&& x==6 ))||(((x>=s-9)&&(x<s-4))&&((y>=s-9)&&(y<s-4)))|| (x==s-8 && y==8) || ( (x<=s/2 +2  && x>=s/2-2) &&((y<=s-5 && y>s-10) || (y<=s/2 +2  && y>=s/2 -2) || (y<9 && y>=4)  )) || ( (y<=s/2 +2 && y>=s/2 -2) && ( (x>s-10 && x<=s-5) || (x<9 && x>=4))  ))
 						{
+						    printf("\x1b[31m %i\x1b[0m",res);
 						}
 						else
 						{
 							if(((x==8)&&(( y<=8 && y!=6) || (y>=s-8))) || ((y==8)&&(x>=s-7 || x<=8)&& x!=6))
 							{
+								printf("\x1b[36m %i\x1b[0m",res);
 							}
 							else
 							{
+								printf(" %i",res);
 							}
 						}
 					}
 				}
+				printf("\n");
 			}
 
 		}
@@ -156,6 +191,4 @@ void NoParsePrint(int* matrice, int s)
 
 	return;
 }
-
-
 

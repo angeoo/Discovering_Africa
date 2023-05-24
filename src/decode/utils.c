@@ -8,23 +8,40 @@
 
 void putformat(int* mat,int size , int* forinfo)
 {
-    for(int c =0;c<6;c++)
-    {
-        mat[8*size + c]=forinfo[c];
-        mat[(size-c-1)*size + 8]=forinfo[c];
-    }
-    mat[8*size+7]=forinfo[6];
-    mat[(size-7)*size + 8]=forinfo[6];
-    for(int c=0;c<2;c++)
-    {
-        mat[(8-c)*size + 8]=forinfo[c+6+1];
-        mat[8*size + (size-8+c)]=forinfo[c+6+1];
-    }
-    for(int c=0 ;c<6;c++)
-    {
-        mat[(5-c)*size +8]=forinfo[c+9];
-        mat[8*size + (size-6+c)]=forinfo[c+9];
-    }
+    mat[0*size+8] =forinfo[0];
+    mat[1*size+8] =forinfo[1];
+    mat[2*size+8] =forinfo[2];
+    mat[3*size+8] =forinfo[3];
+    mat[4*size+8] =forinfo[4];
+    mat[5*size+8] =forinfo[5];
+    mat[7*size+8]=forinfo[6];
+    mat[8*size+size-1-0] =forinfo[0];
+    mat[8*size+size-1-1] =forinfo[1];
+    mat[8*size+size-1-2] =forinfo[2];
+    mat[8*size+size-1-3] =forinfo[3];
+    mat[8*size+size-1-4] =forinfo[4];
+    mat[8*size+size-1-5] =forinfo[5];
+    mat[8*size+size-1-6] =forinfo[6];
+    mat[8*size+size-1-7] =forinfo[7];
+    mat[8*size+8] =forinfo[7];
+    mat[8*size+7] =forinfo[8];
+    mat[8*size+5] =forinfo[9];
+    mat[8*size+4] =forinfo[10];
+    mat[8*size+3] =forinfo[11];
+    mat[8*size+2] =forinfo[12];
+    mat[8*size+1] =forinfo[13];
+    mat[8*size+0] =forinfo[14];
+    mat[(size-7)*size+8] =forinfo[8];
+    mat[(size-6)*size+8] =forinfo[9];
+    mat[(size-5)*size+8] =forinfo[10];
+    mat[(size-4)*size+8] =forinfo[11];
+    mat[(size-3)*size+8] =forinfo[12];
+    mat[(size-2)*size+8] =forinfo[13];
+    mat[(size-1)*size+8] =forinfo[14];
+    
+
+
+
 }
 
 int GiveVersion(int len)
@@ -105,7 +122,7 @@ tuple* init_mat(int vers) {
 
     int alli[5][5]= {{1,1,1,1,1}, {1,0,0,0,1}, {1,0,1,0,1}, {1,0,0,0,1},
         {1,1,1,1,1}};
-    
+
     ret[(size-8)*size + 8]=1;
 
     //haut-gauche find
@@ -360,6 +377,7 @@ int main (int argc, char *argv[])
         int* data_matrix=mat_data(data,w/size);
         Rmask(data_matrix,w/size,data);
         getQRcode(data_matrix,w/size);
+        printf("\n");
     }   
     else
     {
@@ -372,7 +390,6 @@ int main (int argc, char *argv[])
         
 	
 	char* word  = argv[2];
-        
 	//calculating the len
         int c=0;
         while(word[c]!='\0')
@@ -416,6 +433,7 @@ int main (int argc, char *argv[])
         //enlever les negatifs
         RemoveNeg(negcreated , finres->mat,finres->size);
         
+
         //get format info array
         int* finf = FormatInfo(ecl , 1);
         //put format info in the final matrix without negatives
@@ -424,13 +442,14 @@ int main (int argc, char *argv[])
         //applying mask to finres into negcreated
         Mask(negcreated,1,size);
 
-        //create matrix to store the final masked mat in it
+  //create matrix to store the final masked mat in it
+
         tuple* maskqr = init_mat(version);
-putformat(maskqr->mat,size,finf);
+        putformat(maskqr->mat,size,finf);
         RemoveNeg(negcreated,maskqr->mat,size);
-        
-        
-        
+
+
+
 
 
         //**************************************essayer masking
@@ -438,16 +457,18 @@ putformat(maskqr->mat,size,finf);
 
 
         //**************************************essayer masking
-
-        
+        printf("\nNo masking\n");
+        NoParsePrint(finres->mat, size);
+        printf("Masking\n");
+        NoParsePrint(maskqr->mat, size);
         new_image(maskqr->mat,size,"mask.bmp",size);
         new_image(finres->mat,finres->size,"nomask.bmp",size);
 
 
-
+        
         //free(created);
-        free(negcreated);
-        free(word);
+        //free(negcreated);
+        //free(word);
         //free(data);
         //free(data_matrix);
     }

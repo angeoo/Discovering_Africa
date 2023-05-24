@@ -226,7 +226,13 @@ void goToQR(){
 
 	GtkWidget *main_image = GTK_WIDGET(gtk_builder_get_object(builder, "background"));
 	GdkPixbuf *p = gdk_pixbuf_new_from_file("../src/decode/mask.bmp",NULL);
-	gtk_image_set_from_pixbuf(main_image,p);
+    int w =300;
+    int h = 300;
+
+    GdkPixbuf *rez = gdk_pixbuf_scale_simple(p,w,h,GDK_INTERP_BILINEAR);
+    //GtkWidget *rezim = gtk_image_new_from_pixbuf(rez);
+
+	gtk_image_set_from_pixbuf(main_image,rez);
 
 	gtk_widget_hide(testWindow);
 	gtk_widget_show_all(mainWindow);
@@ -423,7 +429,7 @@ int main(int argc, char **argv)
 	// Create a vertical box to hold the widgets
 	GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
 	//gtk_container_add(GTK_CONTAINER(terminalWindowFixed), box);
-	gtk_fixed_put(GTK_WIDGET(terminalWindowFixed),box,275,300);
+	gtk_fixed_put(GTK_WIDGET(terminalWindowFixed),box,450,450);
 
 	// Create a label
 	GtkWidget *label = gtk_label_new("Enter a sentence:");
