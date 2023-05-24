@@ -215,17 +215,20 @@ void goToQR(){
 		}
 	}
 
-	char* links ={
+	char* links[3] ={
 		"https://www.routard.com/guide_voyage_lieu/1498-le_caire_et_ses_environs.html",
 		"https://www.zanzibar-voyage.com/",
 		"https://www.canalmonde.fr/r-annuaire-tourisme/monde/guides/info-tourisme.php?o=764"
 	};
 
-	gtk_widget_hide(testWindow);
 
-	//execute_utils_enc(res);
-	//
-	//changer bg_image avec le QR genere
+	execute_utils_enc(links[res]);
+
+	GtkWidget *main_image = GTK_WIDGET(gtk_builder_get_object(builder, "background"));
+	GdkPixbuf *p = gdk_pixbuf_new_from_file("../src/decode/mask.bmp",NULL);
+	gtk_image_set_from_pixbuf(main_image,p);
+
+	gtk_widget_hide(testWindow);
 	gtk_widget_show_all(mainWindow);
 }
 
@@ -380,8 +383,11 @@ int main(int argc, char **argv)
 	for(int i=0;i<5;i++){
 
 		testbox[i] = gtk_box_new(GTK_ORIENTATION_VERTICAL,10);
-		if(i%2==0){
+		if(i!=4 && i%2==0){
 			gtk_fixed_put(testWindowFixed,testbox[i],150+i*250,150);
+		}
+		if(i==4){
+			gtk_fixed_put(testWindowFixed,testbox[i],150,450);
 		}
 		else{
 			gtk_fixed_put(testWindowFixed,testbox[i],150+(i-1)*250,300);
@@ -402,7 +408,7 @@ int main(int argc, char **argv)
 	}
 
 	GtkWidget * send_test = gtk_button_new_with_label("Send");
-	gtk_fixed_put(testWindowFixed,send_test,250*6,150);
+	gtk_fixed_put(testWindowFixed,send_test,50,50);
 
 	g_signal_connect(send_test,"clicked",G_CALLBACK(on_send_test),NULL);
 
