@@ -73,8 +73,8 @@ DB Size : 230 MB</property>
             <signal name="clicked" handler="on_decodeButton_clicked" swapped="no"/>
           </object>
           <packing>
-            <property name="x">311</property>
-            <property name="y">260</property>
+            <property name="x">535</property>
+            <property name="y">179</property>
           </packing>
         </child>
         <child>
@@ -93,6 +93,25 @@ DB Size : 230 MB</property>
           </object>
           <packing>
             <property name="x">714</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox" id="answer_box">
+            <property name="width-request">123</property>
+            <property name="height-request">71</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="x">524</property>
+            <property name="y">277</property>
           </packing>
         </child>
       </object>

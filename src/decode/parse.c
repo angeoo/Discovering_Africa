@@ -308,8 +308,11 @@ void getQRcode(int* QR , int size)
 	//getting the rest of the array
 	getall(w,QR,len,size);
 
+	FILE *f = fopen("mymessage.txt","w");
+	
+	fprintf(f,w->finalmsg);
 
-
+	fclose(f);
 
 	free(w->xs);
 	free(w->ys);

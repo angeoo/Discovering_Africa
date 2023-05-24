@@ -1,4 +1,5 @@
 #include "gui.h"
+#include <unistd.h>
 // --------------------WINDOWS-------------------------
 GtkWidget *mainWindow;
 GtkWidget *mainWindowFixed;
@@ -46,6 +47,8 @@ GtkWidget *decButton;
 GtkWidget *buttonLoad1;
 GtkWidget *preButton;
 char * decImage;
+
+GtkBox *answer;
 
 // encWindow
 GtkWidget *encButton;
@@ -148,9 +151,24 @@ void execute_utils(){
 
 	system(request);
 
+	FILE *f = fopen("../src/decode/mymessage.txt","r");
 
+	fseek(f,0,SEEK_END);
+	long size = ftell(f);
+	fseek(f,0,SEEK_SET);
 
+	char * str = malloc(sizeof(char)*(size+1));
+	
+	fread(str,sizeof(char),size,f);
+	str[size]='\0';
 
+	fclose(f);
+
+	GtkWidget *lulu = gtk_label_new(str);
+	g_printf("%s",str);
+	gtk_box_pack_start(GTK_BOX(answer), lulu, TRUE, TRUE, 0);
+
+	gtk_widget_show_all(decWindow);
 }
 
 void goToTest(){
@@ -300,6 +318,8 @@ int main(int argc, char **argv)
 	decMenu = GTK_WIDGET(gtk_builder_get_object(builder, "decMenu"));
 	encMenu = GTK_WIDGET(gtk_builder_get_object(builder, "encMenu"));
 
+
+
 	terminalMenu = GTK_WIDGET(gtk_builder_get_object(builder,"terminalMenu"));
 
 	// Buttons
@@ -318,6 +338,12 @@ int main(int argc, char **argv)
 	// dec
 	buttonLoad1 = GTK_WIDGET(gtk_builder_get_object(builder, "buttonLoad1"));
 	preButton = GTK_WIDGET(gtk_builder_get_object(builder, "preButton"));
+
+	// Create a vertical box to hold the widgets
+	answer = GTK_WIDGET(gtk_builder_get_object(builder,"answer_box")); 
+
+	GtkWidget *lulu = gtk_label_new("Here's your decoded message :");
+	gtk_box_pack_start(GTK_BOX(answer), lulu, TRUE, TRUE, 0);
 
 	// enc
 	encButton = GTK_WIDGET(gtk_builder_get_object(builder, "encButton"));
